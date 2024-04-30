@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp" />
+    <link rel="stylesheet" href="/css/dashboard.css"/>
+
+        <title>Admin Dashboard</title>
+</head>
+<body>
+   
+<div class="container">
+
+    <div th:replace="~{partials/dashboardsidebar}"></div>
+
+
+        <main>
+            <h1>Dashboard</h1>
+            <div class="date">
+                <input type="date">
+            </div>
+            <div class="insights">
+
+                <div class="sales">
+                    <span class="material-symbols-sharp">analytics</span>
+                    <div class="middle">
+                        <div class="left">
+                            <h3>Total Donation Amount</h3>
+                            <h1>$10,000</h1>
+                        </div>
+                        <div class="progress">
+                            <svg>
+                                <!-- <circle cx="50" cy="50" r="40" stroke="green" stroke-width="4" fill="yellow" /> -->
+                                <circle cx='38' cy='38' r='36'></circle>
+                            </svg>
+
+                            <div class="number">
+                                <p>80%</p>
+                            </div>
+                        </div>
+                    </div>
+                    <small class="text-muted">Last 24 Hours</small>
+                </div>
+                <!-- end of sales -->
+                <div class="expenses">
+                    <span class="material-symbols-sharp">bar_chart</span>
+                    <div class="middle">
+                        <div class="left">
+                            <h3>Total Expenses</h3>
+                            <h1>$4,000</h1>
+                        </div>
+                        <div class="progress">
+                            <svg>
+                                <circle cx='38' cy='38' r='36'></circle>
+                            </svg>
+
+                            <div class="number">
+                                <p>40%</p>
+                            </div>
+                        </div>
+                    </div>
+                    <small class="text-muted">Last 24 Hours</small>
+                </div>
+                <!-- end of expenses -->
+
+                <div class="income">
+                    <span class="material-symbols-sharp">stacked_line_chart</span>
+                    <div class="middle">
+                        <div class="left">
+                            <h3>Program Impact</h3>
+                            <h1>500</h1>
+                        </div>
+                        <div class="progress">
+                            <svg>
+                                <circle cx='38' cy='38' r='36'></circle>
+                            </svg>
+
+                            <div class="number">
+                                <p>60%</p>
+                            </div>
+                        </div>
+                    </div>
+                    <small class="text-muted">Last 24 Hours</small>
+                </div>
+                <!-- end of income -->
+            </div>
+
+            <!-- end of insights -->
+
+            <div class="recent-orders">
+                <h2>Recent Activities</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Donor Name</th>
+                            <th>Donor Number</th>
+                            <th>Amount</th>
+                            <th>Status</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            
+                        </tr>
+                        <tr>
+                           
+                        </tr>
+                        <tr>
+                            
+                        </tr>
+                    </tbody>
+                </table>
+                <a href="">Show All</a>
+            </div>
+        </main>
+        <!-- end of main -->
+
+        <div class="right">
+            <div class="top">
+               
+                <div class="theme-toggler">
+                    <span class="material-symbols-sharp active">light_mode</span>
+                    <span class="material-symbols-sharp">dark_mode</span>
+                </div>
+                <div class="profile">
+                    <div class="info">
+                        <p>Hey, <b>Eslam</b> </p>
+                        <small class="text-muted">Admin</small>
+                    </div>
+                    <div class="profile-photo">
+                        <!-- <img src="Team Members Info/team members pics/eslam.JPEG" alt=""> -->
+                    </div>
+                </div>
+            </div>
+            <!-- end of top -->
+
+
+            <div class="recent-updates">
+                <h2>Recent Updates</h2>
+                <div class="updates">
+                    <div class="update">
+                        <div class="message">
+                            <p><b>Habiba</b> volunteered for an event</p>
+                            <small class="text-muted">2 Hours ago</small>
+                        </div>
+                    </div>
+                    <div class="update">
+                        <div class="message">
+                            <p><b>Ali</b> volunteered for an event</p>
+                            <small class="text-muted">4 Days ago</small>
+                        </div>
+                    </div>
+                    <div class="update">
+                        <div class="message">
+                            <p><b>Zeina</b> volunteered for an event</p>
+                            <small class="text-muted">3 Days ago</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- end of recent updates -->
+            <div class="sales-analytics">
+                <h2>Analytics</h2>
+                <div class="item online">
+                    <div class="icon"><span class="material-symbols-sharp">attach_money</span></div>
+                    <div class="right">
+                        <div class="info">
+                            <h3>Donations Received</h3>
+                            <small class="text-muted">Last 24 Hours</small>
+                        </div>
+                        <h5 class="success">+40%</h5>
+                        <h3>3600</h3>
+                    </div>
+                </div>
+                <div class="item offline">
+                    <div class="icon"><span class="material-symbols-sharp">group</span></div>
+                    <div class="right">
+                        <div class="info">
+                            <h3>Volunteers Registered</h3>
+                            <small class="text-muted">Last 24 Hours</small>
+                        </div>
+                        <h5 class="success">+20%</h5>
+                        <h3>1100</h3>
+                    </div>
+                </div>
+                <div class="item customers">
+                    <div class="icon"><span class="material-symbols-sharp">business</span></div>
+                    <div class="right">
+                        <div class="info">
+                            <h3>New Organizations</h3>
+                            <small class="text-muted">Last 24 Hours</small>
+                        </div>
+                        <h5 class="success">+25%</h5>
+                        <h3>845</h3>
+                    </div>
+                </div>
+
+                <div class="item add-product">
+                    <div>
+                        <span class="material-symbols-sharp">add</span>
+                       <a href="">Add Event</a>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        const themeToggler = document.querySelector(".theme-toggler");
+
+//shaghal l darkmode
+themeToggler.addEventListener('click', () =>{
+    document.body.classList.toggle('dark-theme-variables');
+    themeToggler.querySelector('span:nth-child(1)').classList.toggle('active');
+    themeToggler.querySelector('span:nth-child(2)').classList.toggle('active');
+})
+    </script>
+    
+</body>
+</html>
