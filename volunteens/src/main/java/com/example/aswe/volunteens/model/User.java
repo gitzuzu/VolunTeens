@@ -5,6 +5,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import java.util.Objects;
 
@@ -33,16 +35,22 @@ public class User {
     @Column(name = "address", nullable = false)
     private String address;
 
+    @ManyToOne
+    @JoinColumn(name = "role_id", nullable = false)
+    private Role role;
+
 
     public User() {
     }
 
     public User( String firstname, String lastname, String email, String password, String address) {
+      
         this.firstname = firstname;
         this.lastname = lastname;
         this.email = email;
         this.password = password;
         this.address = address;
+       
     }
 
     public Long getUserId() {
@@ -53,19 +61,19 @@ public class User {
         this.userId = userId;
     }
 
-    public String getfirstname() {
+    public String getFirstname() {
         return this.firstname;
     }
 
-    public void setfirstname(String firstname) {
+    public void setFirstname(String firstname) {
         this.firstname = firstname;
     }
 
-    public String getlastname() {
+    public String getLastname() {
         return this.lastname;
     }
 
-    public void setlastname(String lastname) {
+    public void setLastname(String lastname) {
         this.lastname = lastname;
     }
 
@@ -93,18 +101,26 @@ public class User {
         this.address = address;
     }
 
+    public Role getRole() {
+        return this.role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
     public User userId(Long userId) {
         setUserId(userId);
         return this;
     }
 
     public User firstname(String firstname) {
-        setfirstname(firstname);
+        setFirstname(firstname);
         return this;
     }
 
     public User lastname(String lastname) {
-        setlastname(lastname);
+        setLastname(lastname);
         return this;
     }
 
@@ -123,6 +139,11 @@ public class User {
         return this;
     }
 
+    public User role(Role role) {
+        setRole(role);
+        return this;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == this)
@@ -131,24 +152,26 @@ public class User {
             return false;
         }
         User user = (User) o;
-        return Objects.equals(userId, user.userId) && Objects.equals(firstname, user.firstname) && Objects.equals(lastname, user.lastname) && Objects.equals(email, user.email) && Objects.equals(password, user.password) && Objects.equals(address, user.address);
+        return Objects.equals(userId, user.userId) && Objects.equals(firstname, user.firstname) && Objects.equals(lastname, user.lastname) && Objects.equals(email, user.email) && Objects.equals(password, user.password) && Objects.equals(address, user.address) && Objects.equals(role, user.role);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(userId, firstname, lastname, email, password, address);
+        return Objects.hash(userId, firstname, lastname, email, password, address, role);
     }
 
     @Override
     public String toString() {
         return "{" +
             " userId='" + getUserId() + "'" +
-            ", firstname='" + getfirstname() + "'" +
-            ", lastname='" + getlastname() + "'" +
+            ", firstname='" + getFirstname() + "'" +
+            ", lastname='" + getLastname() + "'" +
             ", email='" + getEmail() + "'" +
             ", password='" + getPassword() + "'" +
             ", address='" + getAddress() + "'" +
+            ", role='" + getRole() + "'" +
             "}";
     }
-    
+
+   
 }
