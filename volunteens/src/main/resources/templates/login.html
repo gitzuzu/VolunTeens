@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/form.css}">
+    <title>Login</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Saira:wght@500;600;700&display=swap"rel="stylesheet">
+
+</head>
+<body>
+    <th:block th:insert="~{fragments/header.html}"/>
+    <div class="wrapper">
+      
+ 
+        <div class="form-box login">
+            <h2>Login</h2>
+            <form method="post" th:action="@{/login}" th:object="${userDTO}">
+                <div class="row g-3">
+                   
+                    
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="email" name="email" th:field="*{email}" th:errorClass="is-invalid">
+                    <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="invalid-feedback"></div>
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" class="form-control" id="password" name="password" th:field="*{password}" th:errorClass="is-invalid">
+                    <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="invalid-feedback"></div>
+                </div>
+                <div class="remember-forgot">
+                    <a href="#">Forget Password?</a>
+                </div>
+                <button type="submit" class="btn btn-primary">Login</button>
+                <div class="login-register mt-3">
+                    <p>Don't Have an account?
+                        <a th:href="@{/signup}" class="login-link">
+                            Register
+                        </a>
+                    </p>
+                </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- Bootstrap Bundle with Popper -->
+    
+    <th:block th:insert="~{fragments/footer.html}"/>
+    
+</body>
+</html>
