@@ -23,5 +23,23 @@ public class TempController {
         ModelAndView mav = new ModelAndView("opportunities.html");
         return mav;
     }
+
+    @GetMapping("donate")
+    public ModelAndView donate() {
+        ModelAndView mav = new ModelAndView("donate.html");
+        return mav;
+    }
+
+    @GetMapping("service")
+    public ModelAndView service() {
+        ModelAndView mav = new ModelAndView("service.html");
+        return mav;
+    }
+
+    @GetMapping("testimonial")
+    public ModelAndView testimonial() {
+        ModelAndView mav = new ModelAndView("testimonial.html");
+        return mav;
+    }
     
 }
