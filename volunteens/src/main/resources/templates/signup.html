@@ -15,6 +15,7 @@
     <div class="wrapper">
 
 
+
         <div class="form-box register">
             <h2>Register</h2>
             <form method="post" th:action="@{/signup}" th:object="${userDTO}">
@@ -23,6 +24,7 @@
                         <label for="firstname" class="form-label">First Name</label>
                         <input type="text" class="form-control" id="firstname" name="firstname" th:field="*{firstname}"
                             th:errorClass="is-invalid">
+
                         <div th:if="${#fields.hasErrors('firstname')}" th:errors="*{firstname}" class="invalid-feedback"></div>
                     </div>
                     <div class="col-md-6">
@@ -67,6 +69,6 @@
     
     <th:block th:insert="~{fragments/footer.html}"/>
     
-    
+
 </body>
 </html>

@@ -11,7 +11,13 @@
     };
     spinner();
     
+    var isHomePage = window.location.pathname === '/'; 
     
+    if(!isHomePage) {
+        $('.fixed-top').addClass('bg-dark shadow');
+    }
+
+    if(isHomePage) {
     // Initiate the wowjs
     new WOW().init();
 
@@ -32,7 +38,7 @@
             }
         }
     });
-    
+}
     
     // Back to top button
     $(window).scroll(function () {

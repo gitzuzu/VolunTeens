@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="utf-8">
@@ -15,69 +15,15 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
     <link href="assets/animate/animate.min.css" rel="stylesheet">
     <link href="assets/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/style.css" rel="stylesheet">
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{css/style.css}" rel="stylesheet">
 </head>
 
 <body>
+    <th:block th:insert="~{fragments/header.html}"/>
     <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
         <div class="spinner-grow text-primary" role="status"></div>
     </div>
-
-
-
-    <!-- Navbar Start -->
-    <div class="container-fluid fixed-top px-0 wow fadeIn" data-wow-delay="0.1s">
-        <div class="top-bar text-white-50 row gx-0 align-items-center d-none d-lg-flex">
-            <div class="col-lg-6 px-5 text-start">
-                <small><i class="fa fa-map-marker-alt me-2"></i>28 Street, Cairo, Egypt</small>
-                <small class="ms-4"><i class="fa fa-envelope me-2"></i>Volunteens@gmail.com</small>
-            </div>
-            <div class="col-lg-6 px-5 text-end">
-                <small>Follow us:</small>
-                <a class="text-white-50 ms-3" href=""><i class="fab fa-facebook-f"></i></a>
-                <a class="text-white-50 ms-3" href=""><i class="fab fa-twitter"></i></a>
-                <a class="text-white-50 ms-3" href=""><i class="fab fa-linkedin-in"></i></a>
-                <a class="text-white-50 ms-3" href=""><i class="fab fa-instagram"></i></a>
-            </div>
-        </div>
-
-        <nav class="navbar navbar-expand-lg navbar-dark py-lg-0 px-lg-5 wow fadeIn" data-wow-delay="0.1s">
-            <a href="index.html" class="navbar-brand ms-4 ms-lg-0">
-                <h1 class="fw-bold text-primary m-0">Volun<span class="text-white">Teens</span></h1>
-            </a>
-            <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarCollapse">
-                <div class="navbar-nav ms-auto p-4 p-lg-0">
-                    <a href="index.html" class="nav-item nav-link active">Home</a>
-                    <a href="about.html" class="nav-item nav-link">About</a>
-                    <a href="causes.html" class="nav-item nav-link">Causes</a>
-                    <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
-                        <div class="dropdown-menu m-0">
-                            <a href="service.html" class="dropdown-item">Service</a>
-                            <a href="donate.html" class="dropdown-item">Donate</a>
-                            <a href="team.html" class="dropdown-item">Our Team</a>
-                            <a href="testimonial.html" class="dropdown-item">Testimonial</a>
-                            <a href="404.html" class="dropdown-item">Sign Up</a>
-                        </div>
-                    </div>
-                    <a href="contact.html" class="nav-item nav-link">Contact</a>
-                </div>
-                <div class="d-none d-lg-flex ms-2">
-                    <a class="btn btn-outline-primary py-2 px-3" href="">
-                        Donate Now
-                        <div class="d-inline-flex btn-sm-square bg-white text-primary rounded-circle ms-2">
-                            <i class="fa fa-arrow-right"></i>
-                        </div>
-                    </a>
-                </div>
-            </div>
-        </nav>
-    </div>
-    <!-- Navbar End -->
 
 
     <!-- Carousel Start -->
@@ -178,38 +124,28 @@
 
 
     <!-- Causes Start -->
-    <div class="container-xxl bg-light my-5 py-5">
-        <div class="container py-5">
+    <div class="container-xxl py-5">
+        <div class="container">
             <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;">
-                <div class="d-inline-block rounded-pill bg-secondary text-primary py-1 px-3 mb-3">Feature Causes</div>
+                <div class="d-inline-block rounded-pill bg-secondary text-primary py-1 px-3 mb-3">Opportunities</div>
                 <h1 class="display-6 mb-5">Every Child Deserves The Opportunity To Learn</h1>
             </div>
             <div class="row g-4 justify-content-center">
                 <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                    <div class="causes-item d-flex flex-column bg-white border-top border-5 border-primary rounded-top overflow-hidden h-100">
+                    <div class="causes-item d-flex flex-column bg-light border-top border-5 border-primary rounded-top overflow-hidden h-100">
                         <div class="text-center p-4 pt-0">
                             <div class="d-inline-block bg-primary text-white rounded-bottom fs-5 pb-1 px-3 mb-4">
                                 <small>Education</small>
                             </div>
                             <h5 class="mb-3">Education For African Children</h5>
-                            <p>description henaaaaa</p>
-                            <div class="causes-progress bg-light p-3 pt-2">
-                                <div class="d-flex justify-content-between">
-                                    <p class="text-dark">$10,000 <small class="text-body">Goal</small></p>
-                                    <p class="text-dark">$9,542 <small class="text-body">Raised</small></p>
-                                </div>
-                                <div class="progress">
-                                    <div class="progress-bar" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100">
-                                        <span>90%</span>
-                                    </div>
-                                </div>
-                            </div>
+                            <p>Tempor erat elitr rebum at clita dolor diam ipsum sit diam amet diam et eos</p>
+                           
                         </div>
                         <div class="position-relative mt-auto">
                             <img class="img-fluid" src="images/courses-1.jpg" alt="">
                             <div class="causes-overlay">
                                 <a class="btn btn-outline-primary" href="">
-                                    Read More
+                                    Apply Now
                                     <div class="d-inline-flex btn-sm-square bg-primary text-white rounded-circle ms-2">
                                         <i class="fa fa-arrow-right"></i>
                                     </div>
@@ -219,30 +155,20 @@
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
-                    <div class="causes-item d-flex flex-column bg-white border-top border-5 border-primary rounded-top overflow-hidden h-100">
+                    <div class="causes-item d-flex flex-column bg-light border-top border-5 border-primary rounded-top overflow-hidden h-100">
                         <div class="text-center p-4 pt-0">
                             <div class="d-inline-block bg-primary text-white rounded-bottom fs-5 pb-1 px-3 mb-4">
                                 <small>Pure Water</small>
                             </div>
                             <h5 class="mb-3">Ensure Pure Drinking Water</h5>
-                            <p>description henaaaaa</p>
-                            <div class="causes-progress bg-light p-3 pt-2">
-                                <div class="d-flex justify-content-between">
-                                    <p class="text-dark">$10,000 <small class="text-body">Goal</small></p>
-                                    <p class="text-dark">$9,542 <small class="text-body">Raised</small></p>
-                                </div>
-                                <div class="progress">
-                                    <div class="progress-bar" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100">
-                                        <span>90%</span>
-                                    </div>
-                                </div>
-                            </div>
+                            <p>Tempor erat elitr rebum at clita dolor diam ipsum sit diam amet diam et eos</p>
+                           
                         </div>
                         <div class="position-relative mt-auto">
                             <img class="img-fluid" src="images/courses-2.jpg" alt="">
                             <div class="causes-overlay">
                                 <a class="btn btn-outline-primary" href="">
-                                    Read More
+                                    Apply Now
                                     <div class="d-inline-flex btn-sm-square bg-primary text-white rounded-circle ms-2">
                                         <i class="fa fa-arrow-right"></i>
                                     </div>
@@ -252,30 +178,20 @@
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
-                    <div class="causes-item d-flex flex-column bg-white border-top border-5 border-primary rounded-top overflow-hidden h-100">
+                    <div class="causes-item d-flex flex-column bg-light border-top border-5 border-primary rounded-top overflow-hidden h-100">
                         <div class="text-center p-4 pt-0">
                             <div class="d-inline-block bg-primary text-white rounded-bottom fs-5 pb-1 px-3 mb-4">
                                 <small>Healthy Life</small>
                             </div>
                             <h5 class="mb-3">Ensure Medical Treatment</h5>
-                            <p>description henaaaaa</p>
-                            <div class="causes-progress bg-light p-3 pt-2">
-                                <div class="d-flex justify-content-between">
-                                    <p class="text-dark">$10,000 <small class="text-body">Goal</small></p>
-                                    <p class="text-dark">$9,542 <small class="text-body">Raised</small></p>
-                                </div>
-                                <div class="progress">
-                                    <div class="progress-bar" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100">
-                                        <span>90%</span>
-                                    </div>
-                                </div>
-                            </div>
+                            <p>Tempor erat elitr rebum at clita dolor diam ipsum sit diam amet diam et eos</p>
+                          
                         </div>
                         <div class="position-relative mt-auto">
                             <img class="img-fluid" src="images/courses-3.jpg" alt="">
                             <div class="causes-overlay">
                                 <a class="btn btn-outline-primary" href="">
-                                    Read More
+                                   Apply Now
                                     <div class="d-inline-flex btn-sm-square bg-primary text-white rounded-circle ms-2">
                                         <i class="fa fa-arrow-right"></i>
                                     </div>
@@ -348,6 +264,7 @@
 
 
 
+
     <!-- Donate Start -->
     <div class="container-fluid donate my-5 py-5" data-parallax="scroll" data-image-src="images/carousel-1.jpg">
         <div class="container py-5">
@@ -405,96 +322,89 @@
 
     
 
-    <!-- Testimonial Start -->
+    <!-- Team Start -->
     <div class="container-xxl py-5">
         <div class="container">
             <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;">
-                <div class="d-inline-block rounded-pill bg-secondary text-primary py-1 px-3 mb-3">Testimonial</div>
-                <h1 class="display-6 mb-5">Trusted By Thousands Of People And Nonprofits</h1>
+                <div class="d-inline-block rounded-pill bg-secondary text-primary py-1 px-3 mb-3">Team Members</div>
+                <h1 class="display-6 mb-5">Let's Meet With Our Ordinary Soldiers</h1>
             </div>
-            <div class="owl-carousel testimonial-carousel wow fadeInUp" data-wow-delay="0.1s">
-                <div class="testimonial-item text-center">
-                    <img class="img-fluid bg-light rounded-circle p-2 mx-auto mb-4" src="images/testimonial-2.jpg" style="width: 100px; height: 100px;">
-                    <div class="testimonial-text rounded text-center p-4">
-                        <p>I'm proud to share my experience with VolunTeens. Their commitment to making a difference is truly remarkable. With their support, I've witnessed tangible results that have changed lives for the better. Thank you, VolunTeens, for your dedication and impact.</p>
-                        <h5 class="mb-1">Eslam Ahmed</h5>
-                        <span class="fst-italic">entrepreneur</span>
+            <div class="row g-4">
+                <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                    <div class="team-item position-relative rounded overflow-hidden">
+                        <div class="overflow-hidden">
+                            <img class="img-fluid" src="images/team-1.jpg" alt="">
+                        </div>
+                        <div class="team-text bg-light text-center p-4">
+                            <h5>Full Name</h5>
+                            <p class="text-primary">Designation</p>
+                            <div class="team-social text-center">
+                                <a class="btn btn-square" href=""><i class="fab fa-facebook-f"></i></a>
+                                <a class="btn btn-square" href=""><i class="fab fa-twitter"></i></a>
+                                <a class="btn btn-square" href=""><i class="fab fa-instagram"></i></a>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="testimonial-item text-center">
-                    <img class="img-fluid bg-light rounded-circle p-2 mx-auto mb-4" src="images/testimonial-1.jpg" style="width: 100px; height: 100px;">
-                    <div class="testimonial-text rounded text-center p-4">
-                        <p>As a proud supporter of VolunTeens, I've seen firsthand the incredible impact they've had on both individuals and communities. Their dedication to serving others is unmatched, and I'm honored to be a part of their mission. Thank you, VolunTeens, for your unwavering commitment to making the world a better place.</p>
-                        <h5 class="mb-1">Nouran</h5>
-                        <span class="fst-italic">Art Director</span>
+                <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
+                    <div class="team-item position-relative rounded overflow-hidden">
+                        <div class="overflow-hidden">
+                            <img class="img-fluid" src="images/team-2.jpg" alt="">
+                        </div>
+                        <div class="team-text bg-light text-center p-4">
+                            <h5>Full Name</h5>
+                            <p class="text-primary">Designation</p>
+                            <div class="team-social text-center">
+                                <a class="btn btn-square" href=""><i class="fab fa-facebook-f"></i></a>
+                                <a class="btn btn-square" href=""><i class="fab fa-twitter"></i></a>
+                                <a class="btn btn-square" href=""><i class="fab fa-instagram"></i></a>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="testimonial-item text-center">
-                    <img class="img-fluid bg-light rounded-circle p-2 mx-auto mb-4" src="images/testimonial-3.jpg" style="width: 100px; height: 100px;">
-                    <div class="testimonial-text rounded text-center p-4">
-                        <p>I'm honored to share my experience as a donor to VolunTeens. Their transparency, dedication, and passion for their cause are truly commendable. It's heartening to see the tangible difference they make in the lives of both individuals and nonprofits. Thank you, VolunTeens, for your tireless efforts and the positive change you bring to our communities.</p>
-                        <h5 class="mb-1">Mohamed Ali</h5>
-                        <span class="fst-italic">Firefighter</span>
+                <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
+                    <div class="team-item position-relative rounded overflow-hidden">
+                        <div class="overflow-hidden">
+                            <img class="img-fluid" src="images/team-3.jpg" alt="">
+                        </div>
+                        <div class="team-text bg-light text-center p-4">
+                            <h5>Full Name</h5>
+                            <p class="text-primary">Designation</p>
+                            <div class="team-social text-center">
+                                <a class="btn btn-square" href=""><i class="fab fa-facebook-f"></i></a>
+                                <a class="btn btn-square" href=""><i class="fab fa-twitter"></i></a>
+                                <a class="btn btn-square" href=""><i class="fab fa-instagram"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.7s">
+                    <div class="team-item position-relative rounded overflow-hidden">
+                        <div class="overflow-hidden">
+                            <img class="img-fluid" src="images/team-4.jpg" alt="">
+                        </div>
+                        <div class="team-text bg-light text-center p-4">
+                            <h5>Full Name</h5>
+                            <p class="text-primary">Designation</p>
+                            <div class="team-social text-center">
+                                <a class="btn btn-square" href=""><i class="fab fa-facebook-f"></i></a>
+                                <a class="btn btn-square" href=""><i class="fab fa-twitter"></i></a>
+                                <a class="btn btn-square" href=""><i class="fab fa-instagram"></i></a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <!-- Testimonial End -->
+    <!-- Team End -->
 
 
     <!-- Footer Start -->
-    <div class="container-fluid bg-dark text-white-50 footer mt-5 pt-5 wow fadeIn" data-wow-delay="0.1s">
-        <div class="container py-5">
-            <div class="row g-5">
-                <div class="col-lg-3 col-md-6">
-                    <h1 class="fw-bold text-primary mb-4">Volun<span class="text-white">Teens</span></h1>
-                    <p>We're a dynamic nonprofit dedicated to harnessing the energy and passion of young volunteers.</p>
-                    <div class="d-flex pt-2">
-                        <a class="btn btn-square me-1" href=""><i class="fab fa-twitter"></i></a>
-                        <a class="btn btn-square me-1" href=""><i class="fab fa-facebook-f"></i></a>
-                        <a class="btn btn-square me-1" href=""><i class="fab fa-youtube"></i></a>
-                        <a class="btn btn-square me-0" href=""><i class="fab fa-linkedin-in"></i></a>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                    <h5 class="text-light mb-4">Address</h5>
-                    <p><i class="fa fa-map-marker-alt me-3"></i>28 Street, Cairo, Egypt</p>
-                    <p><i class="fa fa-phone-alt me-3"></i>+012 345 67890</p>
-                    <p><i class="fa fa-envelope me-3"></i>Volunteens@gmail.com</p>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                    <h5 class="text-light mb-4">Quick Links</h5>
-                    <a class="btn btn-link" href="">About Us</a>
-                    <a class="btn btn-link" href="">Contact Us</a>
-                    <a class="btn btn-link" href="">Our Services</a>
-                    <a class="btn btn-link" href="">Terms & Condition</a>
-                    <a class="btn btn-link" href="">Support</a>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                    <h5 class="text-light mb-4">Newsletter</h5>
-                    <p>Stay Connected with VolunTeens: Get the latest updates, stories, and opportunities to make a difference in your community. Subscribe to our newsletter today!</p>
-                    <div class="position-relative mx-auto" style="max-width: 400px;">
-                        <input class="form-control bg-transparent w-100 py-3 ps-4 pe-5" type="text" placeholder="Your email">
-                        <button type="button" class="btn btn-primary py-2 position-absolute top-0 end-0 mt-2 me-2">SignUp</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="container-fluid copyright">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
-                        &copy; <a href="#">VolunTeens</a>, All Right Reserved.
-                    </div>
-                    <!-- <div class="col-md-6 text-center text-md-end">
-                        ESLAM
-                    </div>
-                </div> -->
-            </div>
-        </div>
-    </div>
+    <th:block th:insert="~{fragments/footer.html}"/>
+    
     <!-- Footer End -->
+
 
 
 

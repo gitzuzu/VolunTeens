@@ -1,0 +1,56 @@
+
+.wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 12em;
+}
+
+.form-box {
+    max-width: 400px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: transparent;
+    outline: none;
+}
+.form-box h2{
+    text-align: center;
+    margin: 10px 0;
+}
+
+
+.invalid-feedback {
+    color: red;
+    font-size: 12px;
+}
+
+.btn {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    cursor: pointer;
+}
+
+
+
+.login-register {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 14px;
+}
+
+.login-link {
+    color: #001D23;
+    text-decoration: none;
+}
+
+.login-link:hover {
+    text-decoration: underline;
+}
+
+.remember-forgot{
+    text-align: right;
+}
