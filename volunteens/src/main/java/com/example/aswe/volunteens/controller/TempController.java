@@ -42,4 +42,10 @@ public class TempController {
         return mav;
     }
     
+    @GetMapping("contactus")
+    public ModelAndView contactus() {
+        ModelAndView mav = new ModelAndView("contactus.html");
+        return mav;
+    }
+    
 }

@@ -1,23 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" th:href="@{/css/form.css}">
-    <title>Document</title>
+    <title>Signup</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Saira:wght@500;600;700&display=swap"rel="stylesheet">
+
 </head>
+
 <body>
-    <th:block th:insert="~{fragments/header.html}"/>
+    <th:block th:insert="~{fragments/header.html}" />
     <div class="wrapper">
-      
- 
+
+
+
         <div class="form-box register">
             <h2>Register</h2>
             <form method="post" th:action="@{/signup}" th:object="${userDTO}">
                 <div class="row g-3">
                     <div class="col-md-6">
                         <label for="firstname" class="form-label">First Name</label>
-                        <input type="text" class="form-control" id="firstname" name="firstname" th:field="*{firstname}" th:errorClass="is-invalid">
+                        <input type="text" class="form-control" id="firstname" name="firstname" th:field="*{firstname}"
+                            th:errorClass="is-invalid">
+
                         <div th:if="${#fields.hasErrors('firstname')}" th:errors="*{firstname}" class="invalid-feedback"></div>
                     </div>
                     <div class="col-md-6">
@@ -62,5 +69,6 @@
     
     <th:block th:insert="~{fragments/footer.html}"/>
     
+
 </body>
 </html>
