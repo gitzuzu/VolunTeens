@@ -41,10 +41,6 @@ public class AuthenticationController {
     @GetMapping("")
     public ModelAndView home(Model model,HttpSession session) {
         ModelAndView mav = new ModelAndView("index.html");
-        String userId = (String) session.getAttribute("userId");
-        String orgId = (String) session.getAttribute("orgId");
-        model.addAttribute("userId", userId);
-        model.addAttribute("orgId", orgId);
         return mav;
     }
 
