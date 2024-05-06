@@ -15,7 +15,7 @@
     <link href="assets/animate/animate.min.css" rel="stylesheet">
     <link href="assets/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
     <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
-    <link th:href="@{css/style.css}" rel="stylesheet">
+    <link th:href="@{/css/style.css}" rel="stylesheet">
 </head>
 <body>
     <!-- Navbar start -->
@@ -57,11 +57,15 @@
                     <a href="/contactus" class="nav-item nav-link">Contact</a>
                 </div>
                 <div class="d-none d-lg-flex ms-2">
-                    <a class="btn btn-outline-primary py-2 px-3" href="/signup">
-                        Sign Up
-                        <div class="d-inline-flex btn-sm-square bg-white text-primary rounded-circle ms-2">
-                            <i class="fa fa-arrow-right"></i>
-                        </div>
+                    <a class="btn btn-outline-primary py-2 px-3"  data-bs-toggle="modal" data-bs-target="#signupModalCenter">
+                        <span th:if="${userId != null}" th:text="${userId}">Welcome</span>
+                        <span th:if="${orgId != null}" th:text="${orgId}"></span>
+                        
+                        <span th:if="${userId == null and orgId == null}">Sign Up
+                            <div class="d-inline-flex btn-sm-square bg-white text-primary rounded-circle ms-2">
+                                <i class="fa fa-arrow-right"></i>
+                            </div>
+                        </span>
                     </a>
                 </div>
             </div>
@@ -71,7 +75,7 @@
 
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="assets/wow/wow.min.js"></script>
+    <script src="./assets/wow/wow.min.js"></script>
     <script src="assets/easing/easing.min.js"></script>
     <script src="assets/waypoints/waypoints.min.js"></script>
     <script src="assets/owlcarousel/owl.carousel.min.js"></script>

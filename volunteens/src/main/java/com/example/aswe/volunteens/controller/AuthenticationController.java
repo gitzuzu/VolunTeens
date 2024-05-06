@@ -4,9 +4,14 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.example.aswe.volunteens.dto.AuthDTO;
+import com.example.aswe.volunteens.dto.OrganizationDTO;
 import com.example.aswe.volunteens.dto.UserDTO;
+import com.example.aswe.volunteens.service.AuthService;
+import com.example.aswe.volunteens.service.OrganizationService;
 import com.example.aswe.volunteens.service.UserService;
 
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,19 +30,36 @@ import org.springframework.web.bind.annotation.PostMapping;
 @RequestMapping("/")
 
 public class AuthenticationController {
-    
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private OrganizationService organizationService;
+
+    @Autowired
+    private AuthService authService;
     @GetMapping("")
-    public ModelAndView home() {
+    public ModelAndView home(Model model,HttpSession session) {
         ModelAndView mav = new ModelAndView("index.html");
+        String userId = (String) session.getAttribute("userId");
+        String orgId = (String) session.getAttribute("orgId");
+        model.addAttribute("userId", userId);
+        model.addAttribute("orgId", orgId);
         return mav;
     }
 
-       @Autowired
-    private UserService userService;
+     
     @GetMapping("signup")
     public ModelAndView signup(@ModelAttribute UserDTO userDTO,Model model) {
         ModelAndView mav = new ModelAndView("signup.html");
         model.addAttribute("userDTO", userDTO);
+        return mav;
+    }
+
+     @GetMapping("register")
+    public ModelAndView signup(@ModelAttribute OrganizationDTO OrganizationDTO,Model model) {
+        ModelAndView mav = new ModelAndView("organzationSignup.html");
+        model.addAttribute("organizationDTO", OrganizationDTO);
         return mav;
     }
 
@@ -61,27 +83,51 @@ public class AuthenticationController {
        this.userService.saveUser(userDTO);
        return new ModelAndView("redirect:/login");
     }
+    @PostMapping("register")
+    public ModelAndView save (@Valid @ModelAttribute OrganizationDTO OrganizationDTO,BindingResult bindingResult,RedirectAttributes ra){
+        //check if the user exists
+        if(organizationService.EmailExist(OrganizationDTO.getEmail())){
+            bindingResult.addError(new FieldError("OrganizationDTO", "email", "Email address already in use"));
+        }
+        //check if the passwords match 
+        if(OrganizationDTO.getPassword()!= null && OrganizationDTO.getCpassword()!=null){
+            if(!OrganizationDTO.getPassword().equals(OrganizationDTO.getCpassword())){
+                bindingResult.addError(new FieldError("OrganizationDTO", "cpassword", "Password must match"));
+            }
+        }
+       if(bindingResult.hasErrors()){
+        System.out.println(bindingResult.hasErrors());
+        return new ModelAndView("organzationSignup.html");
+       }
+       ra.addFlashAttribute("message","Success! your register");
+       this.organizationService.saveOrganization(OrganizationDTO);
+       return new ModelAndView("redirect:/login");
+    }
 
-    @GetMapping("login")
-    public ModelAndView login(@ModelAttribute UserDTO userDTO,Model model) {
+     @GetMapping("login")
+    public ModelAndView login(@ModelAttribute AuthDTO AuthDTO,Model model) {
         ModelAndView mav = new ModelAndView("login.html");
-        mav.addObject("userDTO", new UserDTO());
+        model.addAttribute("authDTO", AuthDTO);
         return mav;
     }
 
     @PostMapping("login")
-    public ModelAndView getUser(@Valid @ModelAttribute UserDTO userDTO, BindingResult bindingResult) {
+    public ModelAndView getUser(@Valid @ModelAttribute AuthDTO AuthDTO, BindingResult bindingResult,HttpSession session) {
       
         if( bindingResult.hasFieldErrors("email")||bindingResult.hasFieldErrors("password")) {
             System.out.println(bindingResult.hasErrors());
             return new ModelAndView("login.html");
         }
-        if(!this.userService.getUser(userDTO.getEmail(), userDTO.getPassword())){
+        if(!this.authService.getUser(AuthDTO.getEmail(), AuthDTO.getPassword(),session)){
             System.out.println(bindingResult.hasErrors());
-            bindingResult.addError(new FieldError("userDTO", "password", "Password incorrect"));
+            bindingResult.addError(new FieldError("authDTO", "password", "Password incorrector Incoreect emaill"));
             return new ModelAndView("login.html");
         }
         return new ModelAndView("redirect:/");
     }
+    
+
+    
+
     
 }

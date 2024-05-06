@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+    <title>Document</title>
+</head>
+<body>
+       <!-- Sign Up Modal -->
+<div class="modal fade" id="signupModalCenter" tabindex="-1" aria-labelledby="signupModalCenterLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="signupModalCenterLabel">Sign Up</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p >Welcome! Choose your registration type:</p>
+                <div class="row">
+                    <div class="col text-center">
+                        <img src="/images/group.png" alt="User Icon" class="img-fluid mb-3" style="max-width: 100px;">
+                        <p>User</p>
+                        <button type="button" class="btn btn-primary" onclick="location.href='/signup';">Register as User</button>
+                    </div>
+                    <div class="col text-center">
+                        <img src="/images/organization.png" alt="Organization Icon" class="img-fluid mb-3" style="max-width: 100px;">
+                        <p>Organization</p>
+                        <button type="button" class="btn btn-secondary" onclick="location.href='/register';">Register as Organization</button>
+                    </div>
+                </div>
+                <p class="login-link">Already have an account?
+                    <a th:href="@{/login}" class="login-link">
+                        Login
+                    </a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>
