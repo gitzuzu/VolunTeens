@@ -1,50 +1,45 @@
-package com.example.aswe.volunteens.model;
+package com.example.aswe.volunteens.dto;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import org.hibernate.validator.constraints.Length;
+
 import java.util.Objects;
 
-@Entity
-public class Organization {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+public class OrganizationDTO {
     private Long organizationId;
 
-    @Column(name = "organization Name", nullable = false)
+    @NotBlank(message = "Enter Organization Name")
     private String organizationName;
 
-    @Column(name = "email", nullable = false, unique = true)
+    @NotBlank(message = "Enter your email")
+    @Email(message = "Enter a valid email address")
     private String email;
 
-    @Column(name = "password", nullable = false)
+    @NotBlank(message = "Enter your password")
+    @Length(min=8, message = "Password must be at least 8 characters")
     private String password;
-    
-    @Column(name = "Description", nullable = false)
+
+    @NotBlank(message = "Re-enter your password")
+    private String cpassword; 
+
+    @NotBlank(message = "Enter your Description")
     private String organizationDescrp;
 
-    @Column(name = "ContactInfo", nullable = false)
+    @NotBlank(message = "Enter your ContactInfo")
     private String contactInfo;
 
-    @Column(name = "Status", nullable = false, columnDefinition = "VARCHAR(255) DEFAULT 'pending'")
-    private String status;
-    
-  
 
-    public Organization() {
+    public OrganizationDTO() {
     }
 
-    public Organization(String organizationName, String email, String password, String organizationDescrp, String contactInfo, String status) {
-        
+    public OrganizationDTO( String organizationName, String email, String password, String cpassword, String organizationDescrp, String contactInfo) {
         this.organizationName = organizationName;
         this.email = email;
         this.password = password;
+        this.cpassword = cpassword;
         this.organizationDescrp = organizationDescrp;
         this.contactInfo = contactInfo;
-        this.status = status;
     }
 
     public Long getOrganizationId() {
@@ -79,6 +74,14 @@ public class Organization {
         this.password = password;
     }
 
+    public String getCpassword() {
+        return this.cpassword;
+    }
+
+    public void setCpassword(String cpassword) {
+        this.cpassword = cpassword;
+    }
+
     public String getOrganizationDescrp() {
         return this.organizationDescrp;
     }
@@ -95,46 +98,38 @@ public class Organization {
         this.contactInfo = contactInfo;
     }
 
-    public String getStatus() {
-        return this.status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public Organization organizationId(Long organizationId) {
+    public OrganizationDTO organizationId(Long organizationId) {
         setOrganizationId(organizationId);
         return this;
     }
 
-    public Organization organizationName(String organizationName) {
+    public OrganizationDTO organizationName(String organizationName) {
         setOrganizationName(organizationName);
         return this;
     }
 
-    public Organization email(String email) {
+    public OrganizationDTO email(String email) {
         setEmail(email);
         return this;
     }
 
-    public Organization password(String password) {
+    public OrganizationDTO password(String password) {
         setPassword(password);
         return this;
     }
 
-    public Organization organizationDescrp(String organizationDescrp) {
+    public OrganizationDTO cpassword(String cpassword) {
+        setCpassword(cpassword);
+        return this;
+    }
+
+    public OrganizationDTO organizationDescrp(String organizationDescrp) {
         setOrganizationDescrp(organizationDescrp);
         return this;
     }
 
-    public Organization contactInfo(String contactInfo) {
+    public OrganizationDTO contactInfo(String contactInfo) {
         setContactInfo(contactInfo);
-        return this;
-    }
-
-    public Organization status(String status) {
-        setStatus(status);
         return this;
     }
 
@@ -142,16 +137,16 @@ public class Organization {
     public boolean equals(Object o) {
         if (o == this)
             return true;
-        if (!(o instanceof Organization)) {
+        if (!(o instanceof OrganizationDTO)) {
             return false;
         }
-        Organization organization = (Organization) o;
-        return Objects.equals(organizationId, organization.organizationId) && Objects.equals(organizationName, organization.organizationName) && Objects.equals(email, organization.email) && Objects.equals(password, organization.password) && Objects.equals(organizationDescrp, organization.organizationDescrp) && Objects.equals(contactInfo, organization.contactInfo) && Objects.equals(status, organization.status);
+        OrganizationDTO organizationDTO = (OrganizationDTO) o;
+        return Objects.equals(organizationId, organizationDTO.organizationId) && Objects.equals(organizationName, organizationDTO.organizationName) && Objects.equals(email, organizationDTO.email) && Objects.equals(password, organizationDTO.password) && Objects.equals(cpassword, organizationDTO.cpassword) && Objects.equals(organizationDescrp, organizationDTO.organizationDescrp) && Objects.equals(contactInfo, organizationDTO.contactInfo);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(organizationId, organizationName, email, password, organizationDescrp, contactInfo, status);
+        return Objects.hash(organizationId, organizationName, email, password, cpassword, organizationDescrp, contactInfo);
     }
 
     @Override
@@ -161,11 +156,12 @@ public class Organization {
             ", organizationName='" + getOrganizationName() + "'" +
             ", email='" + getEmail() + "'" +
             ", password='" + getPassword() + "'" +
+            ", cpassword='" + getCpassword() + "'" +
             ", organizationDescrp='" + getOrganizationDescrp() + "'" +
             ", contactInfo='" + getContactInfo() + "'" +
-            ", status='" + getStatus() + "'" +
             "}";
     }
+   
 
-    
+   
 }

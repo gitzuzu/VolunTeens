@@ -446,3 +446,13 @@
 .footer .copyright a:hover {
     color: var(--primary);
 }
+
+.modal-body {
+    text-align: center;
+    font-weight: 500;
+    font-size: 1em; 
+}
+
+.login-link{
+    margin-top: 2em;
+}
