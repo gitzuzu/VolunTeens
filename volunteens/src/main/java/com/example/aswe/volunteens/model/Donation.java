@@ -18,7 +18,7 @@ public class Donation {
     @Column(name = "id")
     private Long donationId;
 
-    @Column(name="amountDonated")
+    @Column(name="amountDonated", nullable = false)
     private String amountDonated;
 
     @ManyToOne
@@ -31,8 +31,8 @@ public class Donation {
     public Donation() {
     }
 
-    public Donation(Long donationId, String amountDonated, User user, LocalDate donationDate) {
-        this.donationId = donationId;
+    public Donation( String amountDonated, User user, LocalDate donationDate) {
+     
         this.amountDonated = amountDonated;
         this.user = user;
         this.donationDate = donationDate;
