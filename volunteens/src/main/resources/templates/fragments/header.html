@@ -45,7 +45,9 @@
                 <div class="navbar-nav ms-auto p-4 p-lg-0">
                     <a href="/" class="nav-item nav-link">Home</a>
                     <a href="/aboutus" class="nav-item nav-link">About</a>
-                    <a href="/opportunities" class="nav-item nav-link">Opportunities</a>
+                    <!-- //conditinal rendering to org and user ..  user opportunity w org post opportunity -->
+                    <a th:if="${userId != null}" href="/opportunities" class="nav-item nav-link">Opportunities</a>
+                    <a th:if="${orgId != null}" href="/postOpportunity" class="nav-item nav-link">Post Opportunity</a>
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">More</a>
                         <div class="dropdown-menu m-0">
