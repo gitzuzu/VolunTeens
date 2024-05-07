@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Donate</title>
+    <title>Post Opportunity</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -35,20 +35,71 @@
     <!-- Page Header Start -->
     <div class="container-fluid page-header mb-5 wow fadeIn" data-wow-delay="0.1s">
         <div class="container text-center">
-            <h1 class="display-4 text-white animated slideInDown mb-4">Become a Volunteer</h1>
+            <h1 class="display-4 text-white animated slideInDown mb-4">Post Opportunity</h1>
             <nav aria-label="breadcrumb animated slideInDown">
                 <ol class="breadcrumb justify-content-center mb-0">
                     <li class="breadcrumb-item"><a class="text-white" href="#">Home</a></li>
                     <li class="breadcrumb-item"><a class="text-white" href="#">Pages</a></li>
-                    <li class="breadcrumb-item text-primary active" aria-current="page">Become a Volunteer</li>
+                    <li class="breadcrumb-item text-primary active" aria-current="page">Post Opportunity</li>
                 </ol>
             </nav>
         </div>
     </div>
     <!-- Page Header End -->
+  <!-- Post Opportunity Start -->
+  <div class="container-fluid py-5">
+    <div class="container">
+        <div class="row g-5 align-items-center">
+            <div class="col-lg-6 wow fadeIn" data-wow-delay="0.1s">
+                <div class="d-inline-block rounded-pill bg-secondary text-primary py-1 px-3 mb-3">Post Opportunity</div>
+                <h1 class="display-6 mb-5">Share Volunteer Opportunities with Us</h1>
+                <p class="mb-0">We welcome organizations to post volunteer opportunities with us. By sharing your volunteer opportunities, you provide individuals with the chance to make a positive impact in the community. Thank you for considering posting your volunteer opportunities with us. Together, we can create meaningful volunteer experiences!</p>
 
-
-<h1>Post Opportunity</h1>
+            </div>
+            <div class="col-lg-6 wow fadeIn" data-wow-delay="0.5s">
+                <div class="h-100 bg-secondary p-5">
+                    <form>
+                        <div class="row g-3">
+                            <div class="col-12">
+                                <div class="form-floating">
+                                    <input type="text" class="form-control bg-light border-0" id="title" placeholder="Your Title">
+                                    <label for="title">Title</label>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-floating">
+                                    <input type="text" class="form-control bg-light border-0" id="location" placeholder="Your Location">
+                                    <label for="location">Location</label>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-floating">
+                                    <input type="text" class="form-control bg-light border-0" id="requirements" placeholder="Your Requirements">
+                                    <label for="requirements">Requirements</label>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-floating">
+                                    <textarea class="form-control bg-light border-0" id="Description" placeholder="Your Description" rows="5" style="height: 150px;"></textarea>
+                                    <label for="description">Description</label>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <button class="btn btn-primary px-5" style="height: 60px;">
+                                    Post Opportunity
+                                    <div class="d-inline-flex btn-sm-square bg-white text-primary rounded-circle ms-2">
+                                        <i class="fa fa-arrow-right"></i>
+                                    </div>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Post Opportunity End -->
 
   
     <th:block th:insert="~{fragments/footer.html}"/>
