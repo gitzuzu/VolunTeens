@@ -16,7 +16,6 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <!-- Conditional display based on user session -->
                     <div th:if="${user == null && org == null}">
                         <p>Welcome! Choose your registration type:</p>
                         <div class="row">
