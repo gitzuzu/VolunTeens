@@ -11,13 +11,16 @@
     };
     spinner();
     
-    var isHomePage = window.location.pathname === '/'; 
-    
-    if(!isHomePage) {
+    var currentPage = window.location.pathname;
+    var isLoginPage = currentPage.includes('/login');
+    var isSignupPage = currentPage.includes('/registerUser');
+    var isorgSignupPage = currentPage.includes('/registerOrg');
+
+    if (isLoginPage || isSignupPage||isorgSignupPage) {
         $('.fixed-top').addClass('bg-dark shadow');
     }
 
-    if(isHomePage) {
+    else {
     // Initiate the wowjs
     new WOW().init();
 
