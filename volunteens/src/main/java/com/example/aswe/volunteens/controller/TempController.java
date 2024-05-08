@@ -4,6 +4,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.example.aswe.volunteens.dto.DonationDTO;
+import com.example.aswe.volunteens.model.User;
 import com.example.aswe.volunteens.service.DonationService;
 
 import jakarta.servlet.http.HttpSession;
@@ -30,7 +31,7 @@ public class TempController {
 
     @GetMapping("opportunities")
     public ModelAndView opportunities(HttpSession session) {
-        if (session.getAttribute("userId") == null) {
+        if (session.getAttribute("user") == null) {
            
             return new ModelAndView("redirect:/accessDenied");
         }
@@ -40,19 +41,17 @@ public class TempController {
 
     @GetMapping("donate")
     public ModelAndView donate(Model model,HttpSession session) {
-        if (session.getAttribute("userId") == null) {
+        if (session.getAttribute("user") == null) {
            
             return new ModelAndView("redirect:/accessDenied");
         }
         else{
-            model.addAttribute("userEmail", session.getAttribute("userEmail"));
+           
             DonationDTO donateDTO = new DonationDTO();
-            String userId = (String) session.getAttribute("userId");
-            String userEmail = (String) session.getAttribute("userEmail");
-
+            User user = (User) session.getAttribute("user");
             
-            donateDTO.setUserId(userId);
-            donateDTO.setUserEmail(userEmail);
+            donateDTO.setUserId(user.getFirstname());
+            donateDTO.setUserEmail(user.getEmail());
             
             model.addAttribute("donateDTO", donateDTO);
             return new ModelAndView("donate.html");
@@ -96,7 +95,7 @@ public class TempController {
 
     @GetMapping("postOpportunity")
     public ModelAndView postOpportunity(HttpSession session) {
-        if (session.getAttribute("orgId") == null) {
+        if (session.getAttribute("org") == null) {
            
             return new ModelAndView("redirect:/accessDenied");
         }
