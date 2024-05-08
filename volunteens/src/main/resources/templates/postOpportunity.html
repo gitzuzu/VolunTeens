@@ -58,30 +58,39 @@
             </div>
             <div class="col-lg-6 wow fadeIn" data-wow-delay="0.5s">
                 <div class="h-100 bg-secondary p-5">
-                    <form>
+                <div class="alert-info" th:if="${message}" th:text="${message}">welcome</div>
+                    <form th:action="@{/postOpportunity}" method="post" th:object="${opportunityDTO}">
                         <div class="row g-3">
                             <div class="col-12">
                                 <div class="form-floating">
-                                    <input type="text" class="form-control bg-light border-0" id="title" placeholder="Your Title">
+                                    <input type="text" class="form-control bg-light border-0" id="title" placeholder="Your Title" th:field="*{title}"
+                                    th:errorClass="is-invalid">
                                     <label for="title">Title</label>
+                                    <div th:if="${#fields.hasErrors('title')}" th:errors="*{title}" class="invalid-feedback"></div>
                                 </div>
                             </div>
                             <div class="col-12">
                                 <div class="form-floating">
-                                    <input type="text" class="form-control bg-light border-0" id="location" placeholder="Your Location">
+                                    <input type="text" class="form-control bg-light border-0" id="location" placeholder="Your Location" th:field="*{location}"
+                                    th:errorClass="is-invalid">
                                     <label for="location">Location</label>
+                                    <div th:if="${#fields.hasErrors('location')}" th:errors="*{location}" class="invalid-feedback"></div>
                                 </div>
                             </div>
                             <div class="col-12">
                                 <div class="form-floating">
-                                    <input type="text" class="form-control bg-light border-0" id="requirements" placeholder="Your Requirements">
+                                    <input type="text" class="form-control bg-light border-0" id="requirements" placeholder="Your Requirements" th:field="*{requirements}"
+                                    th:errorClass="is-invalid">
                                     <label for="requirements">Requirements</label>
+                                    <div th:if="${#fields.hasErrors('requirements')}" th:errors="*{requirements}" class="invalid-feedback"></div>
                                 </div>
                             </div>
                             <div class="col-12">
                                 <div class="form-floating">
-                                    <textarea class="form-control bg-light border-0" id="Description" placeholder="Your Description" rows="5" style="height: 150px;"></textarea>
+                                    <textarea class="form-control bg-light border-0" id="Description" placeholder="Your Description" rows="5" style="height: 150px;" th:field="*{description}"
+                                    th:errorClass="is-invalid"></textarea>
                                     <label for="description">Description</label>
+                                    <div th:if="${#fields.hasErrors('description')}" th:errors="*{description}" class="invalid-feedback"></div>
                                 </div>
                             </div>
                             <div class="col-12">

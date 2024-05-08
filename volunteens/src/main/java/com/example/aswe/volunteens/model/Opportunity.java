@@ -35,8 +35,7 @@ public class Opportunity {
     public Opportunity() {
     }
 
-    public Opportunity(Long opportunityId, String title, String description, String location, String requirements, Organization organization) {
-        this.opportunityId = opportunityId;
+    public Opportunity( String title, String description, String location, String requirements, Organization organization) {
         this.title = title;
         this.description = description;
         this.location = location;
