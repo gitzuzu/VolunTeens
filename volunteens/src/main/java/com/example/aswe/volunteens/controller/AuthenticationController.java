@@ -45,21 +45,21 @@ public class AuthenticationController {
     }
 
      
-    @GetMapping("signup")
+    @GetMapping("registerUser")
     public ModelAndView signup(@ModelAttribute UserDTO userDTO,Model model) {
         ModelAndView mav = new ModelAndView("signup.html");
         model.addAttribute("userDTO", userDTO);
         return mav;
     }
 
-     @GetMapping("register")
+     @GetMapping("registerOrg")
     public ModelAndView signup(@ModelAttribute OrganizationDTO OrganizationDTO,Model model) {
         ModelAndView mav = new ModelAndView("organzationSignup.html");
         model.addAttribute("organizationDTO", OrganizationDTO);
         return mav;
     }
 
-    @PostMapping("signup")
+    @PostMapping("registerUser")
     public ModelAndView save (@Valid @ModelAttribute UserDTO userDTO,BindingResult bindingResult,RedirectAttributes ra){
         //check if the user exists
         if(userService.EmailExist(userDTO.getEmail())){
@@ -79,7 +79,7 @@ public class AuthenticationController {
        this.userService.saveUser(userDTO);
        return new ModelAndView("redirect:/login");
     }
-    @PostMapping("register")
+    @PostMapping("registerOrg")
     public ModelAndView save (@Valid @ModelAttribute OrganizationDTO OrganizationDTO,BindingResult bindingResult,RedirectAttributes ra){
         //check if the user exists
         if(organizationService.EmailExist(OrganizationDTO.getEmail())){
