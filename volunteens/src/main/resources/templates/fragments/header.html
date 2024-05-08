@@ -46,8 +46,8 @@
                     <a href="/" class="nav-item nav-link">Home</a>
                     <a href="/aboutus" class="nav-item nav-link">About</a>
                     <!-- //conditinal rendering to org and user ..  user opportunity w org post opportunity -->
-                    <a th:if="${userId != null}" href="/opportunities" class="nav-item nav-link">Opportunities</a>
-                    <a th:if="${orgId != null}" href="/postOpportunity" class="nav-item nav-link">Post Opportunity</a>
+                    <a th:if="${user != null}" href="/opportunities" class="nav-item nav-link">Opportunities</a>
+                    <a th:if="${org != null}" href="/postOpportunity" class="nav-item nav-link">Post Opportunity</a>
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">More</a>
                         <div class="dropdown-menu m-0">
@@ -60,10 +60,10 @@
                 </div>
                 <div class="d-none d-lg-flex ms-2">
                     <a class="btn btn-outline-primary py-2 px-3"  data-bs-toggle="modal" data-bs-target="#signupModalCenter">
-                        <span th:if="${userId != null}" th:text="${userId}">Welcome</span>
-                        <span th:if="${orgId != null}" th:text="${orgId}"></span>
+                        <span th:if="${user != null}" th:text="${user.firstname}"></span>
+                        <span th:if="${org!= null}" th:text="${org.organizationName}"></span>
                         
-                        <span th:if="${userId == null and orgId == null}">Sign Up
+                        <span th:if="${user == null and org == null}">Sign Up
                             <div class="d-inline-flex btn-sm-square bg-white text-primary rounded-circle ms-2">
                                 <i class="fa fa-arrow-right"></i>
                             </div>

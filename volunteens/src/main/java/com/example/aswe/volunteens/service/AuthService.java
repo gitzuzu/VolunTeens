@@ -24,15 +24,14 @@ public class AuthService {
         
         User user = this.userRepositry.findByEmail(email);
         if(user!=null && BCrypt.checkpw(password, user.getPassword())){
-            session.setAttribute("userId", user.getFirstname());
-            session.setAttribute("userEmail", user.getEmail());
-            session.removeAttribute("orgId");
+            session.setAttribute("user", user);
+            session.removeAttribute("org");
             return true;
         }else{
             Organization org = this.organizationRepository.findByEmail(email);
             if(org!=null && BCrypt.checkpw(password, org.getPassword())){
-                session.setAttribute("orgId", org.getOrganizationName());
-                session.removeAttribute("userId"); 
+                session.setAttribute("org", org);
+                session.removeAttribute("user"); 
                 return true;
             }
             else{
