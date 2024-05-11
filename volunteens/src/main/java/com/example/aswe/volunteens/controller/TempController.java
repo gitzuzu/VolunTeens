@@ -40,11 +40,12 @@ public class TempController {
     }
 
     @GetMapping("opportunities")
-    public ModelAndView opportunities(HttpSession session) {
+    public ModelAndView opportunities(HttpSession session,Model model) {
         if (session.getAttribute("user") == null) {
            
             return new ModelAndView("redirect:/accessDenied");
         }
+        model.addAttribute("opportunities", opportunityService.allOpportunities());
         return new ModelAndView("opportunities.html");
     }
 
@@ -92,7 +93,7 @@ public class TempController {
 
     @GetMapping("volunteer")
     public ModelAndView volunteer(HttpSession session) {
-        if (session.getAttribute("userId") == null) {
+        if (session.getAttribute("user") == null) {
            
             return new ModelAndView("redirect:/accessDenied");
         }
@@ -133,6 +134,12 @@ public class TempController {
     }
 
 
+    @GetMapping("logout")
+    public RedirectView logout(HttpSession session) {
+        session.invalidate();
+        return new RedirectView("/");
+    }
+    
     
     
 }

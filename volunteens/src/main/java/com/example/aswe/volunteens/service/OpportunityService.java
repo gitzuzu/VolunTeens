@@ -1,5 +1,7 @@
 package com.example.aswe.volunteens.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,5 +31,10 @@ public class OpportunityService {
     public boolean TitleExist(String title){
         
         return this.opportunityRepository.existsByTitle(title);
+    }
+
+    public List allOpportunities(){
+        List<Opportunity>opportunities=opportunityRepository.findAll();
+        return opportunities;
     }
 }
