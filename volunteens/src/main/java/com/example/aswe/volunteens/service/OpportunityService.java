@@ -3,6 +3,9 @@ package com.example.aswe.volunteens.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.example.aswe.volunteens.dto.OpportunityDTO;
@@ -33,8 +36,8 @@ public class OpportunityService {
         return this.opportunityRepository.existsByTitle(title);
     }
 
-    public List allOpportunities(){
-        List<Opportunity>opportunities=opportunityRepository.findAll();
+    public Page allOpportunities(Pageable pageable){
+        Page<Opportunity>opportunities=opportunityRepository.findAll(pageable);
         return opportunities;
     }
 }

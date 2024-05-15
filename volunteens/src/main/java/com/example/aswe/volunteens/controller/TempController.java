@@ -15,6 +15,8 @@ import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -40,12 +42,14 @@ public class TempController {
     }
 
     @GetMapping("opportunities")
-    public ModelAndView opportunities(HttpSession session,Model model) {
+    public ModelAndView opportunities(@RequestParam(defaultValue = "0") int page,
+    @RequestParam(defaultValue = "6") int size,HttpSession session,Model model) {
         if (session.getAttribute("user") == null) {
            
             return new ModelAndView("redirect:/accessDenied");
         }
-        model.addAttribute("opportunities", opportunityService.allOpportunities());
+        Pageable pageable = PageRequest.of(page, size);
+        model.addAttribute("opportunitiesPage", opportunityService.allOpportunities(pageable));
         return new ModelAndView("opportunities.html");
     }
 
