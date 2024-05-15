@@ -10,7 +10,9 @@
     <link href="images/favicon.ico" rel="icon">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Saira:wght@500;600;700&display=swap" rel="stylesheet"> 
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Saira:wght@500;600;700&display=swap"
+        rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
     <link href="assets/animate/animate.min.css" rel="stylesheet">
@@ -20,12 +22,13 @@
 </head>
 
 <body>
-    <th:block th:insert="~{fragments/header.html}"/>
-    <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+    <th:block th:insert="~{fragments/header.html}" />
+    <div id="spinner"
+        class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
         <div class="spinner-grow text-primary" role="status"></div>
     </div>
 
-    <th:block th:insert="~{fragments/model.html}"/>
+    <th:block th:insert="~{fragments/model.html}" />
 
 
 
@@ -53,15 +56,16 @@
                 <h1 class="display-6 mb-5">Every Child Deserves The Opportunity To Learn</h1>
             </div>
             <div class="row g-4 justify-content-center">
-                <div th:each = "opp:${opportunities}"class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                    <div class="causes-item d-flex flex-column bg-light border-top border-5 border-primary rounded-top overflow-hidden h-100">
+                <div th:each="opp:${opportunitiesPage}" class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                    <div
+                        class="causes-item d-flex flex-column bg-light border-top border-5 border-primary rounded-top overflow-hidden h-100">
                         <div class="text-center p-4 pt-0">
                             <div class="d-inline-block bg-primary text-white rounded-bottom fs-5 pb-1 px-3 mb-4">
                                 <small>Education</small>
                             </div>
                             <h5 class="mb-3" th:text="${opp.title}"></h5>
                             <p th:text="${opp.description}"></p>
-                           
+
                         </div>
                         <div class="position-relative mt-auto">
                             <img class="img-fluid" src="images/courses-1.jpg" alt="">
@@ -80,11 +84,36 @@
         </div>
     </div>
     <!-- Causes End -->
-        
 
- 
+    <!-- Pagination Controls -->
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+            <li class="page-item" th:classappend="${opportunitiesPage.first ? 'disabled' : ''}">
+                <a class="page-link"
+                    th:href="@{/opportunities(page=${opportunitiesPage.number - 1}, size=${opportunitiesPage.size})}"
+                    aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            <li th:classappend="${opportunitiesPage.number == page ? 'active' : ''}" class="page-item"
+                th:each="page : ${#numbers.sequence(0, opportunitiesPage.totalPages - 1)}">
+                <a class="page-link" th:href="@{/opportunities(page=${page}, size=${opportunitiesPage.size})}"
+                    th:text="${page + 1}"></a>
+            </li>
+            <li class="page-item" th:classappend="${opportunitiesPage.last ? 'disabled' : ''}">
+                <a class="page-link"
+                    th:href="@{/opportunities(page=${opportunitiesPage.number + 1}, size=${opportunitiesPage.size})}"
+                    aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+<!-- Pagination End -->
 
-    <th:block th:insert="~{fragments/footer.html}"/>
+
+
+    <th:block th:insert="~{fragments/footer.html}" />
     <!-- Back to Top -->
     <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
 
