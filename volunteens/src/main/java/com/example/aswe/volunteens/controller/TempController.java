@@ -7,6 +7,7 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import com.example.aswe.volunteens.dto.DonationDTO;
 import com.example.aswe.volunteens.dto.OpportunityDTO;
+import com.example.aswe.volunteens.model.Organization;
 import com.example.aswe.volunteens.model.User;
 import com.example.aswe.volunteens.service.DonationService;
 import com.example.aswe.volunteens.service.OpportunityService;
@@ -108,9 +109,17 @@ public class TempController {
     @GetMapping("postOpportunity")
     public ModelAndView postOpportunity(HttpSession session,@ModelAttribute OpportunityDTO opportunityDTO,Model model) {
         User user = (User) session.getAttribute("user");
+        Organization organization = (Organization) session.getAttribute("org");
 
-        if (session.getAttribute("org") == null && !"admin@gmail.com".equals(user.getEmail())) {
+        if (session.getAttribute("org") == null )
+        {
+            if( !"admin@gmail.com".equals(user.getEmail()))
+
+                return new ModelAndView("redirect:/accessDenied");
+            
+        }
            
+        if (organization != null && !"true".equalsIgnoreCase(organization.getStatus())) {
             return new ModelAndView("redirect:/accessDenied");
         }
 
