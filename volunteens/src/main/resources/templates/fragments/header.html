@@ -48,6 +48,10 @@
                     <!-- //conditinal rendering to org and user ..  user opportunity w org post opportunity -->
                     <a th:if="${user != null}" href="/opportunities" class="nav-item nav-link">Opportunities</a>
                     <a th:if="${org != null}" href="/postOpportunity" class="nav-item nav-link">Post Opportunity</a>
+                    <span th:if="${user != null}">
+                        <a th:if= "${user.email =='admin@gmail.com' }"  href="/postOpportunity" class="nav-item nav-link">Post Opportunity</a>
+                    </span>
+                    
 
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">More</a>
