@@ -26,7 +26,7 @@ public class OrganizationDTO {
     @NotBlank(message = "Enter your Description")
     private String organizationDescrp;
 
-    @NotBlank(message = "Enter your ContactInfo")
+    @NotBlank(message = "Enter your Contact Info")
     private String contactInfo;
 
 

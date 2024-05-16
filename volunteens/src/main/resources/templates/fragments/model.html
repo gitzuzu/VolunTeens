@@ -39,9 +39,12 @@
                         <div class="row">
                             <div class="col text-center">
                                 <img src="/images/profile.png" alt="profile Icon" class="img-fluid mb-1" style="max-width: 100px;">
-                                <p>Edit Profile</p>
-                                <button type="button" class="btn btn-primary" onclick="location.href='/editProfile';">Edit Profile</button>
-                            </div>
+                                <p th:if="${user.email == 'admin@gmail.com'}">Admin Dashboard</p>
+                            <p th:unless="${user.email == 'admin@gmail.com'}">Edit Profile</p>
+                            <button type="button" class="btn btn-primary" th:if="${user.email != 'admin@gmail.com'}" onclick="location.href='/editProfile';">Edit Profile</button>
+                            <button type="button" class="btn btn-primary" th:if="${user.email == 'admin@gmail.com'}" onclick="location.href='/dashboard';">Dashboard</button>
+                              
+                        </div>
                             <div class="col text-center">
                                 <img src="/images/logout.png" alt="logout Icon" class="img-fluid mb-1" style="max-width: 100px;">
                                 <p>Logout</p>
