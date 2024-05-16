@@ -107,7 +107,9 @@ public class TempController {
 
     @GetMapping("postOpportunity")
     public ModelAndView postOpportunity(HttpSession session,@ModelAttribute OpportunityDTO opportunityDTO,Model model) {
-        if (session.getAttribute("org") == null) {
+        User user = (User) session.getAttribute("user");
+
+        if (session.getAttribute("org") == null && !"admin@gmail.com".equals(user.getEmail())) {
            
             return new ModelAndView("redirect:/accessDenied");
         }
