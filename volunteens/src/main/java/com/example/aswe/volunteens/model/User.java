@@ -26,24 +26,26 @@ public class User {
     @Column(name = "email", nullable = false, unique = true)
     private String email;
 
-
     @Column(name = "password", nullable = false)
     private String password;
 
     @Column(name = "address", nullable = false)
     private String address;
 
+    @Column(name = "is_admin", nullable = false)
+    private boolean isAdmin;
    
 
     public User() {
     }
 
-    public User( String firstname, String lastname, String email, String password, String address) {
+    public User( String firstname, String lastname, String email, String password, String address, boolean isAdmin) {
         this.firstname = firstname;
         this.lastname = lastname;
         this.email = email;
         this.password = password;
         this.address = address;
+        this.isAdmin = isAdmin;
     }
 
     public Long getUserId() {
@@ -94,6 +96,18 @@ public class User {
         this.address = address;
     }
 
+    public boolean isIsAdmin() {
+        return this.isAdmin;
+    }
+
+    public boolean getIsAdmin() {
+        return this.isAdmin;
+    }
+
+    public void setIsAdmin(boolean isAdmin) {
+        this.isAdmin = isAdmin;
+    }
+
     public User userId(Long userId) {
         setUserId(userId);
         return this;
@@ -124,6 +138,11 @@ public class User {
         return this;
     }
 
+    public User isAdmin(boolean isAdmin) {
+        setIsAdmin(isAdmin);
+        return this;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == this)
@@ -132,12 +151,12 @@ public class User {
             return false;
         }
         User user = (User) o;
-        return Objects.equals(userId, user.userId) && Objects.equals(firstname, user.firstname) && Objects.equals(lastname, user.lastname) && Objects.equals(email, user.email) && Objects.equals(password, user.password) && Objects.equals(address, user.address);
+        return Objects.equals(userId, user.userId) && Objects.equals(firstname, user.firstname) && Objects.equals(lastname, user.lastname) && Objects.equals(email, user.email) && Objects.equals(password, user.password) && Objects.equals(address, user.address) && isAdmin == user.isAdmin;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(userId, firstname, lastname, email, password, address);
+        return Objects.hash(userId, firstname, lastname, email, password, address, isAdmin);
     }
 
     @Override
@@ -149,8 +168,11 @@ public class User {
             ", email='" + getEmail() + "'" +
             ", password='" + getPassword() + "'" +
             ", address='" + getAddress() + "'" +
+            ", isAdmin='" + isIsAdmin() + "'" +
             "}";
     }
+
+   
 
 
 }
