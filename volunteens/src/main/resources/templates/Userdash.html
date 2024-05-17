@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>User Management</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp" />
+    <link rel="stylesheet" href="/css/dashboard.css" />
+    <link rel="stylesheet" href="css/editdash.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+<div class="container">
+    <div th:replace="~{partials/dashboardsidebar}"></div>
+
+    <main class="table">
+        <section class="theader">
+            <h1>User Management</h1>
+            <div class="search">
+                <input type="search" placeholder="Search existing users...">
+            </div>
+            <div class="add_user">
+                <a th:href="@{/User/AddUser}">
+                    <button class="btn add-product"><i class="fa fa-plus"></i> Add User</button>
+                </a>
+            </div>
+        </section>
+        <section class="table_body">
+            <table>
+                <thead>
+                    <tr>
+                        <th>User ID</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Email</th>
+                        <th>Address</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="user : ${users}">
+                        <td th:text="${user.userId}"></td>
+                        <td th:text="${user.firstname}"></td>
+                        <td th:text="${user.lastname}"></td>
+                        <td th:text="${user.email}"></td>
+                        <td th:text="${user.address}"></td>
+                        <td>
+                            <a th:href="@{'/User/edit/' + ${user.userId}}" class="btn edit-user">
+                                <i class="fa fa-edit"></i>
+                            </a>
+                            <a th:href="@{'/User/delete/' + ${user.userId}}" class="btn delete-user" onclick="return confirm('Are you sure?')">
+                                <i class="fa fa-trash"></i>
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+    </main>
+</div>
+</body>
+</html>
