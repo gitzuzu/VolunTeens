@@ -40,4 +40,8 @@ public class OpportunityService {
         Page<Opportunity>opportunities=opportunityRepository.findAll(pageable);
         return opportunities;
     }
+
+    public Opportunity findOpportunity(Long opportunityid){
+        return opportunityRepository.findById(opportunityid).get();
+    }
 }

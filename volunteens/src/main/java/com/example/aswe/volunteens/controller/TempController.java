@@ -8,6 +8,7 @@ import org.springframework.web.servlet.view.RedirectView;
 import com.example.aswe.volunteens.dto.ApplicationDTO;
 import com.example.aswe.volunteens.dto.DonationDTO;
 import com.example.aswe.volunteens.dto.OpportunityDTO;
+import com.example.aswe.volunteens.model.Opportunity;
 import com.example.aswe.volunteens.model.Organization;
 import com.example.aswe.volunteens.model.User;
 import com.example.aswe.volunteens.service.ApplicationService;
@@ -115,6 +116,7 @@ public class TempController {
        applicationDTO.setOpportunityId(opportunityId);
        applicationDTO.setName(user.getFirstname());
        applicationDTO.setEmail(user.getEmail());
+       model.addAttribute("opportunity", opportunityService.findOpportunity(opportunityId));
        model.addAttribute("applicationDTO", applicationDTO);
         return new ModelAndView("volunteer.html");
     
