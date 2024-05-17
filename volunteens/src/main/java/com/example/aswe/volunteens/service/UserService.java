@@ -1,5 +1,7 @@
 package com.example.aswe.volunteens.service;
 
+import java.util.List;
+
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -44,4 +46,9 @@ public class UserService {
         System.out.println(isPassword);
        return isPassword;
     }
+
+    public List<User> findAllUsers() {
+        return userRepositry.findAll();
+    }
+
 }
