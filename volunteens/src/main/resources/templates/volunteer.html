@@ -53,9 +53,9 @@
         <div class="container">
             <div class="row g-5 align-items-center">
                 <div class="col-lg-6 wow fadeIn" data-wow-delay="0.1s">
-                    <div class="d-inline-block rounded-pill bg-secondary text-primary py-1 px-3 mb-3">Become A Volunteer</div>
-                    <h1 class="display-6 mb-5">Join Us in Making a Difference</h1>
-                    <p class="mb-0">Your dedication and commitment as a volunteer can bring about remarkable results. By joining our team, you become an integral part of our mission to create positive change in the community. Thank you for considering becoming a volunteer with us. Together, we can make a meaningful impact!</p>
+                    <div class="d-inline-block rounded-pill bg-secondary text-primary py-1 px-3 mb-3" >Become A Volunteer</div>
+                    <h1 class="display-6 mb-5" th:text="${opportunity.title}"></h1>
+                    <p class="mb-0" th:text="${opportunity.description}"></p>
 
                 </div>
                 <div class="col-lg-6 wow fadeIn" data-wow-delay="0.5s">
