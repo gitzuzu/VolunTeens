@@ -150,7 +150,7 @@ public class TempController {
 
         if (session.getAttribute("org") == null )
         {
-            if( !"admin@gmail.com".equals(user.getEmail()))
+            if( !user.getIsAdmin())
 
                 return new ModelAndView("redirect:/accessDenied");
             

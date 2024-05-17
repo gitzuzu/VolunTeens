@@ -49,7 +49,7 @@
                     <a th:if="${user != null}" href="/opportunities" class="nav-item nav-link">Opportunities</a>
                     <a th:if="${org != null}" href="/postOpportunity" class="nav-item nav-link">Post Opportunity</a>
                     <span th:if="${user != null}">
-                        <a th:if= "${user.email =='admin@gmail.com' }"  href="/postOpportunity" class="nav-item nav-link">Post Opportunity</a>
+                        <a th:if= "${user.isAdmin }"  href="/postOpportunity" class="nav-item nav-link">Post Opportunity</a>
                     </span>
                     
 
