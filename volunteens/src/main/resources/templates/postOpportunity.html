@@ -58,7 +58,7 @@
             </div>
             <div class="col-lg-6 wow fadeIn" data-wow-delay="0.5s">
                 <div class="h-100 bg-secondary p-5">
-                <div class="alert-info" th:if="${message}" th:text="${message}">welcome</div>
+                <div class="alert-info" th:if="${message}" th:text="${message}"></div>
                     <form th:action="@{/postOpportunity}" method="post" th:object="${opportunityDTO}">
                         <div class="row g-3">
                             <div class="col-12">

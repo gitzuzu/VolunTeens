@@ -60,31 +60,38 @@
                 </div>
                 <div class="col-lg-6 wow fadeIn" data-wow-delay="0.5s">
                     <div class="h-100 bg-secondary p-5">
-                        <form>
+                        <div class="alert-info" th:if="${message}" th:text="${message}"></div>
+                        <form th:action="@{/volunteer}" method="POST" th:object="${applicationDTO}" enctype="multipart/form-data">
                             <div class="row g-3">
                                 <div class="col-12">
                                     <div class="form-floating">
-                                        <input type="text" class="form-control bg-light border-0" id="name" placeholder="Your Name">
+                                        <input type="text" class="form-control bg-light border-0"  placeholder="Your Name" th:field="*{name}"  th:errorClass="is-invalid">
+                                        <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="invalid-feedback"></div>
                                         <label for="name">Your Name</label>
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="form-floating">
-                                        <input type="text" class="form-control bg-light border-0" id="name" placeholder="Your Name">
-                                        <label for="name">Your Age</label>
+                                        <input type="text" class="form-control bg-light border-0" placeholder="Your Acadmic Grade" th:field="*{academicGrade}" th:errorClass="is-invalid">
+                                        <div th:if="${#fields.hasErrors('academicGrade')}" th:errors="*{academicGrade}" class="invalid-feedback"></div>
+                                        <label for="name">Your Acadmic Grade</label>
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="form-floating">
-                                        <input type="email" class="form-control bg-light border-0" id="email" placeholder="Your Email">
+                                        <input type="email" class="form-control bg-light border-0" id="email" placeholder="Your Email" th:field="*{email}" th:errorClass="is-invalid">
+                                        <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="invalid-feedback"></div>
                                         <label for="email">Your Email</label>
                                     </div>
                                 </div>
                                 <div class="col-12 mb-3">
                                     <div class="input-group">
-                                        <input type="file" class="form-control d-none" id="inputGroupFile02" accept=".pdf,.doc,.docx">
+                                        <input type="file" class="form-control d-none" id="inputGroupFile02" accept=".pdf" th:field="*{cv}"  th:errorClass="is-invalid">
+                                        <div th:if="${#fields.hasErrors('cv')}" th:errors="*{cv}" class="invalid-feedback"></div>
                                         <label class="input-group-text" for="inputGroupFile02">Upload your CV <i class="bi-cloud-arrow-up ms-auto"></i></label>
+                                        <span id="file-name-display" class="ms-2"></span>
                                     </div>
+                                    <input type="hidden" th:field="*{opportunityId}">
                                 </div>
                                 <div class="col-12">
                                     <button class="btn btn-primary px-5" style="height: 60px;">
@@ -121,6 +128,14 @@
     <script src="assets/owlcarousel/owl.carousel.min.js"></script>
     <script src="assets/parallax/parallax.min.js"></script>
     <script src="js/main.js"></script>
+
+    <script>
+        document.getElementById('inputGroupFile02').addEventListener('change', function() {
+    if (this.files.length > 0) {
+        document.getElementById('file-name-display').textContent = this.files[0].name;
+    }
+});
+    </script>
 </body>
 
 </html>

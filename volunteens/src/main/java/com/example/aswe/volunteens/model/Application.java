@@ -21,8 +21,11 @@ public class Application {
     @Column(name = "state", nullable = false) //accepted, rejected, pending
     private String state;
 
+    @Column(name = "acadamicGrade", nullable = false) 
+    private String acadamicGrade;
+
     @Lob
-    @Column(name = "cv", nullable = false)
+    @Column(name = "cv", nullable = false,columnDefinition="LONGBLOB")
     private byte[] cv;
 
     @ManyToOne
@@ -33,12 +36,14 @@ public class Application {
     @JoinColumn(name = "opportunity_id", nullable = false)
     private Opportunity opportunity;
 
+
     public Application() {
     }
 
-    public Application(Long applicationId, String state, byte[] cv, User user, Opportunity opportunity) {
-        this.applicationId = applicationId;
+    public Application( String state, String acadamicGrade, byte[] cv, User user, Opportunity opportunity) {
+        
         this.state = state;
+        this.acadamicGrade = acadamicGrade;
         this.cv = cv;
         this.user = user;
         this.opportunity = opportunity;
@@ -58,6 +63,14 @@ public class Application {
 
     public void setState(String state) {
         this.state = state;
+    }
+
+    public String getAcadamicGrade() {
+        return this.acadamicGrade;
+    }
+
+    public void setAcadamicGrade(String acadamicGrade) {
+        this.acadamicGrade = acadamicGrade;
     }
 
     public byte[] getCv() {
@@ -94,6 +107,11 @@ public class Application {
         return this;
     }
 
+    public Application acadamicGrade(String acadamicGrade) {
+        setAcadamicGrade(acadamicGrade);
+        return this;
+    }
+
     public Application cv(byte[] cv) {
         setCv(cv);
         return this;
@@ -117,12 +135,12 @@ public class Application {
             return false;
         }
         Application application = (Application) o;
-        return Objects.equals(applicationId, application.applicationId) && Objects.equals(state, application.state) && Objects.equals(cv, application.cv) && Objects.equals(user, application.user) && Objects.equals(opportunity, application.opportunity);
+        return Objects.equals(applicationId, application.applicationId) && Objects.equals(state, application.state) && Objects.equals(acadamicGrade, application.acadamicGrade) && Objects.equals(cv, application.cv) && Objects.equals(user, application.user) && Objects.equals(opportunity, application.opportunity);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(applicationId, state, cv, user, opportunity);
+        return Objects.hash(applicationId, state, acadamicGrade, cv, user, opportunity);
     }
 
     @Override
@@ -130,11 +148,11 @@ public class Application {
         return "{" +
             " applicationId='" + getApplicationId() + "'" +
             ", state='" + getState() + "'" +
+            ", acadamicGrade='" + getAcadamicGrade() + "'" +
             ", cv='" + getCv() + "'" +
             ", user='" + getUser() + "'" +
             ", opportunity='" + getOpportunity() + "'" +
             "}";
     }
-
-    
+   
 }

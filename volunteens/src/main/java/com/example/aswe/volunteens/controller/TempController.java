@@ -5,15 +5,19 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
+import com.example.aswe.volunteens.dto.ApplicationDTO;
 import com.example.aswe.volunteens.dto.DonationDTO;
 import com.example.aswe.volunteens.dto.OpportunityDTO;
 import com.example.aswe.volunteens.model.Organization;
 import com.example.aswe.volunteens.model.User;
+import com.example.aswe.volunteens.service.ApplicationService;
 import com.example.aswe.volunteens.service.DonationService;
 import com.example.aswe.volunteens.service.OpportunityService;
 
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
+
+import java.io.IOException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -36,6 +40,9 @@ public class TempController {
 
     @Autowired
     private OpportunityService opportunityService;
+
+    @Autowired
+    private ApplicationService applicationService;
 
     @GetMapping("aboutus")
     public ModelAndView about() {
@@ -96,14 +103,42 @@ public class TempController {
         return new ModelAndView("contactus.html");
     }
 
+   
     @GetMapping("volunteer")
-    public ModelAndView volunteer(HttpSession session) {
+    public ModelAndView volunteer(HttpSession session ,@RequestParam ("opportunityId") Long opportunityId
+    ,@ModelAttribute ApplicationDTO applicationDTO,Model model) {
         if (session.getAttribute("user") == null) {
            
             return new ModelAndView("redirect:/accessDenied");
         }
+        User user = (User) session.getAttribute("user");
+       applicationDTO.setOpportunityId(opportunityId);
+       applicationDTO.setName(user.getFirstname());
+       applicationDTO.setEmail(user.getEmail());
+       model.addAttribute("applicationDTO", applicationDTO);
         return new ModelAndView("volunteer.html");
     
+    }
+    @PostMapping("volunteer")
+    public ModelAndView saveApplication(@Valid @ModelAttribute ApplicationDTO applicationDTO, BindingResult result, RedirectAttributes ra) throws IOException {
+        System.out.println(result.getAllErrors());
+    
+        if (applicationDTO.getCv().isEmpty()) {
+            result.addError(new FieldError("applicationDTO", "cv", "Please provide a file"));
+        } else if (!applicationDTO.getCv().getContentType().equals("application/pdf")) {
+            result.addError(new FieldError("applicationDTO", "cv", "Only PDF files are allowed"));
+        }
+    
+        if (result.hasErrors()) {
+            System.out.println(result.hasErrors());
+            return new ModelAndView("volunteer.html");
+        }
+    
+        applicationService.saveApplication(applicationDTO);
+        ra.addFlashAttribute("message", "Success! Your application has been sent!");
+        
+        // Ensure the opportunityId is included in the redirect
+        return new ModelAndView("redirect:/volunteer?opportunityId=" + applicationDTO.getOpportunityId());
     }
 
     @GetMapping("postOpportunity")
