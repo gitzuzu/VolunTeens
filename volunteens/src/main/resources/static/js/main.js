@@ -18,6 +18,8 @@
 
     if (isLoginPage || isSignupPage||isorgSignupPage) {
         $('.fixed-top').addClass('bg-dark shadow');
+        $('.sign-up-btn').hide();
+        $('.login-model').hide();
     }
 
     else {

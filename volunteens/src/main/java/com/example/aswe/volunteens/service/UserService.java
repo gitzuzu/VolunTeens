@@ -27,7 +27,9 @@ public class UserService {
             userDTO.getLastname(),
             userDTO.getEmail(),
             userDTO.getPassword(),
-            userDTO.getAddress()
+            userDTO.getAddress(),
+            false
+            
         );
         String encoddedPassword = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt(12));
         user.setPassword(encoddedPassword);
@@ -55,4 +57,15 @@ public class UserService {
         userRepositry.deleteById(userId);
     }
 
+    public void toggleAdmin(Long userId) {
+        User optionalUser = userRepositry.findById(userId).get();
+
+        if (optionalUser != null) {
+            optionalUser.setIsAdmin(!optionalUser.getIsAdmin());
+            userRepositry.save(optionalUser);
+        } 
+        else {
+            throw new RuntimeException("User not found with ID: " + userId);
+        }
+    }
 }

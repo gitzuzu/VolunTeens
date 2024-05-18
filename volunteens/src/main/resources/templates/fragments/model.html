@@ -30,7 +30,7 @@
                                 <button type="button" class="btn btn-secondary" onclick="location.href='/registerOrg';">Register as Organization</button>
                             </div>
                         </div>
-                        <p class="login">Already have an account?
+                        <p class="login-model">Already have an account?
                             <a href="/login" class="login-link">Login</a>
                         </p>
                     </div>
@@ -40,10 +40,10 @@
                             <div class="col text-center">
                                 <img src="/images/profile.png" alt="profile Icon" class="img-fluid mb-1" style="max-width: 100px;">
                                 <span th:if="${user != null}">
-                                    <p th:if="${user.email == 'admin@gmail.com'}">Admin Dashboard</p>
-                            <p th:unless="${user.email == 'admin@gmail.com'}">Edit Profile</p>
-                            <button type="button" class="btn btn-primary" th:if="${user.email != 'admin@gmail.com'}" onclick="location.href='/editProfile';">Edit Profile</button>
-                            <button type="button" class="btn btn-primary" th:if="${user.email == 'admin@gmail.com'}" onclick="location.href='/dashboard';">Dashboard</button>
+                                    <p th:if="${user.isAdmin}">Admin Dashboard</p>
+                            <p th:unless="${user.isAdmin}">Edit Profile</p>
+                            <button type="button" class="btn btn-primary" th:if="${!user.isAdmin}" onclick="location.href='/editProfile';">Edit Profile</button>
+                            <button type="button" class="btn btn-primary" th:if="${user.isAdmin}" onclick="location.href='/dashboard';">Dashboard</button>
                                 </span>
                                 
                               <span th:if="${org != null}">
