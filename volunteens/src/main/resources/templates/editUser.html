@@ -16,6 +16,7 @@
     <main>
         <h1>Edit User</h1>
         <div class="addprod">
+            <div class="alert-info" th:if="${message}" th:text="${message}"></div>
             <form th:action="@{/User/update}" th:object="${user}" method="POST">
                 <input type="hidden" th:field="*{userId}" />
                 <h2 class="title">Update User</h2>

@@ -53,6 +53,10 @@ public class UserService {
         return userRepositry.findAll();
     }
 
+    public User findUser(Long userId ){
+        return userRepositry.findById(userId).get();
+    }
+
     public void deleteUser(Long userId) {
         userRepositry.deleteById(userId);
     }
@@ -67,5 +71,21 @@ public class UserService {
         else {
             throw new RuntimeException("User not found with ID: " + userId);
         }
+    }
+
+    public void updateUser(UserDTO userDTO){
+    User existingUser = userRepositry.findById(userDTO.getUserId()).get();
+    existingUser.setFirstname(userDTO.getFirstname());
+    existingUser.setLastname(userDTO.getLastname());
+    existingUser.setEmail(userDTO.getEmail());
+    existingUser.setAddress(userDTO.getAddress());
+    if (!userDTO.getPassword().isEmpty()) {
+        String encoddedPassword = BCrypt.hashpw(userDTO.getPassword(), BCrypt.gensalt(12));
+        existingUser.setPassword(encoddedPassword);
+    }
+    else{
+        existingUser.setPassword(userDTO.getPassword());
+    }
+    userRepositry.save(existingUser);
     }
 }
