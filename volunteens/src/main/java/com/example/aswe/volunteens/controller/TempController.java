@@ -94,10 +94,7 @@ public class TempController {
         return new ModelAndView("service.html");
     }
 
-    @GetMapping("testimonial")
-    public ModelAndView testimonial() {
-        return new ModelAndView("testimonial.html");
-    }
+    
     
     @GetMapping("contactus")
     public ModelAndView contactus() {
