@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+    <meta charset="UTF-8">
+    <title>Organization Management</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp" />
+    <link rel="stylesheet" href="/css/dashboard.css" />
+    <link rel="stylesheet" href="css/editdash.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+</head>
+<body>
+    <div class="container">
+        <div th:replace="~{partials/dashboardsidebar}"></div>
+
+        <main class="table">
+            <section class="theader">
+                <h1>Organization Management</h1>
+                <div class="search">
+                    <input type="search" placeholder="Search existing organizations...">
+                </div>
+            </section>
+            <section class="table_body">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Organization ID</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Description</th>
+                            <th>Contact Info</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="organization : ${organizations}">
+                            <td th:text="${organization.organizationId}"></td>
+                            <td th:text="${organization.organizationName}"></td>
+                            <td th:text="${organization.email}"></td>
+                            <td th:text="${organization.organizationDescrp}"></td>
+                            <td th:text="${organization.contactInfo}"></td>
+                            <td th:text="${organization.status}" th:id="'status-' + ${organization.organizationId}"></td>
+                            <td class="action-buttons">
+                                <div th:if="${organization.status != 'approved'}">
+                                    <button class="btn-approve" th:id="'approve-btn-' + ${organization.organizationId}"
+                                            th:text="'Approve'" th:onclick="'approveOrganization(' + ${organization.organizationId} + ')'">
+                                    </button>
+                                </div>
+                                <a th:href="@{'/Organization/edit/' + ${organization.organizationId}}">Edit</a>
+                                <a th:href="@{'/Organization/delete/' + ${organization.organizationId}}" onclick="return confirm('Are you sure you want to delete this organization?')">Delete</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        function approveOrganization(organizationId) {
+            fetch(`/updateStatus?organizationId=${organizationId}&newStatus=approved`, {
+                method: 'POST',
+            })
+            .then(response => {
+                if (response.ok) {
+                    document.getElementById(`approve-btn-${organizationId}`).style.display = 'none';
+                    const statusCell = document.querySelector(`#status-${organizationId}`);
+                    if (statusCell) {
+                        statusCell.textContent = 'approved';
+                    }
+                } else {
+                    alert('Failed to approve the organization.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+    </script>
+</body>
+</html>

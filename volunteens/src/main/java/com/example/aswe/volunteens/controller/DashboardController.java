@@ -86,34 +86,29 @@ public class DashboardController {
     public ModelAndView deleteUser(@PathVariable Long userId) {
         userService.deleteUser(userId);
         return new ModelAndView("redirect:/users");
-
-     @GetMapping("/organizations")
-    public ModelAndView getorganizations(HttpSession session, Model model){ {
+    }
+    @GetMapping("/organizations")
+    public ModelAndView getorganizations(HttpSession session, Model model) {
         User user = (User) session.getAttribute("user");
-        if (user != null ){
-            if(user.getIsAdmin()) 
-             { 
-                List<Organization> organizations = organizationRepository.findAll();
-                model.addAttribute("organizations", organizations);
-                return new ModelAndView("/organizations");
-            }
-       }
-       return new ModelAndView("redirect:/accessDenied");
-       
-    } }
+        if (user != null && user.getIsAdmin()) {
+            List<Organization> organizations = organizationRepository.findAll();
+            model.addAttribute("organizations", organizations);
+            return new ModelAndView("orgdash");
+        }
+        return new ModelAndView("redirect:/accessDenied");
+    }
+    
     
     @PostMapping("/updateStatus")
     public String updateStatus(@RequestParam Long organizationId, @RequestParam String newStatus) {
-        Organization optionalOrganization = organizationRepository.findById(organizationId).get();
-        if (optionalOrganization != null) {
-            optionalOrganization.setStatus(newStatus);
-            organizationRepository.save(optionalOrganization);
-            return "redirect:/dashboard/organizations";
-        } else {
-            // Handle the case where the organization is not found
-            return "redirect:/dashboard/organizations?error=OrganizationNotFound";
-        }
+        Organization organization = organizationRepository.findById(organizationId)
+            .orElseThrow(() -> new IllegalArgumentException("Invalid organization Id:" + organizationId));
+        organization.setStatus(newStatus);
+        organizationRepository.save(organization);
+        return "redirect:/organizations"; 
     }
+    
+
     @PostMapping("/User/toggleAdmin/{id}")
     public String toggleAdmin(@PathVariable Long id) {
         userService.toggleAdmin(id); // Implement this method in your UserService to toggle the admin status
