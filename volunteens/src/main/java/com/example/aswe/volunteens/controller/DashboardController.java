@@ -6,6 +6,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -68,6 +69,12 @@ public class DashboardController {
         }
 
         userService.saveUser(userDTO);
+        return new ModelAndView("redirect:/users");
+    }
+
+    @GetMapping("/User/delete/{userId}")
+    public ModelAndView deleteUser(@PathVariable Long userId) {
+        userService.deleteUser(userId);
         return new ModelAndView("redirect:/users");
     }
 }
