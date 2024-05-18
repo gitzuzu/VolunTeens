@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submit a Testimonial</title>
+    <link rel="stylesheet" href="/css/review.css">
+</head>
+<body>
+<div class="wrapper">
+    <h3>Submit a Testimonial</h3>
+    <form th:action="@{/testimonial}" th:object="${testimonial}" method="post">
+        <input type="text" th:field="*{name}" placeholder="Your Name" required><br>
+        <input type="text" th:field="*{role}" placeholder="Your Role" required><br>
+        <textarea th:field="*{message}" cols="30" rows="5" placeholder="Your Testimonial..." required></textarea><br>
+        <div class="btn-group">
+            <button type="submit" class="btn submit">Submit</button>
+        </div>
+    </form>
+</div>
+</body>
+</html>
