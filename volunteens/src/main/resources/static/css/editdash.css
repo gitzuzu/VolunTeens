@@ -338,3 +338,30 @@ main.table {
 
 
 
+.btn-approve {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 12px;
+    margin: 0 4px; /* Adjusted margin */
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.btn-approve:hover {
+    background-color: #218838;
+}
+
+.action-buttons {
+    display: flex;
+    align-items: center;
+}
+
+.action-buttons a, .action-buttons button {
+    margin: 0 4px;
+}

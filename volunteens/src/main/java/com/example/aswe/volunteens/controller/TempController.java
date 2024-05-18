@@ -144,25 +144,21 @@ public class TempController {
     }
 
     @GetMapping("postOpportunity")
-    public ModelAndView postOpportunity(HttpSession session,@ModelAttribute OpportunityDTO opportunityDTO,Model model) {
+    public ModelAndView postOpportunity(HttpSession session, @ModelAttribute OpportunityDTO opportunityDTO, Model model) {
         User user = (User) session.getAttribute("user");
         Organization organization = (Organization) session.getAttribute("org");
 
-        if (session.getAttribute("org") == null )
-        {
-            if( !user.getIsAdmin())
-
-                return new ModelAndView("redirect:/accessDenied");
-            
-        }
-           
-        if (organization != null && !"true".equalsIgnoreCase(organization.getStatus())) {
-            return new ModelAndView("redirect:/accessDenied");
+        if (user != null && user.getIsAdmin()) {
+            model.addAttribute("opportunityDTO", opportunityDTO);
+            return new ModelAndView("postOpportunity.html");
         }
 
-        model.addAttribute("opportunityDTO", opportunityDTO);
-        return new ModelAndView("postOpportunity.html");
-    
+        if (organization != null && "approved".equalsIgnoreCase(organization.getStatus())) {
+            model.addAttribute("opportunityDTO", opportunityDTO);
+            return new ModelAndView("postOpportunity.html");
+        }
+
+        return new ModelAndView("redirect:/accessDenied");
     }
 
     @PostMapping("postOpportunity")
