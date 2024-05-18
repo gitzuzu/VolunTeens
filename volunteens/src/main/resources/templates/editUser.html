@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit User</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp" />
+    <link rel="stylesheet" th:href="@{/css/dashboard.css}" />
+    <link rel="stylesheet" th:href="@{/css/editdash.css}" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+<div class="container">
+    <div th:replace="~{partials/dashboardsidebar}"></div>
+
+    <main>
+        <h1>Edit User</h1>
+        <div class="addprod">
+            <form th:action="@{/User/update}" th:object="${user}" method="POST">
+                <input type="hidden" th:field="*{userId}" />
+                <h2 class="title">Update User</h2>
+                <div class="user-container" style="display: block;">
+                    <div class="input">
+                        <label for="firstname">First Name</label>
+                        <input type="text" id="firstname" th:field="*{firstname}" required>
+                    </div>
+                    <div class="input">
+                        <label for="lastname">Last Name</label>
+                        <input type="text" id="lastname" th:field="*{lastname}" required>
+                    </div>
+                    <div class="input">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" th:field="*{email}" required>
+                    </div>
+                    <div class="input">
+                        <label for="address">Address</label>
+                        <input type="text" id="address" th:field="*{address}" required>
+                    </div>
+                    <div class="input">
+                        <label for="password">Password (leave blank if unchanged)</label>
+                        <input type="password" id="password" th:field="*{password}">
+                    </div>
+                    <button type="submit" id="add">Update</button>
+                    <a th:href="@{/users}"><button type="button">Cancel</button></a>
+                </div>
+            </form>
+        </div>
+    </main>
+</div>
+</body>
+</html>

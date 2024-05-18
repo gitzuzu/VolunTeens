@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <title>User Management</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp" />
-
     <link rel="stylesheet" href="/css/dashboard.css" />
     <link rel="stylesheet" href="css/editdash.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -51,7 +50,7 @@
                             <a th:href="@{'/User/edit/' + ${user.userId}}" class="btn edit-user">
                                 <i class="fa fa-edit"></i>
                             </a>
-                            <a th:href="@{'/User/delete/' + ${user.userId}}" class="btn delete-user" onclick="return confirm('Are you sure?')">
+                            <a th:href="@{'/User/delete/' + ${user.userId}}" class="btn delete-user" onclick="return confirm('Are you sure you want to delete this user?')">
                                 <i class="fa fa-trash"></i>
                             </a>
                             <form th:action="@{/User/toggleAdmin/{id}(id=${user.userId})}" method="post" style="display:inline;">
@@ -60,6 +59,8 @@
                                 </button>
                             </form>
                         </td>
+                            
+                        
                     </tr>
                 </tbody>
             </table>

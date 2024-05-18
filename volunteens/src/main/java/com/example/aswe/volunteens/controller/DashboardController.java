@@ -82,6 +82,11 @@ public class DashboardController {
         return new ModelAndView("redirect:/users");
     }
 
+    @GetMapping("/User/delete/{userId}")
+    public ModelAndView deleteUser(@PathVariable Long userId) {
+        userService.deleteUser(userId);
+        return new ModelAndView("redirect:/users");
+
      @GetMapping("/organizations")
     public ModelAndView getorganizations(HttpSession session, Model model){ {
         User user = (User) session.getAttribute("user");

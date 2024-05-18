@@ -53,6 +53,10 @@ public class UserService {
         return userRepositry.findAll();
     }
 
+    public void deleteUser(Long userId) {
+        userRepositry.deleteById(userId);
+    }
+
     public void toggleAdmin(Long userId) {
         User optionalUser = userRepositry.findById(userId).get();
 
