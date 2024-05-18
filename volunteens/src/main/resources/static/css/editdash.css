@@ -365,3 +365,13 @@ main.table {
 .action-buttons a, .action-buttons button {
     margin: 0 4px;
 }
+
+.alert-info{
+    margin-top: 1em;
+    font-size: 22px;
+    background: antiquewhite;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-block: 15px
+}
