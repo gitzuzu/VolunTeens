@@ -42,7 +42,7 @@
                                 <span th:if="${user != null}">
                                     <p th:if="${user.isAdmin}">Admin Dashboard</p>
                             <p th:unless="${user.isAdmin}">Edit Profile</p>
-                            <button type="button" class="btn btn-primary" th:if="${!user.isAdmin}" onclick="location.href='/editProfile';">Edit Profile</button>
+                            <button type="button" class="btn btn-primary" th:if="${!user.isAdmin}" onclick="location.href='/editUserProfile';">Edit Profile</button>
                             <button type="button" class="btn btn-primary" th:if="${user.isAdmin}" onclick="location.href='/dashboard';">Dashboard</button>
                                 </span>
                                 

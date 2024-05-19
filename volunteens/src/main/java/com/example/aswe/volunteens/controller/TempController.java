@@ -8,12 +8,14 @@ import org.springframework.web.servlet.view.RedirectView;
 import com.example.aswe.volunteens.dto.ApplicationDTO;
 import com.example.aswe.volunteens.dto.DonationDTO;
 import com.example.aswe.volunteens.dto.OpportunityDTO;
+import com.example.aswe.volunteens.dto.UserDTO;
 import com.example.aswe.volunteens.model.Opportunity;
 import com.example.aswe.volunteens.model.Organization;
 import com.example.aswe.volunteens.model.User;
 import com.example.aswe.volunteens.service.ApplicationService;
 import com.example.aswe.volunteens.service.DonationService;
 import com.example.aswe.volunteens.service.OpportunityService;
+import com.example.aswe.volunteens.service.UserService;
 
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
@@ -30,7 +32,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+
 
 
 
@@ -45,9 +47,24 @@ public class TempController {
     @Autowired
     private ApplicationService applicationService;
 
+    @Autowired 
+    private UserService userService;
+
     @GetMapping("editUserProfile")
-    public ModelAndView editUserProfile() {
+    public ModelAndView editUserProfile(HttpSession session, Model model) {
+        if (session.getAttribute("user") == null) {
+           
+            return new ModelAndView("redirect:/accessDenied");
+        }
+        model.addAttribute("userDTO",(User)session.getAttribute("user"));
         return new ModelAndView("editUserProfile.html");
+    }
+
+    @PostMapping("updateUser")
+    public ModelAndView saveUserProfile(@ModelAttribute UserDTO userDTO,RedirectAttributes ra,HttpSession session){
+        userService.updateUserProfile(userDTO,session);
+        ra.addFlashAttribute("message","Success! your profile updated");
+        return new ModelAndView("redirect:/editUserProfile");
     }
     
     @GetMapping("editOpportunity")
