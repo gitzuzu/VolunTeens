@@ -148,4 +148,10 @@ public class DashboardController {
         return "redirect:/reports";
     }
 
+    @PostMapping("/testimonials/approve/{id}")
+    public String approveTestimonial(@PathVariable Long id) {
+        testimonialService.approveTestimonial(id);
+        return "redirect:/reports";
+    }
+
 }

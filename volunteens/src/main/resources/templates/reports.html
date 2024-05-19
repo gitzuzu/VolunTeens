@@ -28,6 +28,12 @@
                                     <span th:text="${testimonial.role}"></span>
                                 </div>
                                 <p class="rev" th:text="${testimonial.message}"></p>
+                                
+                                <form th:if="${!testimonial.approved}" th:action="@{/testimonials/approve/{id}(id=${testimonial.id})}" method="post">
+                                    <button class="btn-approve" style="margin-top: 3px;" type="submit">Approve</button>
+                                </form>
+                                
+
                                 <form th:action="@{/delete-testimonial}" method="post">
                                     <input type="hidden" name="id" th:value="${testimonial.id}" />
                                     <button class="delete-btn" type="submit">Delete</button>
