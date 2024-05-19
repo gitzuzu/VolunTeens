@@ -44,10 +44,20 @@ public class TempController {
 
     @Autowired
     private ApplicationService applicationService;
+
+    @GetMapping("editUserProfile")
+    public ModelAndView editUserProfile() {
+        return new ModelAndView("editUserProfile.html");
+    }
+    
+    @GetMapping("editOpportunity")
+    public ModelAndView editOpportunity() {
+        return new ModelAndView("editOpportunity.html");
+    }
     
     @GetMapping("editProfile")
     public ModelAndView editProfile() {
-        return new ModelAndView("editProfile.html");
+        return new ModelAndView("editOrgProfile.html");
     }
 
 
