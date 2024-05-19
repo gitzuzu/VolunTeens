@@ -13,25 +13,25 @@
         </div>
     </div>
     <div class="sidebar">
-        <a href="/dashboard" class="active"><span class="material-symbols-sharp">dashboard</span>
+        <a href="/dashboard" class="sidebar-item"><span class="material-symbols-sharp">dashboard</span>
             <h3>Dashboard</h3>
         </a>
-        <a href="/users"><span class="material-symbols-sharp">person</span>
+        <a href="/users" class="sidebar-item"><span class="material-symbols-sharp">person</span>
             <h3>Users</h3>
         </a>
-        <a href="/organizations"><span class="material-symbols-sharp">receipt_long</span>
+        <a href="/organizations" class="sidebar-item"><span class="material-symbols-sharp">receipt_long</span>
             <h3>Organizations</h3>
         </a>
         <!-- <a href=""><span class="material-symbols-sharp">insights</span>
             <h3>Analytics</h3>
         </a> -->
-        <a href=""><span class="material-symbols-sharp">chat</span>
+        <a href="" ><span class="material-symbols-sharp">chat</span>
             <h3>Chat</h3><span class="message-count">3</span>
         </a>
-        <a href=""><span class="material-symbols-sharp">inventory</span>
+        <a href="/Opportunities" class="sidebar-item"><span class="material-symbols-sharp">inventory</span>
             <h3>Opportunities</h3>
         </a>
-        <a href="/reports"><span class="material-symbols-sharp">report</span>
+        <a href="/reports" class="sidebar-item"><span class="material-symbols-sharp">report</span>
             <h3>Reports</h3>
         </a>
         <a href=""><span class="material-symbols-sharp">Settings</span>
@@ -47,3 +47,12 @@
 
 
 
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var url = window.location.pathname;
+        var activeLink = document.querySelector('.sidebar-item[href="' + url + '"]');
+        if (activeLink) {
+            activeLink.classList.add('active');
+        }
+    });
+</script>
