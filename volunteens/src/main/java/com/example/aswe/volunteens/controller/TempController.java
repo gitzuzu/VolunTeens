@@ -91,7 +91,7 @@ public class TempController {
             return new ModelAndView("redirect:/accessDenied");
         }
         Pageable pageable = PageRequest.of(page, size);
-        model.addAttribute("opportunitiesPage", opportunityService.allOpportunities(pageable));
+        model.addAttribute("opportunitiesPage", opportunityService.allApprovedOpportunities(pageable));
         return new ModelAndView("opportunities.html");
     }
 

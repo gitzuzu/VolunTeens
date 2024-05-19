@@ -18,10 +18,12 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.aswe.volunteens.dto.UserDTO;
+import com.example.aswe.volunteens.model.Opportunity;
 import com.example.aswe.volunteens.model.Organization;
 import com.example.aswe.volunteens.model.Testimonial;
 import com.example.aswe.volunteens.model.User;
 import com.example.aswe.volunteens.respository.OrganizationRepository;
+import com.example.aswe.volunteens.service.OpportunityService;
 import com.example.aswe.volunteens.service.TestimonialService;
 import com.example.aswe.volunteens.service.UserService;
 
@@ -40,6 +42,9 @@ public class DashboardController {
 
      @Autowired
     private TestimonialService testimonialService;
+
+    @Autowired
+    private OpportunityService opportunityService;
 
     @GetMapping("dashboard")
     public ModelAndView dashboard(HttpSession session) {
@@ -135,7 +140,25 @@ public class DashboardController {
         userService.toggleAdmin(id); // Implement this method in your UserService to toggle the admin status
         return "redirect:/users"; // Redirect back to the users page
     }
+    @GetMapping("/Opportunity")
+    public ModelAndView opportunity(HttpSession session,Model model){
+        User user = (User) session.getAttribute("user");
+        if (user != null && user.getIsAdmin()) {
+           
+            model.addAttribute("opportunities", opportunityService.allOpportunities());
+            return new ModelAndView("Opportunitydash");
+        }
+        
+        return new ModelAndView("redirect:/accessDenied");
+    }
 
+    
+    @PostMapping("/updateOpportunityStatus")
+    public String updateOpportunityStatus(@RequestParam Long opportunityId, @RequestParam String newStatus) {
+       opportunityService.updateOpportunityStatus(opportunityId, newStatus);
+        return "redirect:/Opportunity";
+    }
+       
     @GetMapping("/reports")
     public String showReports(Model model) {
         List<Testimonial> testimonials = testimonialService.getAllTestimonials();

@@ -11,5 +11,5 @@ import com.example.aswe.volunteens.model.Opportunity;
 
 public interface OpportunityRepository extends JpaRepository<Opportunity,Long>{
     boolean existsByTitle(String title);
-    Page<Opportunity> findAll(Pageable pageable);
+    Page<Opportunity> findByStatus(String status, Pageable pageable);
 }

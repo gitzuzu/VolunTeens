@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+    <meta charset="UTF-8">
+    <title>Organization Management</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp" />
+    <link rel="stylesheet" href="/css/dashboard.css" />
+    <link rel="stylesheet" href="css/editdash.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+</head>
+<body>
+    <div class="container">
+        <div th:replace="~{partials/dashboardsidebar}"></div>
+
+        <main class="table">
+            <section class="theader">
+                <h1>Opportunity Management</h1>
+                <div class="search">
+                    <input type="search" placeholder="Search existing opportunities...">
+                </div>
+            </section>
+            <section class="table_body">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Opportunity ID</th>
+                            <th>Title</th>
+                            <th>Description</th>
+                            <th>Location</th>
+                            <th>Requirements</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="opportunity : ${opportunities}">
+                            <td th:text="${opportunity.opportunityId}"></td>
+                            <td th:text="${opportunity.title}"></td>
+                            <td th:text="${opportunity.description}"></td>
+                            <td th:text="${opportunity.location}"></td>
+                            <td th:text="${opportunity.requirements}"></td>
+                            <td th:text="${opportunity.status}" th:id="'status-' + ${opportunity.opportunityId}"></td>
+                            <td>
+                                <select th:id="'status-select-' + ${opportunity.opportunityId}"
+                                        th:onChange="'updateOpportunityStatus(' + ${opportunity.opportunityId} + ', this.value)'">
+                                        <option value="default" disabled selected>Action</option>
+                                    <option th:value="approved" >Approve</option>
+                                    <option th:value="rejected">Reject</option>
+                                </select>
+                            </td>
+                            <td class="action-buttons">
+                                <a th:href="@{'/Opportunities/edit/' + ${opportunity.opportunityId}}">Edit</a>
+                                <a th:href="@{'/Opportunities/delete/' + ${opportunity.opportunityId}}" onclick="return confirm('Are you sure you want to delete this opportunity?')">Delete</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+        </main>
+    </div>
+
+    <!-- <script>
+        function approveOpportunity(opportunityId) {
+            fetch(`/updateOpportunityStatus?opportunityId=${opportunityId}&newStatus=approved`, {
+                method: 'POST',
+            })
+            .then(response => {
+                if (response.ok) {
+                    document.getElementById(`approve-btn-${opportunityId}`).style.display = 'none';
+                    const statusCell = document.getElementById(`status-${opportunityId}`);
+                    if (statusCell) {
+                        statusCell.textContent = 'approved';
+                    }
+                } else {
+                    alert('Failed to approve the opportunity.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+    
+        function rejectOpportunity(opportunityId) {
+            fetch(`/updateOpportunityStatus?opportunityId=${opportunityId}&newStatus=rejected`, {
+                method: 'POST',
+            })
+            .then(response => {
+                if (response.ok) {
+                    document.getElementById(`delete-btn-${opportunityId}`).style.display = 'none';
+                    const statusCell = document.getElementById(`status-${opportunityId}`);
+                    if (statusCell) {
+                        statusCell.textContent = 'rejected';
+                    }
+                } else {
+                    alert('Failed to reject the opportunity.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+    </script> -->
+
+        <script>
+            function updateOpportunityStatus(opportunityId, newStatus) {
+                fetch(`/updateOpportunityStatus?opportunityId=${opportunityId}&newStatus=${newStatus}`, {
+                    method: 'POST',
+                })
+                .then(response => {
+                    if (response.ok) {
+                        
+                        const statusCell = document.getElementById(`status-${opportunityId}`);
+                        if (statusCell) {
+                            statusCell.textContent = newStatus;
+                           
+                        }
+                       
+                    } else {
+                        alert('Failed to reject the opportunity.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Error updating status.');
+                });
+            }
+        </script>
+    
+    
+</body>
+</html>
