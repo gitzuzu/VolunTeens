@@ -19,14 +19,15 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.aswe.volunteens.dto.UserDTO;
 import com.example.aswe.volunteens.model.Organization;
+import com.example.aswe.volunteens.model.Testimonial;
 import com.example.aswe.volunteens.model.User;
 import com.example.aswe.volunteens.respository.OrganizationRepository;
+import com.example.aswe.volunteens.service.TestimonialService;
 import com.example.aswe.volunteens.service.UserService;
 
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.RequestBody;
-
 
 @Controller
 
@@ -36,6 +37,9 @@ public class DashboardController {
 
     @Autowired
     private UserService userService;
+
+     @Autowired
+    private TestimonialService testimonialService;
 
     @GetMapping("dashboard")
     public ModelAndView dashboard(HttpSession session) {
@@ -67,11 +71,11 @@ public class DashboardController {
     @PostMapping("/User/AddUser")
     public ModelAndView addUser(@Valid @ModelAttribute("userDTO") UserDTO userDTO, BindingResult bindingResult) {
         ModelAndView modelAndView = new ModelAndView("addUser");
-        
+
         if (bindingResult.hasErrors()) {
             return modelAndView;
         }
-        
+
         if (userService.EmailExist(userDTO.getEmail())) {
             bindingResult.addError(new FieldError("userDTO", "email", "Email already exists"));
             return modelAndView;
@@ -93,20 +97,19 @@ public class DashboardController {
     }
 
     @GetMapping("/User/edit/{userId}")
-    public ModelAndView editUser(Model model,@PathVariable ("userId") Long userId) {
-        model.addAttribute("user",  userService.findUser(userId));
+    public ModelAndView editUser(Model model, @PathVariable("userId") Long userId) {
+        model.addAttribute("user", userService.findUser(userId));
         return new ModelAndView("editUser.html");
     }
 
     @PostMapping("/User/update")
-    public ModelAndView saveEditUser(@ModelAttribute UserDTO userDTO,RedirectAttributes ra) {
-     
-         userService.updateUser(userDTO);
-         ra.addFlashAttribute("message", "Success! Your data is updated!");
-        return new ModelAndView("redirect:/User/edit/"+userDTO.getUserId());
+    public ModelAndView saveEditUser(@ModelAttribute UserDTO userDTO, RedirectAttributes ra) {
+
+        userService.updateUser(userDTO);
+        ra.addFlashAttribute("message", "Success! Your data is updated!");
+        return new ModelAndView("redirect:/User/edit/" + userDTO.getUserId());
     }
-    
-    
+
     @GetMapping("/organizations")
     public ModelAndView getorganizations(HttpSession session, Model model) {
         User user = (User) session.getAttribute("user");
@@ -117,21 +120,32 @@ public class DashboardController {
         }
         return new ModelAndView("redirect:/accessDenied");
     }
-    
-    
+
     @PostMapping("/updateStatus")
     public String updateStatus(@RequestParam Long organizationId, @RequestParam String newStatus) {
         Organization organization = organizationRepository.findById(organizationId)
-            .orElseThrow(() -> new IllegalArgumentException("Invalid organization Id:" + organizationId));
+                .orElseThrow(() -> new IllegalArgumentException("Invalid organization Id:" + organizationId));
         organization.setStatus(newStatus);
         organizationRepository.save(organization);
-        return "redirect:/organizations"; 
+        return "redirect:/organizations";
     }
-    
 
     @PostMapping("/User/toggleAdmin/{id}")
     public String toggleAdmin(@PathVariable Long id) {
         userService.toggleAdmin(id); // Implement this method in your UserService to toggle the admin status
         return "redirect:/users"; // Redirect back to the users page
     }
+
+    @GetMapping("/reports")
+    public String showReports(Model model) {
+        List<Testimonial> testimonials = testimonialService.getAllTestimonials();
+        model.addAttribute("testimonials", testimonials);
+        return "reports";
+    }
+    @PostMapping("/delete-testimonial")
+    public String deleteTestimonial(@RequestParam("id") Long id, Model model) {
+        testimonialService.deleteTestimonialById(id);
+        return "redirect:/reports";
+    }
+
 }

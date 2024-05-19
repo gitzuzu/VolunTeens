@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Reports</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp" />
+    <link rel="stylesheet" href="/css/dashboard.css" />
+    <link rel="stylesheet" href="/css/editdash.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<body>
+    <div class="container">
+        <div th:replace="~{partials/dashboardsidebar}"></div>
+
+        <div class="content">
+            <main class="table">
+                <section class="theader">
+                    <h1>Reports</h1>
+                </section>
+                <section class="testimonials">
+                    <div th:if="${testimonials}">
+                        <div th:each="testimonial : ${testimonials}" class="testimonial">
+                            <div class="content">
+                                <h4 th:text="${testimonial.name}"></h4>
+                                <div class="role">
+                                    <span th:text="${testimonial.role}"></span>
+                                </div>
+                                <p class="rev" th:text="${testimonial.message}"></p>
+                                <form th:action="@{/delete-testimonial}" method="post">
+                                    <input type="hidden" name="id" th:value="${testimonial.id}" />
+                                    <button class="delete-btn" type="submit">Delete</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div th:unless="${testimonials}">
+                        <p>No testimonials found.</p>
+                    </div>
+                </section>
+            </main>
+        </div>
+    </div>
+</body>
+
+</html>
