@@ -20,4 +20,8 @@ public class TestimonialService {
     public Testimonial saveTestimonial(Testimonial testimonial) {
         return testimonialRepository.save(testimonial);
     }
+
+    public void deleteTestimonialById(Long id) {
+        testimonialRepository.deleteById(id);
+    }
 }
