@@ -2,6 +2,8 @@ package com.example.aswe.volunteens.service;
 
 
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -35,12 +37,27 @@ public class OpportunityService {
         return this.opportunityRepository.existsByTitle(title);
     }
 
-    public Page allOpportunities(Pageable pageable){
-        Page<Opportunity>opportunities=opportunityRepository.findAll(pageable);
+    public Page allApprovedOpportunities(Pageable pageable){
+        Page<Opportunity>opportunities= opportunityRepository.findByStatus("approved", pageable);
+        System.out.println(opportunities);
         return opportunities;
     }
 
     public Opportunity findOpportunity(Long opportunityid){
         return opportunityRepository.findById(opportunityid).get();
+    }
+
+    public List<Opportunity> allOpportunities(){
+        return opportunityRepository.findAll();
+    }
+    
+    public void updateOpportunityStatus(Long opportunityId,String newStatus){
+        Opportunity opportunity = findOpportunity(opportunityId);
+        if(opportunity!=null){
+        opportunity.setStatus(newStatus);
+        opportunityRepository.save(opportunity);
+        }else{
+           throw new IllegalArgumentException("Invalid organization Id:" + opportunityId);
+        }
     }
 }

@@ -25,12 +25,16 @@ public class Opportunity {
     @Column(name = "location", nullable = false) // 'online' or 'location
     private String location;
 
+    @Column(name="status",nullable=false,columnDefinition = "VARCHAR(255) DEFAULT 'pending'")
+    private String status;
+
     @Column(name = "requirements", nullable = false)
     private String requirements;
 
     @ManyToOne
     @JoinColumn(name = "organization_id", nullable = false)
     private Organization organization;
+
 
     public Opportunity() {
     }
@@ -75,6 +79,14 @@ public class Opportunity {
         this.location = location;
     }
 
+    public String getStatus() {
+        return this.status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
     public String getRequirements() {
         return this.requirements;
     }
@@ -111,6 +123,11 @@ public class Opportunity {
         return this;
     }
 
+    public Opportunity status(String status) {
+        setStatus(status);
+        return this;
+    }
+
     public Opportunity requirements(String requirements) {
         setRequirements(requirements);
         return this;
@@ -129,12 +146,12 @@ public class Opportunity {
             return false;
         }
         Opportunity opportunity = (Opportunity) o;
-        return Objects.equals(opportunityId, opportunity.opportunityId) && Objects.equals(title, opportunity.title) && Objects.equals(description, opportunity.description) && Objects.equals(location, opportunity.location) && Objects.equals(requirements, opportunity.requirements) && Objects.equals(organization, opportunity.organization);
+        return Objects.equals(opportunityId, opportunity.opportunityId) && Objects.equals(title, opportunity.title) && Objects.equals(description, opportunity.description) && Objects.equals(location, opportunity.location) && Objects.equals(status, opportunity.status) && Objects.equals(requirements, opportunity.requirements) && Objects.equals(organization, opportunity.organization);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(opportunityId, title, description, location, requirements, organization);
+        return Objects.hash(opportunityId, title, description, location, status, requirements, organization);
     }
 
     @Override
@@ -144,6 +161,7 @@ public class Opportunity {
             ", title='" + getTitle() + "'" +
             ", description='" + getDescription() + "'" +
             ", location='" + getLocation() + "'" +
+            ", status='" + getStatus() + "'" +
             ", requirements='" + getRequirements() + "'" +
             ", organization='" + getOrganization() + "'" +
             "}";
