@@ -14,17 +14,23 @@ public class Testimonial {
     private String name;
     private String role;
     private String message;
+    private boolean approved;
 
-    public Testimonial() {}
 
-    public Testimonial(String name, String role, String message) {
+
+    public Testimonial() {
+    }
+
+    public Testimonial(Long id, String name, String role, String message, boolean approved) {
+        this.id = id;
         this.name = name;
         this.role = role;
         this.message = message;
+        this.approved = approved;
     }
 
     public Long getId() {
-        return id;
+        return this.id;
     }
 
     public void setId(Long id) {
@@ -32,7 +38,7 @@ public class Testimonial {
     }
 
     public String getName() {
-        return name;
+        return this.name;
     }
 
     public void setName(String name) {
@@ -40,7 +46,7 @@ public class Testimonial {
     }
 
     public String getRole() {
-        return role;
+        return this.role;
     }
 
     public void setRole(String role) {
@@ -48,33 +54,75 @@ public class Testimonial {
     }
 
     public String getMessage() {
-        return message;
+        return this.message;
     }
 
     public void setMessage(String message) {
         this.message = message;
     }
 
+    public boolean isApproved() {
+        return this.approved;
+    }
+
+    public boolean getApproved() {
+        return this.approved;
+    }
+
+    public void setApproved(boolean approved) {
+        this.approved = approved;
+    }
+
+    public Testimonial id(Long id) {
+        setId(id);
+        return this;
+    }
+
+    public Testimonial name(String name) {
+        setName(name);
+        return this;
+    }
+
+    public Testimonial role(String role) {
+        setRole(role);
+        return this;
+    }
+
+    public Testimonial message(String message) {
+        setMessage(message);
+        return this;
+    }
+
+    public Testimonial approved(boolean approved) {
+        setApproved(approved);
+        return this;
+    }
+
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Testimonial)) return false;
-        Testimonial that = (Testimonial) o;
-        return Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(role, that.role) && Objects.equals(message, that.message);
+        if (o == this)
+            return true;
+        if (!(o instanceof Testimonial)) {
+            return false;
+        }
+        Testimonial testimonial = (Testimonial) o;
+        return Objects.equals(id, testimonial.id) && Objects.equals(name, testimonial.name) && Objects.equals(role, testimonial.role) && Objects.equals(message, testimonial.message) && approved == testimonial.approved;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, role, message);
+        return Objects.hash(id, name, role, message, approved);
     }
 
     @Override
     public String toString() {
-        return "Testimonial{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", role='" + role + '\'' +
-                ", message='" + message + '\'' +
-                '}';
+        return "{" +
+            " id='" + getId() + "'" +
+            ", name='" + getName() + "'" +
+            ", role='" + getRole() + "'" +
+            ", message='" + getMessage() + "'" +
+            ", approved='" + isApproved() + "'" +
+            "}";
     }
+
 }

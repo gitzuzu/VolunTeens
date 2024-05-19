@@ -42,27 +42,27 @@
     <!-- Page Header End -->
 
     <!-- Testimonial Start -->
-    <div class="container-xxl py-5">
-        <div class="container">
-            <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;">
-                <div class="d-inline-block rounded-pill bg-secondary text-primary py-1 px-3 mb-3">Testimonial</div>
-                <h1 class="display-6 mb-5">Trusted By Thousands Of People And Nonprofits</h1>
-            </div>
-            
+<div class="container-xxl py-5">
+    <div class="container">
+        <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;">
+            <div class="d-inline-block rounded-pill bg-secondary text-primary py-1 px-3 mb-3">Testimonial</div>
+            <h1 class="display-6 mb-5">Trusted By Thousands Of People And Nonprofits</h1>
+        </div>
 
-            <div class="owl-carousel testimonial-carousel wow fadeInUp" data-wow-delay="0.1s">
-                <div class="testimonial-item text-center" th:each="testimonial : ${testimonials}">
-                    <div class="img-fluid rounded-circle p-2 mx-auto mb-4" style="width: 100px; height: 100px;"></div>
+        <div class="owl-carousel testimonial-carousel wow fadeInUp" data-wow-delay="0.1s">
+            <div class="testimonial-item text-center" th:each="testimonial : ${testimonials}">
+                <div class="img-fluid rounded-circle p-2 mx-auto mb-4" style="width: 100px; height: 100px;"></div>
 
-                    <div class="testimonial-text rounded text-center p-4">
-                        <p th:text="${testimonial.message}"></p>
-                        <h5 class="mb-1" th:text="${testimonial.name}"></h5>
-                        <span class="fst-italic" th:text="${testimonial.role}"></span>
-                    </div>
+                <div th:if="${testimonial.approved}" class="testimonial-text rounded text-center p-4">
+                    <p th:text="${testimonial.message}"></p>
+                    <h5 class="mb-1" th:text="${testimonial.name}"></h5>
+                    <span class="fst-italic" th:text="${testimonial.role}"></span>
                 </div>
             </div>
         </div>
     </div>
+</div>
+
     <!-- Testimonial End -->
 
     
