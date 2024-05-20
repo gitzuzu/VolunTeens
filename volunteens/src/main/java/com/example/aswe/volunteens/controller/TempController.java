@@ -8,6 +8,7 @@ import org.springframework.web.servlet.view.RedirectView;
 import com.example.aswe.volunteens.dto.ApplicationDTO;
 import com.example.aswe.volunteens.dto.DonationDTO;
 import com.example.aswe.volunteens.dto.OpportunityDTO;
+import com.example.aswe.volunteens.dto.OrganizationDTO;
 import com.example.aswe.volunteens.dto.UserDTO;
 import com.example.aswe.volunteens.model.Opportunity;
 import com.example.aswe.volunteens.model.Organization;
@@ -15,6 +16,7 @@ import com.example.aswe.volunteens.model.User;
 import com.example.aswe.volunteens.service.ApplicationService;
 import com.example.aswe.volunteens.service.DonationService;
 import com.example.aswe.volunteens.service.OpportunityService;
+import com.example.aswe.volunteens.service.OrganizationService;
 import com.example.aswe.volunteens.service.UserService;
 
 import jakarta.servlet.http.HttpSession;
@@ -46,6 +48,9 @@ public class TempController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired 
+    private OrganizationService organizationService;
 
     @GetMapping("editUserProfile")
     public ModelAndView editUserProfile(HttpSession session, Model model) {
@@ -85,10 +90,12 @@ public class TempController {
 
     @GetMapping("editOpportunity")
     public ModelAndView editOpportunity() {
+
         return new ModelAndView("editOpportunity.html");
     }
 
     @GetMapping("editOrgProfile")
+
     public ModelAndView editOrgProfile(@RequestParam(defaultValue = "0") int page,
     @RequestParam(defaultValue = "3") int size,HttpSession session ,Model model) {
         if (session.getAttribute("org") == null) {
@@ -99,12 +106,12 @@ public class TempController {
         Pageable pageable = PageRequest.of(page, size);
         model.addAttribute("opportunities", opportunityService.findOpportunitiesByOrganization(pageable,  (Organization)session.getAttribute("org")));
         System.out.println("opportunities"+opportunityService.findOpportunitiesByOrganization(pageable,  (Organization)session.getAttribute("org")));
-        return new ModelAndView("editOrgProfile.html");
-    }
+
+   
 
     @PostMapping("editOrgProfile")
     public ModelAndView editProfile(@ModelAttribute OrganizationDTO organizationDTO,HttpSession session,RedirectAttributes ra) {
-        
+
         organizationService.updateOrganization(session, organizationDTO);
         ra.addFlashAttribute("message","Success your profile is updated!");
         return new ModelAndView("redirect:/editOrgProfile");
