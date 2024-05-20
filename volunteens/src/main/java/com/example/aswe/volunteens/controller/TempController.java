@@ -53,6 +53,11 @@ public class TempController {
 
     @Autowired 
     private OrganizationService organizationService;
+    
+    @GetMapping("viewApplicants")
+    public ModelAndView viewApplicants() {
+        return new ModelAndView("viewApplicants.html");
+    }
 
     @GetMapping("editUserProfile")
     public ModelAndView editUserProfile(HttpSession session, Model model) {
