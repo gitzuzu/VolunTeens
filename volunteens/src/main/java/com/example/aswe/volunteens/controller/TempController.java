@@ -33,9 +33,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.PostMapping;
 
-
-
-
 @RestController
 public class TempController {
     @Autowired
@@ -47,36 +44,54 @@ public class TempController {
     @Autowired
     private ApplicationService applicationService;
 
-    @Autowired 
+    @Autowired
     private UserService userService;
 
     @GetMapping("editUserProfile")
     public ModelAndView editUserProfile(HttpSession session, Model model) {
         if (session.getAttribute("user") == null) {
-           
+
             return new ModelAndView("redirect:/accessDenied");
         }
-        model.addAttribute("userDTO",(User)session.getAttribute("user"));
+        model.addAttribute("userDTO", (User) session.getAttribute("user"));
         return new ModelAndView("editUserProfile.html");
     }
 
     @PostMapping("updateUser")
-    public ModelAndView saveUserProfile(@ModelAttribute UserDTO userDTO,RedirectAttributes ra,HttpSession session){
-        userService.updateUserProfile(userDTO,session);
-        ra.addFlashAttribute("message","Success! your profile updated");
+    public ModelAndView saveUserProfile(@ModelAttribute UserDTO userDTO, RedirectAttributes ra, HttpSession session) {
+        userService.updateUserProfile(userDTO, session);
+        ra.addFlashAttribute("message", "Success! your profile updated");
         return new ModelAndView("redirect:/editUserProfile");
     }
-    
+
+    @PostMapping("changeUserPassword")
+    public ModelAndView changeUserPassword(@RequestParam("currentPassword") String currentPassword,
+            @RequestParam("newPassword") String newPassword,
+            @RequestParam("confirmPassword") String confirmPassword, RedirectAttributes ra, HttpSession session) {
+        User user = (User) session.getAttribute("user");
+        if (!userService.checkPassword(currentPassword, user)) {
+            ra.addFlashAttribute("error", "Current password is incorrect.");
+            return new ModelAndView("redirect:/editUserProfile");
+        }
+        if (!newPassword.equals(confirmPassword)) {
+            ra.addFlashAttribute("error", "New passwords do not match.");
+            return new ModelAndView("redirect:/editUserProfile");
+        }
+
+        userService.changePassword(user, newPassword);
+        ra.addFlashAttribute("success", "Password successfully changed.");
+        return new ModelAndView("redirect:/editUserProfile");
+    }
+
     @GetMapping("editOpportunity")
     public ModelAndView editOpportunity() {
         return new ModelAndView("editOpportunity.html");
     }
-    
+
     @GetMapping("editProfile")
     public ModelAndView editProfile() {
         return new ModelAndView("editOrgProfile.html");
     }
-
 
     @GetMapping("aboutus")
     public ModelAndView about() {
@@ -85,9 +100,9 @@ public class TempController {
 
     @GetMapping("opportunities")
     public ModelAndView opportunities(@RequestParam(defaultValue = "0") int page,
-    @RequestParam(defaultValue = "6") int size,HttpSession session,Model model) {
+            @RequestParam(defaultValue = "6") int size, HttpSession session, Model model) {
         if (session.getAttribute("user") == null) {
-           
+
             return new ModelAndView("redirect:/accessDenied");
         }
         Pageable pageable = PageRequest.of(page, size);
@@ -96,85 +111,83 @@ public class TempController {
     }
 
     @GetMapping("donate")
-    public ModelAndView donate(Model model,HttpSession session) {
+    public ModelAndView donate(Model model, HttpSession session) {
         if (session.getAttribute("user") == null) {
-           
+
             return new ModelAndView("redirect:/accessDenied");
-        }
-        else{
-           
+        } else {
+
             DonationDTO donateDTO = new DonationDTO();
             User user = (User) session.getAttribute("user");
-            
+
             donateDTO.setUserId(user.getFirstname());
             donateDTO.setUserEmail(user.getEmail());
-            
+
             model.addAttribute("donateDTO", donateDTO);
             return new ModelAndView("donate.html");
         }
-        
+
     }
+
     @PostMapping("donate")
     public String saveDonation(@ModelAttribute DonationDTO donateDTO, HttpSession session) {
         donationService.saveDonation(donateDTO);
         return "success";
     }
-    
-    
 
     @GetMapping("service")
     public ModelAndView service() {
         return new ModelAndView("service.html");
     }
 
-    
-    
     @GetMapping("contactus")
     public ModelAndView contactus() {
         return new ModelAndView("contactus.html");
     }
 
-   
     @GetMapping("volunteer")
-    public ModelAndView volunteer(HttpSession session ,@RequestParam ("opportunityId") Long opportunityId
-    ,@ModelAttribute ApplicationDTO applicationDTO,Model model) {
+    public ModelAndView volunteer(HttpSession session, @RequestParam("opportunityId") Long opportunityId,
+            @ModelAttribute ApplicationDTO applicationDTO, Model model) {
         if (session.getAttribute("user") == null) {
-           
+
             return new ModelAndView("redirect:/accessDenied");
         }
         User user = (User) session.getAttribute("user");
-       applicationDTO.setOpportunityId(opportunityId);
-       applicationDTO.setName(user.getFirstname());
-       applicationDTO.setEmail(user.getEmail());
-       model.addAttribute("opportunity", opportunityService.findOpportunity(opportunityId));
-       model.addAttribute("applicationDTO", applicationDTO);
+        applicationDTO.setOpportunityId(opportunityId);
+        applicationDTO.setName(user.getFirstname());
+        applicationDTO.setEmail(user.getEmail());
+        model.addAttribute("opportunity", opportunityService.findOpportunity(opportunityId));
+        model.addAttribute("applicationDTO", applicationDTO);
         return new ModelAndView("volunteer.html");
-    
+
     }
+
     @PostMapping("volunteer")
-    public ModelAndView saveApplication(@Valid @ModelAttribute ApplicationDTO applicationDTO, BindingResult result, RedirectAttributes ra) throws IOException {
+    public ModelAndView saveApplication(@Valid @ModelAttribute ApplicationDTO applicationDTO, BindingResult result,
+            RedirectAttributes ra) throws IOException {
         System.out.println(result.getAllErrors());
-    
+
         if (applicationDTO.getCv().isEmpty()) {
             result.addError(new FieldError("applicationDTO", "cv", "Please provide a file"));
         } else if (!applicationDTO.getCv().getContentType().equals("application/pdf")) {
             result.addError(new FieldError("applicationDTO", "cv", "Only PDF files are allowed"));
         }
-    
+
         if (result.hasErrors()) {
             System.out.println(result.hasErrors());
             return new ModelAndView("volunteer.html");
         }
-    
+
         applicationService.saveApplication(applicationDTO);
         ra.addFlashAttribute("message", "Success! Your application has been sent!");
-        
+
         // Ensure the opportunityId is included in the redirect
         return new ModelAndView("redirect:/volunteer?opportunityId=" + applicationDTO.getOpportunityId());
     }
 
     @GetMapping("postOpportunity")
-    public ModelAndView postOpportunity(HttpSession session, @ModelAttribute OpportunityDTO opportunityDTO, Model model) {
+    public ModelAndView postOpportunity(HttpSession session, @ModelAttribute OpportunityDTO opportunityDTO,
+            Model model) {
         User user = (User) session.getAttribute("user");
         Organization organization = (Organization) session.getAttribute("org");
 
@@ -192,32 +205,29 @@ public class TempController {
     }
 
     @PostMapping("postOpportunity")
-    public ModelAndView postedOpportunity(@Valid @ModelAttribute OpportunityDTO opportunityDTO,BindingResult bindingResult,HttpSession session,RedirectAttributes ra) {
-        if(opportunityService.TitleExist(opportunityDTO.getTitle())){
+    public ModelAndView postedOpportunity(@Valid @ModelAttribute OpportunityDTO opportunityDTO,
+            BindingResult bindingResult, HttpSession session, RedirectAttributes ra) {
+        if (opportunityService.TitleExist(opportunityDTO.getTitle())) {
             bindingResult.addError(new FieldError("opportunityDTO", "title", "Title already in use"));
         }
-        if(bindingResult.hasErrors()){
+        if (bindingResult.hasErrors()) {
             System.out.println(bindingResult.hasErrors());
             return new ModelAndView("postOpportunity.html");
         }
-        opportunityService.postedOpportunity(opportunityDTO ,session);
-        ra.addFlashAttribute("message","Success! your post opportunity ");
+        opportunityService.postedOpportunity(opportunityDTO, session);
+        ra.addFlashAttribute("message", "Success! your post opportunity ");
         return new ModelAndView("redirect:/postOpportunity");
     }
-    
 
     @GetMapping("accessDenied")
     public ModelAndView accessDenied() {
         return new ModelAndView("404.html");
     }
 
-
     @GetMapping("logout")
     public RedirectView logout(HttpSession session) {
         session.invalidate();
         return new RedirectView("/");
     }
-    
-    
-    
+
 }
