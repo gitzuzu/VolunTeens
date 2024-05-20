@@ -456,3 +456,6 @@
 .login-model{
     margin-top: 2em;
 }
+.hidden{
+    display: none !important; 
+}

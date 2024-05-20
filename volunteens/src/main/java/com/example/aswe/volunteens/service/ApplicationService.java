@@ -1,6 +1,8 @@
 package com.example.aswe.volunteens.service;
 
 import java.io.IOException;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -30,4 +32,23 @@ public class ApplicationService {
             applicationRepository.save(app);
         }
     }
+
+    public List <Application> getApplicationByOrganization(Opportunity opportunity){
+        return applicationRepository.findByOpportunity(opportunity);
+    }
+
+    public Application getCvFile(Long applicationId){
+        return applicationRepository.findById(applicationId)
+        .orElseThrow(() -> new RuntimeException("Application not found"));
+    }
+
+    public void updateApplicationStatus(Long applicationId,String newStatus){
+        Application application = applicationRepository.findById(applicationId).get();
+        if(application!=null){
+            application.setState(newStatus);
+            applicationRepository.save(application);
+        }else{
+           throw new IllegalArgumentException("Invalid organization Id:" + applicationId);
+        }
+}
 }
