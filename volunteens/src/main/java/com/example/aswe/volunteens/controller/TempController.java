@@ -95,16 +95,23 @@ public class TempController {
     }
 
     @GetMapping("editOrgProfile")
-    public ModelAndView editOrgProfile(HttpSession session ,Model model) {
-        model.addAttribute("organizationDTO", (Organization)session.getAttribute("org"));
-        return new ModelAndView("editOrgProfile.html");
-    }
 
-    @PostMapping("editOrgProfile")
-    public ModelAndView editProfile(@ModelAttribute OrganizationDTO organizationDTO,HttpSession session,RedirectAttributes ra) {
+    public ModelAndView editOrgProfile(@RequestParam(defaultValue = "0") int page,
+    @RequestParam(defaultValue = "3") int size,HttpSession session ,Model model) {
         if (session.getAttribute("org") == null) {
             return new ModelAndView("redirect:/accessDenied");
         }
+        
+        model.addAttribute("organizationDTO", (Organization)session.getAttribute("org"));
+        Pageable pageable = PageRequest.of(page, size);
+        model.addAttribute("opportunities", opportunityService.findOpportunitiesByOrganization(pageable,  (Organization)session.getAttribute("org")));
+        System.out.println("opportunities"+opportunityService.findOpportunitiesByOrganization(pageable,  (Organization)session.getAttribute("org")));
+
+   
+
+    @PostMapping("editOrgProfile")
+    public ModelAndView editProfile(@ModelAttribute OrganizationDTO organizationDTO,HttpSession session,RedirectAttributes ra) {
+
         organizationService.updateOrganization(session, organizationDTO);
         ra.addFlashAttribute("message","Success your profile is updated!");
         return new ModelAndView("redirect:/editOrgProfile");
