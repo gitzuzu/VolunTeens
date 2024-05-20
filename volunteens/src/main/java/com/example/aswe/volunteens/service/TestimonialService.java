@@ -1,6 +1,6 @@
 package com.example.aswe.volunteens.service;
 
-import com.example.aswe.volunteens.dto.TestimonialDTO;
+
 import com.example.aswe.volunteens.dto.UserDTO;
 import com.example.aswe.volunteens.model.Organization;
 import com.example.aswe.volunteens.model.Testimonial;
@@ -31,12 +31,12 @@ public class TestimonialService {
         User user = (User) session.getAttribute("user");
         if (organization == null) {
             organization = new Organization();
-            organization.setOrganizationId(0L); // Set organization ID to 0
+            organization.setOrganizationId(0L);
         }
 
         if (user == null) {
             user = new User();
-            user.setUserId(0L); // Set user ID to 0
+            user.setUserId(0L); 
         }
 
         Testimonial newTestimonial = new Testimonial(
@@ -49,11 +49,7 @@ public class TestimonialService {
         );
 
         return testimonialRepository.save(newTestimonial);
-    }
-       
-      
-       
-    
+    } 
 
     public void deleteTestimonialById(Long id) {
         testimonialRepository.deleteById(id);
