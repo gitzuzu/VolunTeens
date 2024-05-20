@@ -26,7 +26,7 @@ public class OpportunityService {
         Opportunity opportunity = new Opportunity
         (opportunityDTO.getTitle(), 
         opportunityDTO.getDescription(),
-        opportunityDTO.getLocation() , 
+        opportunityDTO.getLocation() ,"pending", 
         opportunityDTO.getRequirements(),
         org);
         this.opportunityRepository.save(opportunity);
