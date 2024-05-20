@@ -60,4 +60,8 @@ public class OpportunityService {
            throw new IllegalArgumentException("Invalid organization Id:" + opportunityId);
         }
     }
+
+    public Page findOpportunitiesByOrganization(Pageable pageable,Organization organization){
+        return opportunityRepository.findByOrganizationAndStatus(organization, "approved", pageable);
+    }
 }
