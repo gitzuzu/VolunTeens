@@ -10,6 +10,7 @@ import com.example.aswe.volunteens.dto.DonationDTO;
 import com.example.aswe.volunteens.dto.OpportunityDTO;
 import com.example.aswe.volunteens.dto.OrganizationDTO;
 import com.example.aswe.volunteens.dto.UserDTO;
+import com.example.aswe.volunteens.model.Application;
 import com.example.aswe.volunteens.model.Opportunity;
 import com.example.aswe.volunteens.model.Organization;
 import com.example.aswe.volunteens.model.User;
@@ -28,11 +29,15 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -60,8 +65,38 @@ public class TempController {
     }
     
     @GetMapping("viewApplicants")
-    public ModelAndView viewApplicants() {
+    public ModelAndView viewopportunity(@RequestParam Long opportunityId, HttpSession session, Model model) {
+        if (session.getAttribute("org") == null) {
+
+            return new ModelAndView("redirect:/accessDenied");
+        }
+        Opportunity opportunity = opportunityService.findOpportunity(opportunityId);
+        model.addAttribute("opportunity", opportunityService.findOpportunity(opportunity.getOpportunityId()));
+        model.addAttribute("applications", applicationService.getApplicationByOrganization(opportunity));
         return new ModelAndView("viewApplicants.html");
+    }
+
+    @PostMapping("/updateApplicationStatus")
+    public String updateApplicationStatus(@RequestParam Long applicationId, @RequestParam String newStatus) {
+       applicationService.updateApplicationStatus(applicationId, newStatus);
+        return "redirect:/viewApplicants";
+    }
+    
+
+     @GetMapping("/downloadCv/{applicationId}")
+    public ResponseEntity<byte[]> downloadCv(@PathVariable Long applicationId) {
+        Application application = applicationService.getCvFile(applicationId);
+
+        byte[] cv = application.getCv();
+
+        HttpHeaders header = new HttpHeaders();
+        header.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+        header.setContentLength(cv.length);
+        header.set("Content-Disposition", "attachment; filename=cv_" + applicationId + ".pdf");  // Assuming the CV is in PDF format
+
+        return ResponseEntity.ok()
+                             .headers(header)
+                             .body(cv);
     }
 
     @GetMapping("editUserProfile")

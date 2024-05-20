@@ -45,33 +45,33 @@
         <!-- Opportunity Details Start -->
         <div class="h-100 bg-secondary p-5">
             <div class="alert-info"></div>
-            <form method="post">
-                <input type="hidden" name="opportunityId">
+            <form method="post" th:object="${opportunity}">
+                
                 <div class="row g-3">
                     <div class="col-12">
                         <div class="form-floating">
-                            <input type="text" class="form-control bg-light border-0" name="title" placeholder="Your Title" value="Opportunity Title">
+                            <input type="text" class="form-control bg-light border-0" th:field="*{title}" placeholder="Your Title">
                             <label for="title">Title</label>
                             <div class="invalid-feedback"></div>
                         </div>
                     </div>
                     <div class="col-12">
                         <div class="form-floating">
-                            <input type="text" class="form-control bg-light border-0" name="location" placeholder="Your Location" value="Opportunity Location">
+                            <input type="text" class="form-control bg-light border-0" th:field="*{location}" placeholder="Your Location" >
                             <label for="location">Location</label>
                             <div class="invalid-feedback"></div>
                         </div>
                     </div>
                     <div class="col-12">
                         <div class="form-floating">
-                            <input type="text" class="form-control bg-light border-0" name="requirements" placeholder="Your Requirements" value="Opportunity Requirements">
+                            <input type="text" class="form-control bg-light border-0"  th:field="*{requirements}"  placeholder="Your Requirements">
                             <label for="requirements">Requirements</label>
                             <div class="invalid-feedback"></div>
                         </div>
                     </div>
                     <div class="col-12">
                         <div class="form-floating">
-                            <textarea class="form-control bg-light border-0" name="description" placeholder="Your Description" rows="5" style="height: 150px;">Opportunity Description</textarea>
+                            <textarea class="form-control bg-light border-0"  th:field="*{description}" placeholder="Your Description" rows="5" style="height: 150px;">Opportunity Description</textarea>
                             <label for="description">Description</label>
                             <div class="invalid-feedback"></div>
                         </div>
@@ -88,45 +88,53 @@
             <div class="d-inline-block rounded-pill bg-secondary text-primary py-1 px-3 mb-3">Applicants</div>
             <h1 class="display-6 mb-5">Meet Our Enthusiastic Volunteers</h1>
         </div>
-        <div class="row g-4">
-            <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                <div class="testimonial-item text-center bg-light p-4">
-                    <p><strong>Name:</strong> Applicant Name</p>
-                    <p><strong>Academic Grade:</strong> Excellent</p>
-                    <p><strong>Email:</strong> applicant@example.com</p>
-                    <div class="d-flex justify-content-center mt-3">
-                        <button class="btn btn-success me-2">Accept</button>
-                        <button class="btn btn-danger">Delete</button>
+            <div class="row g-4">
+                <div class="col-lg-4 col-md-6 wow fadeInUp" th:each="app:${applications}" data-wow-delay="0.1s">
+                    <div class="testimonial-item text-center bg-light p-4">
+                        <strong>Name:</strong> <p th:text="${app.user.firstname}"></p>
+                        <strong>Academic Grade:</strong> <p th:text="${app.acadamicGrade}"></p>
+                        <strong>Email:</strong> <p th:text="${app.user.email}"></p>
+                        <a th:href="@{/downloadCv/{id}(id=${app.applicationId})}" class="btn btn-primary download-btn">Download CV</a>
+                       
+                        <div th:id="'button-container-'+ ${app.applicationId}" class="d-flex justify-content-center mt-3">
+                            <button class="btn btn-success me-2" th:onclick="'updateApplicationStatus(' + ${app.applicationId} + ', \'Accepted\')'">Accept</button>
+                            <button class="btn btn-danger" th:onclick="'updateApplicationStatus(' + ${app.applicationId} + ', \'Rejected\')'">Reject</button>
+                        </div>
+                        <span th:id="'status-'+ ${app.applicationId}" th:if="${app.state!='pending'}" class="status-text" ></span>
                     </div>
                 </div>
-            </div>
-            <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
-                <div class="testimonial-item text-center bg-light p-4">
-                    <p><strong>Name:</strong> Applicant Name</p>
-                    <p><strong>Academic Grade:</strong> Very Good</p>
-                    <p><strong>Email:</strong> applicant2@example.com</p>
-                    <div class="d-flex justify-content-center mt-3">
-                        <button class="btn btn-success me-2">Accept</button>
-                        <button class="btn btn-danger">Delete</button>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.7s">
-                <div class="testimonial-item text-center bg-light p-4">
-                    <p><strong>Name:</strong> Applicant Name</p>
-                    <p><strong>Academic Grade:</strong> Average</p>
-                    <p><strong>Email:</strong> applicant4@example.com</p>
-                    <div class="d-flex justify-content-center mt-3">
-                        <button class="btn btn-success me-2">Accept</button>
-                        <button class="btn btn-danger">Delete</button>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
 </div>
 <!-- Applicants Display End -->
 </div>
+<script>
+    function updateApplicationStatus(applicationId, newStatus) {
+        fetch(`/updateApplicationStatus?applicationId=${applicationId}&newStatus=${newStatus}`, {
+            method: 'POST',
+        })
+        .then(response => {
+            if (response.ok) {
+                const statusSpan = document.getElementById(`status-${applicationId}`);
+            const buttonContainer = document.getElementById(`button-container-${applicationId}`);
+            buttonContainer.classList.add('hidden');
+            if (statusSpan) {
+                statusSpan.textContent = newStatus;  
+                statusSpan.style.display = 'block';  
+                
+            }
+          
+               
+            } else {
+                alert('Failed to update the application status.');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Error updating status.');
+        });
+    }
+</script>
 
     <th:block th:insert="~{fragments/footer.html}" />
     <!-- Back to Top -->
