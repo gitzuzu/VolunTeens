@@ -39,10 +39,12 @@ public class Opportunity {
     public Opportunity() {
     }
 
-    public Opportunity( String title, String description, String location, String requirements, Organization organization) {
+    public Opportunity( String title, String description, String location, String status, String requirements, Organization organization) {
+       
         this.title = title;
         this.description = description;
         this.location = location;
+        this.status = status;
         this.requirements = requirements;
         this.organization = organization;
     }
@@ -166,5 +168,5 @@ public class Opportunity {
             ", organization='" + getOrganization() + "'" +
             "}";
     }
-    
+
 }
