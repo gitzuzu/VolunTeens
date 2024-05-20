@@ -10,6 +10,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import java.util.Objects;
+import java.util.Optional;
 
 @Entity
 public class Donation {
@@ -28,14 +29,20 @@ public class Donation {
     @Column(name = "donationDate")
     private LocalDate donationDate;
 
+    @ManyToOne
+    @JoinColumn(name = "org_id", nullable = false)
+    private Organization organization;
+
+
     public Donation() {
     }
 
-    public Donation( String amountDonated, User user, LocalDate donationDate) {
-     
+    public Donation( String amountDonated, User user, LocalDate donationDate, Organization organization) {
+
         this.amountDonated = amountDonated;
         this.user = user;
         this.donationDate = donationDate;
+        this.organization = organization;
     }
 
     public Long getDonationId() {
@@ -70,6 +77,14 @@ public class Donation {
         this.donationDate = donationDate;
     }
 
+    public Organization getOrganization() {
+        return this.organization;
+    }
+
+    public void setOrganization(Organization organization) {
+        this.organization = organization;
+    }
+
     public Donation donationId(Long donationId) {
         setDonationId(donationId);
         return this;
@@ -90,6 +105,11 @@ public class Donation {
         return this;
     }
 
+    public Donation organization(Organization organization) {
+        setOrganization(organization);
+        return this;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == this)
@@ -98,12 +118,12 @@ public class Donation {
             return false;
         }
         Donation donation = (Donation) o;
-        return Objects.equals(donationId, donation.donationId) && Objects.equals(amountDonated, donation.amountDonated) && Objects.equals(user, donation.user) && Objects.equals(donationDate, donation.donationDate);
+        return Objects.equals(donationId, donation.donationId) && Objects.equals(amountDonated, donation.amountDonated) && Objects.equals(user, donation.user) && Objects.equals(donationDate, donation.donationDate) && Objects.equals(organization, donation.organization);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(donationId, amountDonated, user, donationDate);
+        return Objects.hash(donationId, amountDonated, user, donationDate, organization);
     }
 
     @Override
@@ -113,6 +133,9 @@ public class Donation {
             ", amountDonated='" + getAmountDonated() + "'" +
             ", user='" + getUser() + "'" +
             ", donationDate='" + getDonationDate() + "'" +
+            ", organization='" + getOrganization() + "'" +
             "}";
     }
+
+    
 }

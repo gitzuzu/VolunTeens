@@ -1,6 +1,8 @@
 package com.example.aswe.volunteens.service;
 
 
+import java.util.List;
+
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -42,5 +44,9 @@ public class OrganizationService {
         existingOrganization.setContactInfo(organizationDTO.getContactInfo());
          this.organizationRepository.save(existingOrganization);
          session.setAttribute("org", existingOrganization);
+    }
+
+    public List<Organization> findAllOrganizations() {
+        return this.organizationRepository.findAll();
     }
 }

@@ -10,5 +10,6 @@ import com.example.aswe.volunteens.model.Organization;
 public interface OrganizationRepository extends JpaRepository <Organization,Long>{
     Organization findByEmail(String email);
     boolean existsByEmail(String email);
+     
     
 }
