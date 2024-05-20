@@ -75,6 +75,15 @@
                                     </div>
                                 </div>
                                 <div class="col-12">
+                                    <div class="form-floating">
+                                        <select class="form-control bg-light border-0" th:field="*{orgId}">
+                                            <option value="" disabled selected>Select Organization</option>
+                                            <option th:each="org : ${organizations}" th:value="${org.organizationId}" th:text="${org.organizationName}"></option>
+                                        </select>
+                                        <label for="organization">Organization</label>
+                                    </div>
+                                </div>
+                                <div class="col-12">
                                     <div class="btn-group d-flex justify-content-around">
                                         <input type="radio" class="btn-check" name="btnradio" id="btnradio1" value="10" checked>
                                         <label class="btn btn-light py-3" for="btnradio1">$10</label>
