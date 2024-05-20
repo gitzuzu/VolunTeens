@@ -4,6 +4,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+
 import java.util.Objects;
 
 @Entity
@@ -15,18 +18,26 @@ public class Testimonial {
     private String role;
     private String message;
     private boolean approved;
+    @ManyToOne
+    @JoinColumn(name = "organization_id")
+    private Organization organization;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
 
     public Testimonial() {
     }
 
-    public Testimonial(Long id, String name, String role, String message, boolean approved) {
-        this.id = id;
+    public Testimonial( String name, String role, String message, boolean approved, Organization organization, User user) {
+
         this.name = name;
         this.role = role;
         this.message = message;
         this.approved = approved;
+        this.organization = organization;
+        this.user = user;
     }
 
     public Long getId() {
@@ -73,6 +84,22 @@ public class Testimonial {
         this.approved = approved;
     }
 
+    public Organization getOrganization() {
+        return this.organization;
+    }
+
+    public void setOrganization(Organization organization) {
+        this.organization = organization;
+    }
+
+    public User getUser() {
+        return this.user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     public Testimonial id(Long id) {
         setId(id);
         return this;
@@ -98,6 +125,16 @@ public class Testimonial {
         return this;
     }
 
+    public Testimonial organization(Organization organization) {
+        setOrganization(organization);
+        return this;
+    }
+
+    public Testimonial user(User user) {
+        setUser(user);
+        return this;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == this)
@@ -106,12 +143,12 @@ public class Testimonial {
             return false;
         }
         Testimonial testimonial = (Testimonial) o;
-        return Objects.equals(id, testimonial.id) && Objects.equals(name, testimonial.name) && Objects.equals(role, testimonial.role) && Objects.equals(message, testimonial.message) && approved == testimonial.approved;
+        return Objects.equals(id, testimonial.id) && Objects.equals(name, testimonial.name) && Objects.equals(role, testimonial.role) && Objects.equals(message, testimonial.message) && approved == testimonial.approved && Objects.equals(organization, testimonial.organization) && Objects.equals(user, testimonial.user);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, role, message, approved);
+        return Objects.hash(id, name, role, message, approved, organization, user);
     }
 
     @Override
@@ -122,6 +159,8 @@ public class Testimonial {
             ", role='" + getRole() + "'" +
             ", message='" + getMessage() + "'" +
             ", approved='" + isApproved() + "'" +
+            ", organization='" + getOrganization() + "'" +
+            ", user='" + getUser() + "'" +
             "}";
     }
 
