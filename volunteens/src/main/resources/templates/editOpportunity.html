@@ -52,6 +52,7 @@
         <div class="row g-5 align-items-center">
             <div class="col-lg-6 wow fadeIn" data-wow-delay="0.1s">
                 <div class="d-inline-block rounded-pill bg-secondary text-primary py-1 px-3 mb-3">Edit Opportunity</div>
+                <div class="alert-info" th:if="${message}" th:text="${message}"></div>
                 <h1 class="display-6 mb-5">Share Volunteer Opportunities with Us</h1>
                 <p class="mb-0">We welcome organizations to post volunteer opportunities with us. By sharing your volunteer opportunities, you provide individuals with the chance to make a positive impact in the community. Thank you for considering posting your volunteer opportunities with us. Together, we can create meaningful volunteer experiences!</p>
 
@@ -59,32 +60,33 @@
             <div class="col-lg-6 wow fadeIn" data-wow-delay="0.5s">
                 <div class="h-100 bg-secondary p-5">
                 <div class="alert-info"></div>
-                    <form method="post">
+                    <form method="post" th:action="@{/editOpportunity}" th:object="${opportunity}">
+                        <input type="hidden" th:field="*{opportunityId}">
                         <div class="row g-3">
                             <div class="col-12">
                                 <div class="form-floating">
-                                    <input type="text" class="form-control bg-light border-0" id="title" placeholder="Your Title">
+                                    <input type="text" class="form-control bg-light border-0" th:field="*{title}" placeholder="Your Title">
                                     <label for="title">Title</label>
                                     <div  class="invalid-feedback"></div>
                                 </div>
                             </div>
                             <div class="col-12">
                                 <div class="form-floating">
-                                    <input type="text" class="form-control bg-light border-0" id="location" placeholder="Your Location" >
+                                    <input type="text" class="form-control bg-light border-0" th:field="*{location}" placeholder="Your Location" >
                                     <label for="location">Location</label>
                                     <div class="invalid-feedback"></div>
                                 </div>
                             </div>
                             <div class="col-12">
                                 <div class="form-floating">
-                                    <input type="text" class="form-control bg-light border-0" id="requirements" placeholder="Your Requirements">
+                                    <input type="text" class="form-control bg-light border-0" th:field="*{requirements}" placeholder="Your Requirements">
                                     <label for="requirements">Requirements</label>
                                     <div  class="invalid-feedback"></div>
                                 </div>
                             </div>
                             <div class="col-12">
                                 <div class="form-floating">
-                                    <textarea class="form-control bg-light border-0" id="Description" placeholder="Your Description" rows="5" style="height: 150px;"></textarea>
+                                    <textarea class="form-control bg-light border-0"th:field="*{description}" placeholder="Your Description" rows="5" style="height: 150px;"></textarea>
                                     <label for="description">Description</label>
                                     <div class="invalid-feedback"></div>
                                 </div>

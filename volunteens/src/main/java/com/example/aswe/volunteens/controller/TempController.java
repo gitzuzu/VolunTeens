@@ -34,6 +34,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+
 
 @RestController
 public class TempController {
@@ -89,11 +91,23 @@ public class TempController {
     }
 
     @GetMapping("editOpportunity")
-    public ModelAndView editOpportunity() {
+    public ModelAndView editOpportunity(@RequestParam ("opportunityId") Long opportunityId ,
+    HttpSession session,Model model) {
+        if (session.getAttribute("org") == null) {
 
+            return new ModelAndView("redirect:/accessDenied");
+        } 
+        model.addAttribute("opportunity", opportunityService.findOpportunity(opportunityId));
         return new ModelAndView("editOpportunity.html");
     }
 
+    @PostMapping("editOpportunity")
+    public ModelAndView editOpportunity(@ModelAttribute Opportunity opportunity,RedirectAttributes ra) {
+        opportunityService.updateOpportunity(opportunity);
+        ra.addFlashAttribute("message","Success opportunity is updated!");
+        return new ModelAndView("redirect:/editOpportunity?opportunityId="+opportunity.getOpportunityId());
+    }
+    
     @GetMapping("editOrgProfile")
     public ModelAndView editOrgProfile(@RequestParam(defaultValue = "0") int page,
     @RequestParam(defaultValue = "3") int size,HttpSession session ,Model model) {

@@ -64,4 +64,13 @@ public class OpportunityService {
     public Page findOpportunitiesByOrganization(Pageable pageable,Organization organization){
         return opportunityRepository.findByOrganizationAndStatus(organization, "approved", pageable);
     }
+
+    public void updateOpportunity(Opportunity opportunity){
+        Opportunity existingOpportunity = opportunityRepository.findById(opportunity.getOpportunityId()).get();
+        existingOpportunity.setTitle(opportunity.getTitle());
+        existingOpportunity.setLocation(opportunity.getLocation());
+        existingOpportunity.setDescription(opportunity.getDescription());
+        existingOpportunity.setRequirements(opportunity.getRequirements());
+         this.opportunityRepository.save(existingOpportunity);
+    }
 }
