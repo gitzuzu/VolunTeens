@@ -53,6 +53,10 @@ public class TempController {
 
     @Autowired 
     private OrganizationService organizationService;
+    @GetMapping("UserAppliedOpportunities")
+    public ModelAndView UserAppliedOpportunities() {
+        return new ModelAndView("UserAppliedOpportunities.html");
+    }
     
     @GetMapping("viewApplicants")
     public ModelAndView viewApplicants() {
