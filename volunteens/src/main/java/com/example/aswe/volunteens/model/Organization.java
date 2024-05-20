@@ -37,14 +37,13 @@ public class Organization {
     public Organization() {
     }
 
-    public Organization(String organizationName, String email, String password, String organizationDescrp, String contactInfo, String status) {
+    public Organization(String organizationName, String email, String password, String organizationDescrp, String contactInfo) {
         
         this.organizationName = organizationName;
         this.email = email;
         this.password = password;
         this.organizationDescrp = organizationDescrp;
         this.contactInfo = contactInfo;
-        this.status = status;
     }
 
     public Long getOrganizationId() {
