@@ -271,4 +271,17 @@ public class TempController {
         return new RedirectView("/");
     }
 
+    @PostMapping("deleteUser")
+    public ModelAndView deleteUserAccount(HttpSession session, RedirectAttributes ra) {
+        User user = (User) session.getAttribute("user");
+        if (user != null) {
+            userService.deleteUser(user.getUserId());
+            session.invalidate(); 
+            ra.addFlashAttribute("message", "Your account has been successfully deleted.");
+            return new ModelAndView("redirect:/"); 
+        } else {
+            ra.addFlashAttribute("error", "No user is logged in.");
+            return new ModelAndView("redirect:/editUserProfile");
+        }
+    }
 }
