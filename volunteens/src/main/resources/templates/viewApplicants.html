@@ -91,16 +91,16 @@
             <div class="row g-4">
                 <div class="col-lg-4 col-md-6 wow fadeInUp" th:each="app:${applications}" data-wow-delay="0.1s">
                     <div class="testimonial-item text-center bg-light p-4">
-                        <strong>Name:</strong> <p th:text="${app.user.firstname}"></p>
-                        <strong>Academic Grade:</strong> <p th:text="${app.acadamicGrade}"></p>
-                        <strong>Email:</strong> <p th:text="${app.user.email}"></p>
+                        <p><strong>Name:</strong> <span th:text="${app.user.firstname}"></span></p>
+                        <p><strong>Academic Grade:</strong> <span th:text="${app.acadamicGrade}"></span></p>
+                        <p><strong>Email:</strong> <span th:text="${app.user.email}"></span></p>
                         <a th:href="@{/downloadCv/{id}(id=${app.applicationId})}" class="btn btn-primary download-btn">Download CV</a>
                        
                         <div th:id="'button-container-'+ ${app.applicationId}" class="d-flex justify-content-center mt-3">
-                            <button class="btn btn-success me-2" th:onclick="'updateApplicationStatus(' + ${app.applicationId} + ', \'Accepted\')'">Accept</button>
-                            <button class="btn btn-danger" th:onclick="'updateApplicationStatus(' + ${app.applicationId} + ', \'Rejected\')'">Reject</button>
+                            <button th:if="${app.state = 'Accepted'}" class="btn btn-success me-2" th:onclick="'updateApplicationStatus(' + ${app.applicationId} + ', \'Accepted\')'">Accept</button>
+                            <button th:if="${app.state != 'Rejected'}" class="btn btn-danger" th:onclick="'updateApplicationStatus(' + ${app.applicationId} + ', \'Rejected\')'">Reject</button>
                         </div>
-                        <span th:id="'status-'+ ${app.applicationId}" th:if="${app.state!='pending'}" class="status-text" ></span>
+                        <span th:id="'status-'+ ${app.applicationId}" th:text="${app.state}" class="status-text" ></span>
                     </div>
                 </div>
         </div>
