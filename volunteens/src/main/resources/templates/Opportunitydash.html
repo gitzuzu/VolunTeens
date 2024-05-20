@@ -60,47 +60,6 @@
         </main>
     </div>
 
-    <!-- <script>
-        function approveOpportunity(opportunityId) {
-            fetch(`/updateOpportunityStatus?opportunityId=${opportunityId}&newStatus=approved`, {
-                method: 'POST',
-            })
-            .then(response => {
-                if (response.ok) {
-                    document.getElementById(`approve-btn-${opportunityId}`).style.display = 'none';
-                    const statusCell = document.getElementById(`status-${opportunityId}`);
-                    if (statusCell) {
-                        statusCell.textContent = 'approved';
-                    }
-                } else {
-                    alert('Failed to approve the opportunity.');
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
-        }
-    
-        function rejectOpportunity(opportunityId) {
-            fetch(`/updateOpportunityStatus?opportunityId=${opportunityId}&newStatus=rejected`, {
-                method: 'POST',
-            })
-            .then(response => {
-                if (response.ok) {
-                    document.getElementById(`delete-btn-${opportunityId}`).style.display = 'none';
-                    const statusCell = document.getElementById(`status-${opportunityId}`);
-                    if (statusCell) {
-                        statusCell.textContent = 'rejected';
-                    }
-                } else {
-                    alert('Failed to reject the opportunity.');
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
-        }
-    </script> -->
 
         <script>
             function updateOpportunityStatus(opportunityId, newStatus) {

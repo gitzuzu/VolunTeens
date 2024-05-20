@@ -93,4 +93,15 @@ public class UserService {
         existingUser.setEmail(userDTO.getEmail());
         existingUser.setAddress(userDTO.getAddress());
     }
+
+    public boolean checkPassword(String currentPassword,User user){
+        return BCrypt.checkpw(currentPassword, user.getPassword());
+    }
+
+    public void changePassword(User user,String newPassword){
+        String encoddedPassword = BCrypt.hashpw(newPassword, BCrypt.gensalt(12));
+        user.setPassword(encoddedPassword);
+        userRepositry.save(user);
+
+    }
 }

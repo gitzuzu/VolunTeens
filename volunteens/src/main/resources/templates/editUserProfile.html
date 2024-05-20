@@ -6,7 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/form.css">
     <title>User Profile</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Saira:wght@500;600;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Saira:wght@500;600;700&display=swap"
+        rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
     <link href="assets/animate/animate.min.css" rel="stylesheet">
@@ -46,8 +48,9 @@
         <div class="row">
             <div class="col-md-8 offset-md-2">
                 <h2 class="text-center">User Profile</h2>
-            <div class="alert-info" th:if="${message}" th:text="${message}"></div>
-                <form th:action="@{/updateUser}" method="POST" th:object="${userDTO}" class="wow fadeInUp" data-wow-delay="0.5s" >
+                <div class="alert-info" th:if="${message}" th:text="${message}"></div>
+                <form th:action="@{/updateUser}" method="POST" th:object="${userDTO}" class="wow fadeInUp"
+                    data-wow-delay="0.5s">
                     <input type="hidden" th:field="*{userId}" />
                     <div class="mb-3">
                         <label for="firstname" class="form-label">First Name</label>
@@ -59,26 +62,24 @@
                     </div>
                     <div class="mb-3">
                         <label for="email" class="form-label">Email</label>
-                        <input type="email" class="form-control" th:field="*{email}" >
+                        <input type="email" class="form-control" th:field="*{email}">
                     </div>
                     <div class="mb-3">
                         <label for="address" class="form-label">Address</label>
                         <input type="text" class="form-control" th:field="*{address}">
                     </div>
-                    <!-- <div class="mb-3">
-                        <label for="contactInfo" class="form-label">Contact Info</label>
-                        <input type="text" class="form-control" id="contactInfo" name="contactInfo" value="123-456-7890">
-                    </div>
-                    <div class="mb-3">
-                        <label for="bio" class="form-label">Bio</label>
-                        <textarea class="form-control" id="bio" name="bio" rows="4">This is a sample bio.</textarea>
-                    </div> -->
+
                     <div class="text-center">
-                        <button type="submit" class="btn btn-primary wow fadeInUp" data-wow-delay="0.7s">Update Profile</button>
+                        <button type="submit" class="btn btn-primary wow fadeInUp" data-wow-delay="0.7s">Update
+                            Profile</button>
                     </div>
                 </form>
+
                 <h2 class="text-center mt-5">Change Password</h2>
-                <form class="wow fadeInUp" data-wow-delay="0.9s">
+                <div class="alert-danger" th:if="${error}" th:text="${error}"></div>
+                <div class="alert-info" th:if="${success}" th:text="${success}"></div>
+
+                <form class="wow fadeInUp" data-wow-delay="0.9s" th:action="@{/changeUserPassword}" method="post">
                     <div class="mb-3">
                         <label for="currentPassword" class="form-label">Current Password</label>
                         <input type="password" class="form-control" id="currentPassword" name="currentPassword">
@@ -92,7 +93,8 @@
                         <input type="password" class="form-control" id="confirmPassword" name="confirmPassword">
                     </div>
                     <div class="text-center">
-                        <button type="submit" class="btn btn-primary wow fadeInUp" data-wow-delay="1.1s">Change Password</button>
+                        <button type="submit" class="btn btn-primary wow fadeInUp" data-wow-delay="1.1s">Change
+                            Password</button>
                     </div>
                 </form>
             </div>
