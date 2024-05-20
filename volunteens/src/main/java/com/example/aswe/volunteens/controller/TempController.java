@@ -8,6 +8,7 @@ import org.springframework.web.servlet.view.RedirectView;
 import com.example.aswe.volunteens.dto.ApplicationDTO;
 import com.example.aswe.volunteens.dto.DonationDTO;
 import com.example.aswe.volunteens.dto.OpportunityDTO;
+import com.example.aswe.volunteens.dto.OrganizationDTO;
 import com.example.aswe.volunteens.dto.UserDTO;
 import com.example.aswe.volunteens.model.Opportunity;
 import com.example.aswe.volunteens.model.Organization;
@@ -15,6 +16,7 @@ import com.example.aswe.volunteens.model.User;
 import com.example.aswe.volunteens.service.ApplicationService;
 import com.example.aswe.volunteens.service.DonationService;
 import com.example.aswe.volunteens.service.OpportunityService;
+import com.example.aswe.volunteens.service.OrganizationService;
 import com.example.aswe.volunteens.service.UserService;
 
 import jakarta.servlet.http.HttpSession;
@@ -46,6 +48,9 @@ public class TempController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired 
+    private OrganizationService organizationService;
 
     @GetMapping("editUserProfile")
     public ModelAndView editUserProfile(HttpSession session, Model model) {
@@ -85,12 +90,24 @@ public class TempController {
 
     @GetMapping("editOpportunity")
     public ModelAndView editOpportunity() {
+
         return new ModelAndView("editOpportunity.html");
     }
 
-    @GetMapping("editProfile")
-    public ModelAndView editProfile() {
+    @GetMapping("editOrgProfile")
+    public ModelAndView editOrgProfile(HttpSession session ,Model model) {
+        model.addAttribute("organizationDTO", (Organization)session.getAttribute("org"));
         return new ModelAndView("editOrgProfile.html");
+    }
+
+    @PostMapping("editOrgProfile")
+    public ModelAndView editProfile(@ModelAttribute OrganizationDTO organizationDTO,HttpSession session,RedirectAttributes ra) {
+        if (session.getAttribute("org") == null) {
+            return new ModelAndView("redirect:/accessDenied");
+        }
+        organizationService.updateOrganization(session, organizationDTO);
+        ra.addFlashAttribute("message","Success your profile is updated!");
+        return new ModelAndView("redirect:/editOrgProfile");
     }
 
     @GetMapping("aboutus")

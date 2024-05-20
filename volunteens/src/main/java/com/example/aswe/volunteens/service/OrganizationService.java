@@ -9,6 +9,8 @@ import com.example.aswe.volunteens.dto.OrganizationDTO;
 import com.example.aswe.volunteens.model.Organization;
 import com.example.aswe.volunteens.respository.OrganizationRepository;
 
+import jakarta.servlet.http.HttpSession;
+
 
 @Service
 public class OrganizationService {
@@ -20,7 +22,7 @@ public class OrganizationService {
             OrganizationDTO.getEmail(),
             OrganizationDTO.getPassword(),
             OrganizationDTO.getOrganizationDescrp(),
-            OrganizationDTO.getContactInfo(),"pending"
+            OrganizationDTO.getContactInfo()
         );
         String encoddedPassword = BCrypt.hashpw(org.getPassword(), BCrypt.gensalt(12));
         org.setPassword(encoddedPassword);
@@ -32,4 +34,13 @@ public class OrganizationService {
         return this.organizationRepository.existsByEmail(email);
     }
 
+    public void updateOrganization(HttpSession session,OrganizationDTO organizationDTO){
+        Organization existingOrganization = organizationRepository.findById(organizationDTO.getOrganizationId()).get();
+        existingOrganization.setOrganizationName(organizationDTO.getOrganizationName());
+        existingOrganization.setEmail(organizationDTO.getEmail());
+        existingOrganization.setOrganizationDescrp(organizationDTO.getOrganizationDescrp());
+        existingOrganization.setContactInfo(organizationDTO.getContactInfo());
+         this.organizationRepository.save(existingOrganization);
+         session.setAttribute("org", existingOrganization);
+    }
 }
