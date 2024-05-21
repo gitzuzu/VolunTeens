@@ -44,6 +44,7 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private Set<Application> applications;
 
+
     public User() {
     }
 

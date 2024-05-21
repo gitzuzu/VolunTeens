@@ -21,7 +21,7 @@
             <form method="post" th:action="@{/registerOrg}" th:object="${organizationDTO}">
                 
                     <div class="mb-3">
-                        <label for="organizationName" class="form-label">Organization Name</label>
+                        <label for="organizationName" class="form-label">Your Organization's Name</label>
                         <input type="text" class="form-control" id="organizationName" name="organizationName" th:field="*{organizationName}"
                             th:errorClass="is-invalid">
 
