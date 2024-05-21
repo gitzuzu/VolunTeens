@@ -1,6 +1,7 @@
 package com.example.aswe.volunteens.service;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,8 @@ import com.example.aswe.volunteens.model.User;
 import com.example.aswe.volunteens.respository.DonationRepository;
 import com.example.aswe.volunteens.respository.OrganizationRepository;
 import com.example.aswe.volunteens.respository.UserRepositry;
+
+import jakarta.servlet.http.HttpSession;
 
 @Service
 public class DonationService {
@@ -37,5 +40,9 @@ public class DonationService {
 
     }
 
-    
+    public List<Donation> findDonationsByOrganization(Organization organization) {
+        return donationRepository.findByOrganization(organization);
+    }
+
+        
 }

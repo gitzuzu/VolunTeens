@@ -11,6 +11,7 @@ import com.example.aswe.volunteens.dto.OpportunityDTO;
 import com.example.aswe.volunteens.dto.OrganizationDTO;
 import com.example.aswe.volunteens.dto.UserDTO;
 import com.example.aswe.volunteens.model.Application;
+import com.example.aswe.volunteens.model.Donation;
 import com.example.aswe.volunteens.model.Opportunity;
 import com.example.aswe.volunteens.model.Organization;
 import com.example.aswe.volunteens.model.User;
@@ -161,10 +162,20 @@ public class TempController {
         if (organization == null || !"approved".equals(organization.getStatus())) {
             return new ModelAndView("redirect:/accessDenied");
         }
+
         model.addAttribute("organizationDTO", (Organization)session.getAttribute("org"));
         Pageable pageable = PageRequest.of(page, size);
+
+        DonationDTO donateDTO = new DonationDTO();
+        donateDTO.setOrgId(organization.getOrganizationId());
+        model.addAttribute("organizationDTO", organization);
+
+        List<Donation> donations = donationService.findDonationsByOrganization(organization);
+        model.addAttribute("donations", donations);
+
         model.addAttribute("opportunities", opportunityService.findOpportunitiesByOrganization(pageable,  (Organization)session.getAttribute("org")));
-        return new ModelAndView("editOrgProfile.html");}
+        return new ModelAndView("editOrgProfile.html");
+    }
 
     @PostMapping("editOrgProfile")
     public ModelAndView editProfile(@ModelAttribute OrganizationDTO organizationDTO,HttpSession session,RedirectAttributes ra) {
@@ -201,12 +212,17 @@ public class TempController {
             DonationDTO donateDTO = new DonationDTO();
             User user = (User) session.getAttribute("user");
 
+            
+
             donateDTO.setUserId(user.getFirstname());
             donateDTO.setUserEmail(user.getEmail());
 
+         
+
             List<Organization> organizations = organizationService.findAllOrganizations();
             model.addAttribute("organizations", organizations);
-   
+            
+           
 
             model.addAttribute("donateDTO", donateDTO);
             return new ModelAndView("donate.html");

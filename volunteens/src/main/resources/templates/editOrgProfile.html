@@ -80,6 +80,7 @@
                 <div th:if="${opportunities.isEmpty()}" class="alert alert-info">
                     There are no posted opportunities yet.
                 </div>
+                
                 <div class="row g-4 justify-content-center">
                     <div class="col-lg-4 col-md-6" th:each="opportunity: ${opportunities}">
                         <div
@@ -118,6 +119,22 @@
                             </div>
                         </div>
                     </div>
+
+                    <!-- <div class="col-lg-4 col-md-6" th:each="donation, iterStat : ${donations}">
+                        <div class="causes-item d-flex flex-column bg-light border-top border-5 border-primary rounded-top overflow-hidden h-100">
+                            <div class="text-center p-4 pt-0">
+                                <div class="d-inline-block bg-primary text-white rounded-bottom fs-5 pb-1 px-3 mb-4">
+                                    <small>Category</small>
+                                </div>
+                                <p th:text="${iterStat.index + 1}"></p>
+                                <p th:text="${donation.user.firstname} + ' ' + ${donation.user.lastname}"></p>
+                                <p th:text="${donation.amountDonated}"></p>
+                                <p th:text="${donation.donationDate}"></p>
+
+                            </div>
+                        </div>
+                    </div> -->
+
 
                 </div>
 

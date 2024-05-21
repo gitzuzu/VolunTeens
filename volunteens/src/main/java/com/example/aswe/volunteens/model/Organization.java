@@ -1,11 +1,15 @@
 package com.example.aswe.volunteens.model;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 public class Organization {
@@ -31,6 +35,9 @@ public class Organization {
 
     @Column(name = "Status", nullable = false, columnDefinition = "VARCHAR(255) DEFAULT 'pending'")
     private String status;
+
+    @OneToMany(mappedBy = "organization", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    private Set<Opportunity> opportunities;
     
   
 
