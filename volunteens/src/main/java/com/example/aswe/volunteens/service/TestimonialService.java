@@ -29,15 +29,6 @@ public class TestimonialService {
     public Testimonial saveTestimonial(Testimonial testimonial ,HttpSession session) {
         Organization organization = (Organization) session.getAttribute("org");
         User user = (User) session.getAttribute("user");
-        if (organization == null) {
-            organization = new Organization();
-            organization.setOrganizationId(0L);
-        }
-
-        if (user == null) {
-            user = new User();
-            user.setUserId(0L); 
-        }
 
         Testimonial newTestimonial = new Testimonial(
             testimonial.getName(),
