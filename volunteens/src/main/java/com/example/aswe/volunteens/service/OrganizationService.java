@@ -24,7 +24,7 @@ public class OrganizationService {
             OrganizationDTO.getEmail(),
             OrganizationDTO.getPassword(),
             OrganizationDTO.getOrganizationDescrp(),
-            OrganizationDTO.getContactInfo()
+            OrganizationDTO.getContactInfo(),"pending"
         );
         String encoddedPassword = BCrypt.hashpw(org.getPassword(), BCrypt.gensalt(12));
         org.setPassword(encoddedPassword);

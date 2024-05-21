@@ -97,7 +97,7 @@
                         <a th:href="@{/downloadCv/{id}(id=${app.applicationId})}" class="btn btn-primary download-btn">Download CV</a>
                        
                         <div th:id="'button-container-'+ ${app.applicationId}" class="d-flex justify-content-center mt-3">
-                            <button th:if="${app.state = 'Accepted'}" class="btn btn-success me-2" th:onclick="'updateApplicationStatus(' + ${app.applicationId} + ', \'Accepted\')'">Accept</button>
+                            <button th:if="${app.state != 'Accepted'}" class="btn btn-success me-2" th:onclick="'updateApplicationStatus(' + ${app.applicationId} + ', \'Accepted\')'">Accept</button>
                             <button th:if="${app.state != 'Rejected'}" class="btn btn-danger" th:onclick="'updateApplicationStatus(' + ${app.applicationId} + ', \'Rejected\')'">Reject</button>
                         </div>
                         <span th:id="'status-'+ ${app.applicationId}" th:text="${app.state}" class="status-text" ></span>
