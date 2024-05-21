@@ -120,24 +120,25 @@
                         </div>
                     </div>
 
-                    <!-- <div class="col-lg-4 col-md-6" th:each="donation, iterStat : ${donations}">
-                        <div class="causes-item d-flex flex-column bg-light border-top border-5 border-primary rounded-top overflow-hidden h-100">
-                            <div class="text-center p-4 pt-0">
-                                <div class="d-inline-block bg-primary text-white rounded-bottom fs-5 pb-1 px-3 mb-4">
-                                    <small>Category</small>
-                                </div>
-                                <p th:text="${iterStat.index + 1}"></p>
-                                <p th:text="${donation.user.firstname} + ' ' + ${donation.user.lastname}"></p>
-                                <p th:text="${donation.amountDonated}"></p>
-                                <p th:text="${donation.donationDate}"></p>
-
-                            </div>
-                        </div>
-                    </div> -->
-
 
                 </div>
-
+   <!-- Donations Section Start -->
+   <h3 class="mt-5"> Donations</h3>
+   <div class="row g-4 justify-content-center">
+       <div class="col-lg-4 col-md-6" th:each="donation, iterStat : ${donations}">
+           <div class="causes-item d-flex flex-column bg-light border-top border-5 border-primary rounded-top overflow-hidden h-100">
+               <div class="text-center p-4 pt-0">
+                   <div class="d-inline-block bg-primary text-white rounded-bottom fs-5 pb-1 px-3 mb-4">
+                       <small th:text="'Donation #' + ${iterStat.index + 1}"></small>
+                   </div>
+                   <p><strong>Donor:</strong> <span th:text="${donation.user.firstname} + ' ' + ${donation.user.lastname}"></span></p>
+                   <p><strong>Amount:</strong> <span th:text="${donation.amountDonated}"></span></p>
+                   <p><strong>Date:</strong> <span th:text="${donation.donationDate}"></span></p>
+               </div>
+           </div>
+       </div>
+   </div>
+   <!-- Donations Section End -->
                 <!-- Pagination Controls -->
                 <nav aria-label="Page navigation example">
                     <ul class="pagination justify-content-center">
