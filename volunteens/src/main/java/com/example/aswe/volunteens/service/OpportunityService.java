@@ -73,4 +73,7 @@ public class OpportunityService {
         existingOpportunity.setRequirements(opportunity.getRequirements());
          this.opportunityRepository.save(existingOpportunity);
     }
+    public void cancelOpportunity(Long opportunityid) {
+        opportunityRepository.deleteById(opportunityid);
+    }
 }

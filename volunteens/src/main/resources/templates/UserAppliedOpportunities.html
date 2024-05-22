@@ -73,17 +73,17 @@
         function cancelApplication(element) {
             var applicationId = element.getAttribute('data-application-id');
             if (confirm('Are you sure you want to cancel this application?')) {
-                fetch('/cancel-application/' + applicationId, {
+                fetch('/cancelapplication/' + applicationId, {
                     method: 'POST'
                 })
                 .then(response => {
                     if (response.ok) {
                         var listItem = element.closest('.list-group-item');
                         if (listItem) {
-                            listItem.remove(); // Remove the list item from the DOM
+                            listItem.remove(); 
                         }
                     } else {
-                        alert('Failed to cancel application.'); // Handle non-OK responses
+                        alert('Failed to cancel application.'); 
                     }
                 })
                 .catch(error => {

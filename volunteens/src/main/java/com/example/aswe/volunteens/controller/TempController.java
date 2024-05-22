@@ -72,10 +72,21 @@ public class TempController {
         model.addAttribute("Useropportunity",Applications);
         return new ModelAndView("UserAppliedOpportunities.html");
     }
-    @PostMapping("/cancel-application/{applicationId}")
+
+    @PostMapping("/cancelapplication/{applicationId}")
     public ModelAndView cancelApplication(@PathVariable Long applicationId) {
         try {
             applicationService.cancelApplication(applicationId);
+            return new ModelAndView("UserAppliedOpportunities.html");
+        } catch (Exception e) {
+            return new ModelAndView("redirect:/accessDenied");
+        }
+    }
+
+    @PostMapping("/cancelopportunity/{opportunityId}")
+    public ModelAndView cancelOpportunity(@PathVariable Long opportunityId) {
+        try {
+            opportunityService.cancelOpportunity(opportunityId);
             return new ModelAndView("UserAppliedOpportunities.html");
         } catch (Exception e) {
             return new ModelAndView("redirect:/accessDenied");
