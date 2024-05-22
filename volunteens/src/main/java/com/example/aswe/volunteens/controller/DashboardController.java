@@ -149,6 +149,20 @@ public class DashboardController {
         return "redirect:/organizations";
     }
 
+    @GetMapping("/Organization/edit/{organizationId}")
+    public ModelAndView editOrganization(Model model, @PathVariable("organizationId") Long organizationId) {
+        model.addAttribute("organizationDTO", organizationService.findOrganization(organizationId));
+        return new ModelAndView("editorg.html");
+    }
+
+    @PostMapping("/Organization/update")
+    public ModelAndView saveEditOrganization(@ModelAttribute OrganizationDTO organizationDTO, RedirectAttributes ra) {
+
+        organizationService.updateOrganizationdash(organizationDTO);
+        ra.addFlashAttribute("message", "Success! Your data is updated!");
+        return new ModelAndView("redirect:/Organization/edit/" + organizationDTO.getOrganizationId());
+    }
+
     @PostMapping("/User/toggleAdmin/{id}")
     public String toggleAdmin(@PathVariable Long id) {
         userService.toggleAdmin(id); // Implement this method in your UserService to toggle the admin status
