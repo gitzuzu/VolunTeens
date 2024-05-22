@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import com.example.aswe.volunteens.dto.OpportunityDTO;
 import com.example.aswe.volunteens.model.Opportunity;
 import com.example.aswe.volunteens.model.Organization;
+import com.example.aswe.volunteens.model.User;
 import com.example.aswe.volunteens.respository.OpportunityRepository;
 
 import jakarta.servlet.http.HttpSession;
@@ -76,4 +77,7 @@ public class OpportunityService {
     public void cancelOpportunity(Long opportunityid) {
         opportunityRepository.deleteById(opportunityid);
     }
+
+    
+
 }
