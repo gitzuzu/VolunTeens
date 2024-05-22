@@ -49,4 +49,11 @@ public class OrganizationService {
     public List<Organization> findAllOrganizations() {
         return this.organizationRepository.findAll();
     }
+
+    
+    public void deleteOrganization(Long organizationId) {
+        organizationRepository.deleteById(organizationId);
+    }
+
+    
 }

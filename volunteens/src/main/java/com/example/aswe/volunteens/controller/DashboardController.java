@@ -2,7 +2,6 @@ package com.example.aswe.volunteens.controller;
 
 import java.util.List;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,18 +15,19 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.example.aswe.volunteens.dto.OrganizationDTO;
 import com.example.aswe.volunteens.dto.UserDTO;
 import com.example.aswe.volunteens.model.Organization;
 import com.example.aswe.volunteens.model.Testimonial;
 import com.example.aswe.volunteens.model.User;
 import com.example.aswe.volunteens.respository.OrganizationRepository;
 import com.example.aswe.volunteens.service.OpportunityService;
+import com.example.aswe.volunteens.service.OrganizationService;
 import com.example.aswe.volunteens.service.TestimonialService;
 import com.example.aswe.volunteens.service.UserService;
 
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
-
 
 @Controller
 
@@ -38,11 +38,14 @@ public class DashboardController {
     @Autowired
     private UserService userService;
 
-     @Autowired
+    @Autowired
     private TestimonialService testimonialService;
 
     @Autowired
     private OpportunityService opportunityService;
+
+    @Autowired
+    private OrganizationService organizationService;
 
     @GetMapping("dashboard")
     public ModelAndView dashboard(HttpSession session) {
@@ -138,31 +141,32 @@ public class DashboardController {
         userService.toggleAdmin(id); // Implement this method in your UserService to toggle the admin status
         return "redirect:/users"; // Redirect back to the users page
     }
+
     @GetMapping("/Opportunity")
-    public ModelAndView opportunity(HttpSession session,Model model){
+    public ModelAndView opportunity(HttpSession session, Model model) {
         User user = (User) session.getAttribute("user");
         if (user != null && user.getIsAdmin()) {
-           
+
             model.addAttribute("opportunities", opportunityService.allOpportunities());
             return new ModelAndView("Opportunitydash");
         }
-        
+
         return new ModelAndView("redirect:/accessDenied");
     }
 
-    
     @PostMapping("/updateOpportunityStatus")
     public String updateOpportunityStatus(@RequestParam Long opportunityId, @RequestParam String newStatus) {
-       opportunityService.updateOpportunityStatus(opportunityId, newStatus);
+        opportunityService.updateOpportunityStatus(opportunityId, newStatus);
         return "redirect:/Opportunity";
     }
-       
+
     @GetMapping("/reports")
     public String showReports(Model model) {
         List<Testimonial> testimonials = testimonialService.getAllTestimonials();
         model.addAttribute("testimonials", testimonials);
         return "reports";
     }
+
     @PostMapping("/delete-testimonial")
     public String deleteTestimonial(@RequestParam("id") Long id, Model model) {
         testimonialService.deleteTestimonialById(id);
@@ -175,4 +179,14 @@ public class DashboardController {
         return "redirect:/reports";
     }
 
+    @GetMapping("/Organization/delete/{organizationId}")
+    public String deleteOrganization(@PathVariable Long organizationId, RedirectAttributes ra) {
+        organizationService.deleteOrganization(organizationId);
+        ra.addFlashAttribute("message", "Organization deleted successfully!");
+        return "redirect:/organizations";
+    }
+
+ 
+     
+    
 }
