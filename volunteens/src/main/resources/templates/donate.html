@@ -64,13 +64,15 @@
                             <div class="row g-3">
                                 <div class="col-12">
                                     <div class="form-floating">
-                                        <input type="text" class="form-control bg-light border-0"  placeholder="Your Name"th:field ="*{userId}">
+                                        <input type="text" class="form-control bg-light border-0"  placeholder="Your Name"th:field ="*{name}"th:errorClass="is-invalid">
+                                        <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="invalid-feedback"></div>
                                         <label for="name">Your Name</label>
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="form-floating">
-                                        <input type="email" class="form-control bg-light border-0"  placeholder="Your Email" th:field="*{userEmail}" >
+                                        <input type="email" class="form-control bg-light border-0"  placeholder="Your Email" th:field="*{userEmail}" th:errorClass="is-invalid" >
+                                        <div th:if="${#fields.hasErrors('userEmail')}" th:errors="*{userEmail}" class="invalid-feedback"></div>
                                         <label for="email">Your Email</label>
                                     </div>
                                 </div>

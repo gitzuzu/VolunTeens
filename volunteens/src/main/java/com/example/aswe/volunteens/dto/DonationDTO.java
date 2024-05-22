@@ -1,24 +1,28 @@
 package com.example.aswe.volunteens.dto;
 import java.time.LocalDate;
 import java.util.Objects;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 
 public class DonationDTO {
     private Long donationId;
     private String amountDonated;
-    private String userId;
+    @NotBlank(message = "Enter your name")
+    private String name;
     private LocalDate donationDate;
+    @NotBlank(message = "Enter your email")
+    @Email(message = "Enter a valid email address")
     private String userEmail;
     private Long orgId;
-
 
 
     public DonationDTO() {
     }
 
-    public DonationDTO(Long donationId, String amountDonated, String userId, LocalDate donationDate, String userEmail, Long orgId) {
+    public DonationDTO(Long donationId, String amountDonated, String name, LocalDate donationDate, String userEmail, Long orgId) {
         this.donationId = donationId;
         this.amountDonated = amountDonated;
-        this.userId = userId;
+        this.name = name;
         this.donationDate = donationDate;
         this.userEmail = userEmail;
         this.orgId = orgId;
@@ -40,12 +44,12 @@ public class DonationDTO {
         this.amountDonated = amountDonated;
     }
 
-    public String getUserId() {
-        return this.userId;
+    public String getName() {
+        return this.name;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public LocalDate getDonationDate() {
@@ -82,8 +86,8 @@ public class DonationDTO {
         return this;
     }
 
-    public DonationDTO userId(String userId) {
-        setUserId(userId);
+    public DonationDTO name(String name) {
+        setName(name);
         return this;
     }
 
@@ -110,12 +114,12 @@ public class DonationDTO {
             return false;
         }
         DonationDTO donationDTO = (DonationDTO) o;
-        return Objects.equals(donationId, donationDTO.donationId) && Objects.equals(amountDonated, donationDTO.amountDonated) && Objects.equals(userId, donationDTO.userId) && Objects.equals(donationDate, donationDTO.donationDate) && Objects.equals(userEmail, donationDTO.userEmail) && Objects.equals(orgId, donationDTO.orgId);
+        return Objects.equals(donationId, donationDTO.donationId) && Objects.equals(amountDonated, donationDTO.amountDonated) && Objects.equals(name, donationDTO.name) && Objects.equals(donationDate, donationDTO.donationDate) && Objects.equals(userEmail, donationDTO.userEmail) && Objects.equals(orgId, donationDTO.orgId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(donationId, amountDonated, userId, donationDate, userEmail, orgId);
+        return Objects.hash(donationId, amountDonated, name, donationDate, userEmail, orgId);
     }
 
     @Override
@@ -123,12 +127,14 @@ public class DonationDTO {
         return "{" +
             " donationId='" + getDonationId() + "'" +
             ", amountDonated='" + getAmountDonated() + "'" +
-            ", userId='" + getUserId() + "'" +
+            ", name='" + getName() + "'" +
             ", donationDate='" + getDonationDate() + "'" +
             ", userEmail='" + getUserEmail() + "'" +
             ", orgId='" + getOrgId() + "'" +
             "}";
     }
-   
+
+
+    
 
 }
