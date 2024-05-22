@@ -9,4 +9,6 @@ import com.example.aswe.volunteens.model.Organization;
 
 public interface DonationRepository extends JpaRepository<Donation, Long>{
     List<Donation> findByOrganization(Organization organization);
+    List<Donation> findTop10ByOrderByDonationDateDesc();
+
 }

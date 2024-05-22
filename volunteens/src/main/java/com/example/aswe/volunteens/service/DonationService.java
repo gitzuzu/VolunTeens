@@ -3,6 +3,7 @@ package com.example.aswe.volunteens.service;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -43,6 +44,11 @@ public class DonationService {
     public List<Donation> findDonationsByOrganization(Organization organization) {
         return donationRepository.findByOrganization(organization);
     }
-
+    public List<Donation> findRecentDonations() {
+        return donationRepository.findTop10ByOrderByDonationDateDesc(); 
+    }
         
+   
+
+   
 }
