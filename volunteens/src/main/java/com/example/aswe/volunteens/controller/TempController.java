@@ -242,7 +242,7 @@ public class TempController {
 
             
 
-            donateDTO.setUserId(user.getFirstname());
+            donateDTO.setName(user.getFirstname());
             donateDTO.setUserEmail(user.getEmail());
 
          
@@ -258,11 +258,21 @@ public class TempController {
 
     }
 
-    @PostMapping("donate")
-    public String saveDonation(@ModelAttribute DonationDTO donateDTO, HttpSession session) {
+    @PostMapping("/donate")
+    public ModelAndView saveDonation(@Valid @ModelAttribute("donateDTO") DonationDTO donateDTO, BindingResult result,
+                                     HttpSession session, RedirectAttributes redirectAttributes, Model model) {
+        System.out.println("Processing donation");
+        if (result.hasErrors()) {
+            System.out.println("Validation errors: " + result.getAllErrors());
+            model.addAttribute("organizations", organizationService.findAllOrganizations()); 
+            model.addAttribute("donateDTO", donateDTO);
+            return new ModelAndView("donate.html"); 
+        }
         donationService.saveDonation(donateDTO);
-        return "success";
+        redirectAttributes.addFlashAttribute("message", "Donation successful!");
+        return new ModelAndView("redirect:/donate");
     }
+    
 
     @GetMapping("service")
     public ModelAndView service() {
