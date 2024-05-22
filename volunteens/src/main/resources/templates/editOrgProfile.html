@@ -82,7 +82,7 @@
                 </div>
                 
                 <div class="row g-4 justify-content-center">
-                    <div class="col-lg-4 col-md-6" th:each="opportunity: ${opportunities}">
+                    <div class="col-lg-4 col-md-6 list-item" th:each="opportunity: ${opportunities}">
                         <div
                             class="causes-item d-flex flex-column bg-light border-top border-5 border-primary rounded-top overflow-hidden h-100">
                             <div class="text-center p-4 pt-0">
@@ -102,13 +102,13 @@
                                             <i class="fa fa-edit"></i>
                                         </div>
                                     </a>
-                                    <a class="btn btn-outline-danger" href="#">
+                                    <button class="btn btn-outline-danger" href="#"  th:attr="data-opportunity-id=${opportunity.opportunityId}" onclick="cancelOpportunity(this)">
                                         Delete
                                         <div
                                             class="d-inline-flex btn-sm-square bg-danger text-white rounded-circle ms-2">
                                             <i class="fa fa-trash"></i>
                                         </div>
-                                    </a>
+                                    </button>
                                     <a class="btn btn-outline-info" th:href="@{/viewApplicants(opportunityId=${opportunity.opportunityId})}">
                                         View Applicants
                                         <div class="d-inline-flex btn-sm-square bg-info text-white rounded-circle ms-2">
@@ -167,7 +167,30 @@
             </div>
         </div>
     </div>
-
+    <script>
+        function cancelOpportunity(element) {
+            var opportunityId = element.getAttribute('data-opportunity-id');
+            if (confirm('Are you sure you want to cancel this opportunity?')) {
+                fetch('/cancelopportunity/' + opportunityId, {
+                    method: 'POST'
+                })
+                .then(response => {
+                    if (response.ok) {
+                        var listItem = element.closest('.list-item');
+                        if (listItem) {
+                            listItem.remove(); 
+                        }
+                    } else {
+                        alert('Failed to cancel application.'); 
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Error cancelling application.'); // Handle fetch errors
+                });
+            }
+        }
+    </script>
     <th:block th:insert="~{fragments/footer.html}" />
     <!-- Back to Top -->
     <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>

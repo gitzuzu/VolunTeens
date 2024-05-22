@@ -15,7 +15,7 @@ import com.example.aswe.volunteens.respository.DonationRepository;
 import com.example.aswe.volunteens.respository.OrganizationRepository;
 import com.example.aswe.volunteens.respository.UserRepositry;
 
-import jakarta.servlet.http.HttpSession;
+
 
 @Service
 public class DonationService {
