@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Organization</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp" />
+    <link rel="stylesheet" th:href="@{/css/dashboard.css}" />
+    <link rel="stylesheet" th:href="@{/css/editdash.css}" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+    <div class="container">
+        <div th:replace="~{partials/dashboardsidebar}"></div>
+
+        <main>
+            <h1>Edit Organization</h1>
+            <div class="addprod">
+                <div class="alert-info" th:if="${message}" th:text="${message}"></div>
+                <form th:action="@{/Organization/update}" th:object="${organizationDTO}" method="post">
+                    <input type="hidden" th:field="*{organizationId}" />
+                    <h2 class="title">Update Organization</h2>
+                    <div class="user-container" style="display: block;">
+                        <div class="input">
+                            <label for="organizationName">Organization Name</label>
+                            <input type="text" id="organizationName" th:field="*{organizationName}" class="form-control" required />
+                        </div>
+                        <div class="input">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" th:field="*{email}" class="form-control" required />
+                        </div>
+                        <div class="input">
+                            <label for="organizationDescrp">Description</label>
+                            <textarea id="organizationDescrp" th:field="*{organizationDescrp}" class="form-control" required></textarea>
+                        </div>
+                        <div class="input">
+                            <label for="contactInfo">Contact Info</label>
+                            <input type="text" id="contactInfo" th:field="*{contactInfo}" class="form-control" required />
+                        </div>
+                        <button type="submit" class="btn btn-primary" id="add">Update</button>
+                        <a th:href="@{/organizations}"><button type="button">Cancel</button></a>
+                    </div>
+                </form>
+            </div>
+        </main>
+    </div>
+</body>
+</html>
