@@ -68,7 +68,7 @@
                 })
                 .then(response => {
                     if (response.ok) {
-                        
+
                         const statusCell = document.getElementById(`status-${opportunityId}`);
                         if (statusCell) {
                             statusCell.textContent = newStatus;
