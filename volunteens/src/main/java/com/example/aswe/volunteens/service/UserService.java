@@ -104,4 +104,8 @@ public class UserService {
         userRepositry.save(user);
 
     }
+
+    public long getTotalUsers() {
+        return userRepositry.count();
+    }
 }

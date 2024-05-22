@@ -15,12 +15,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.example.aswe.volunteens.dto.DonationDTO;
 import com.example.aswe.volunteens.dto.OrganizationDTO;
 import com.example.aswe.volunteens.dto.UserDTO;
+import com.example.aswe.volunteens.model.Donation;
 import com.example.aswe.volunteens.model.Organization;
 import com.example.aswe.volunteens.model.Testimonial;
 import com.example.aswe.volunteens.model.User;
 import com.example.aswe.volunteens.respository.OrganizationRepository;
+import com.example.aswe.volunteens.service.DonationService;
 import com.example.aswe.volunteens.service.OpportunityService;
 import com.example.aswe.volunteens.service.OrganizationService;
 import com.example.aswe.volunteens.service.TestimonialService;
@@ -47,15 +50,25 @@ public class DashboardController {
     @Autowired
     private OrganizationService organizationService;
 
-    @GetMapping("dashboard")
-    public ModelAndView dashboard(HttpSession session) {
+    @Autowired
+    private DonationService donationService;
+
+    @GetMapping("/dashboard")
+    public String dashboard(HttpSession session, Model model) {
         User user = (User) session.getAttribute("user");
         if (user != null && user.getIsAdmin()) {
-            return new ModelAndView("dashboard.html");
-        }
-        return new ModelAndView("redirect:/accessDenied");
-    }
+            model.addAttribute("adminInfo", user);
 
+            long totalUsers = userService.getTotalUsers();
+            model.addAttribute("totalUsers", totalUsers);
+
+            List<Donation> recentDonations = donationService.findRecentDonations();
+            model.addAttribute("recentDonations", recentDonations);
+
+            return "dashboard";
+        }
+        return "redirect:/accessDenied";
+    }
     @GetMapping("/users")
     public ModelAndView showUsers(HttpSession session) {
         User user = (User) session.getAttribute("user");
