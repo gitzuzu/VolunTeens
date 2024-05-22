@@ -36,6 +36,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -61,8 +62,24 @@ public class TempController {
     @Autowired 
     private OrganizationService organizationService;
     @GetMapping("UserAppliedOpportunities")
-    public ModelAndView UserAppliedOpportunities() {
+    public ModelAndView UserAppliedOpportunities(HttpSession session, Model model) {
+        if (session.getAttribute("user") == null) {
+
+            return new ModelAndView("redirect:/accessDenied");
+        }
+        System.out.println(applicationService.findByUser((User)session.getAttribute("user")));
+        List<Application> Applications= applicationService.findByUser((User)session.getAttribute("user"));
+        model.addAttribute("Useropportunity",Applications);
         return new ModelAndView("UserAppliedOpportunities.html");
+    }
+    @PostMapping("/cancel-application/{applicationId}")
+    public ModelAndView cancelApplication(@PathVariable Long applicationId) {
+        try {
+            applicationService.cancelApplication(applicationId);
+            return new ModelAndView("UserAppliedOpportunities.html");
+        } catch (Exception e) {
+            return new ModelAndView("redirect:/accessDenied");
+        }
     }
     
     @GetMapping("viewApplicants")
@@ -265,7 +282,7 @@ public class TempController {
 
     @PostMapping("volunteer")
     public ModelAndView saveApplication(@Valid @ModelAttribute ApplicationDTO applicationDTO, BindingResult result,
-            RedirectAttributes ra) throws IOException {
+            RedirectAttributes ra,Model model) throws IOException {
         System.out.println(result.getAllErrors());
 
         if (applicationDTO.getCv().isEmpty()) {
@@ -276,6 +293,8 @@ public class TempController {
 
         if (result.hasErrors()) {
             System.out.println(result.hasErrors());
+            Opportunity opportunity = opportunityService.findOpportunity(applicationDTO.getOpportunityId());
+            model.addAttribute("opportunity",opportunity);
             return new ModelAndView("volunteer.html");
         }
 

@@ -43,61 +43,24 @@
         <!-- Applied Opportunities Start -->
         <div class="row">
             <div class="col-md-8 offset-md-2">
-                <div class="alert-info" th:if="${message}" th:text="${message}"></div>
                 <h2 class="text-center mb-4">Opportunities You've Applied For</h2>
                 <div class="list-group">
                     <!-- Applied Opportunity Item Start -->
-                    <div class="list-group-item list-group-item-action flex-column align-items-start mb-3">
+                    <div class="list-group-item list-group-item-action flex-column align-items-start mb-3" th:each="userapp:${Useropportunity}">
                         <div class="d-flex w-100 justify-content-between">
                             <div class="d-flex align-items-center">
                                 <img src="images/courses-1.jpg" alt="Opportunity Image" class="img-thumbnail me-3" style="width: 100px; height: 100px;">
                                 <div>
-                                    <h5 class="mb-1">Opportunity Title</h5>
-                                    <small>Location: City, Country</small>
+                                    <h5 class="mb-1" th:text="'Opportunity Title:'+ ${userapp.opportunity.title}"></h5>
+                                    <small th:text="'Location:'+  ${userapp.opportunity.location}"></small>
                                 </div>
                             </div>
                             <small>Applied on: Date</small>
                         </div>
-                        <p class="mb-1">Opportunity Description</p>
-                        <small>Status: <span class="badge bg-warning">Pending</span> </small>
+                        <p class="mb-1" th:text="'Opportunity Description'+${userapp.opportunity.description}"></p>
+                        <small>Status: <span class="badge bg-warning" th:text="${userapp.state}"></span> </small>
                         <div class="d-flex justify-content-end mt-3">
-                            <button class="btn btn-danger me-2">Cancel</button>
-                            <button class="btn btn-secondary">Report</button>
-                        </div>
-                    </div>
-                    <div class="list-group-item list-group-item-action flex-column align-items-start mb-3">
-                        <div class="d-flex w-100 justify-content-between">
-                            <div class="d-flex align-items-center">
-                                <img src="images/courses-1.jpg" alt="Opportunity Image" class="img-thumbnail me-3" style="width: 100px; height: 100px;">
-                                <div>
-                                    <h5 class="mb-1">Cancel</h5>
-                                    <small>Location: City, Country</small>
-                                </div>
-                            </div>
-                            <small>Applied on: Date</small>
-                        </div>
-                        <p class="mb-1">Opportunity Description</p>
-                        <small>Status: <span class="badge bg-success">Accepted</span> </small>
-                        <div class="d-flex justify-content-end mt-3">
-                            <button class="btn btn-danger me-2">Cancel</button>
-                            <button class="btn btn-secondary">Report</button>
-                        </div>
-                    </div>
-                    <div class="list-group-item list-group-item-action flex-column align-items-start mb-3">
-                        <div class="d-flex w-100 justify-content-between">
-                            <div class="d-flex align-items-center">
-                                <img src="images/courses-1.jpg" alt="Opportunity Image" class="img-thumbnail me-3" style="width: 100px; height: 100px;">
-                                <div>
-                                    <h5 class="mb-1">Opportunity Title</h5>
-                                    <small>Location: City, Country</small>
-                                </div>
-                            </div>
-                            <small>Applied on: Date</small>
-                        </div>
-                        <p class="mb-1">Opportunity Description</p>
-                        <small>Status:  <span class="badge bg-danger">Rejected</span></small>
-                        <div class="d-flex justify-content-end mt-3">
-                            <button class="btn btn-danger me-2">Cancel</button>
+                            <button class="btn btn-danger me-2" th:attr="data-application-id=${userapp.applicationId}" onclick="cancelApplication(this)">Cancel</button>
                             <button class="btn btn-secondary">Report</button>
                         </div>
                     </div>
@@ -106,7 +69,32 @@
         </div>
         <!-- Applied Opportunities End -->
     </div>
-
+    <script>
+        function cancelApplication(element) {
+            var applicationId = element.getAttribute('data-application-id');
+            if (confirm('Are you sure you want to cancel this application?')) {
+                fetch('/cancel-application/' + applicationId, {
+                    method: 'POST'
+                })
+                .then(response => {
+                    if (response.ok) {
+                        var listItem = element.closest('.list-group-item');
+                        if (listItem) {
+                            listItem.remove(); // Remove the list item from the DOM
+                        }
+                    } else {
+                        alert('Failed to cancel application.'); // Handle non-OK responses
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Error cancelling application.'); // Handle fetch errors
+                });
+            }
+        }
+    </script>
+    
+        
     <th:block th:insert="~{fragments/footer.html}" />
     <!-- Back to Top -->
     <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>

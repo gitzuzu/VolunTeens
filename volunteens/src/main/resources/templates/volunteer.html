@@ -62,6 +62,7 @@
                     <div class="h-100 bg-secondary p-5">
                         <div class="alert-info" th:if="${message}" th:text="${message}"></div>
                         <form th:action="@{/volunteer}" method="POST" th:object="${applicationDTO}" enctype="multipart/form-data">
+                            <input type="hidden" th:field="*{opportunityId}">
                             <div class="row g-3">
                                 <div class="col-12">
                                     <div class="form-floating">

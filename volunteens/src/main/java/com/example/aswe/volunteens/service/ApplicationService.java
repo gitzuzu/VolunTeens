@@ -51,4 +51,11 @@ public class ApplicationService {
            throw new IllegalArgumentException("Invalid organization Id:" + applicationId);
         }
 }
+public List <Application> findByUser(User user){
+    return applicationRepository.findByUser(user);
+}
+
+public void cancelApplication(Long applicationId) {
+    applicationRepository.deleteById(applicationId);
+}
 }
